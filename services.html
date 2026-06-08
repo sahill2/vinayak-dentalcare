@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services | Vinayak Dental Care</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/whatsapp.css">
+    <style>
+        .page-header {
+            background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1629909615184-74f495363b67?auto=format&fit=crop&q=80&w=1600') center/cover;
+            padding: 120px 0 60px;
+            text-align: center;
+            color: white;
+        }
+        
+        .page-header h1 {
+            color: white;
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .services-page-wrap {
+            padding: 80px 0;
+            background-color: var(--bg-color);
+        }
+
+        .services-list-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 40px;
+        }
+
+        .service-detail-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+
+        .service-detail-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .service-detail-img {
+            height: 200px;
+            width: 100%;
+            background-color: var(--light-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--white);
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
+        }
+
+        .service-detail-content {
+            padding: 30px;
+        }
+
+        .service-detail-content h3 {
+            font-size: 1.4rem;
+            color: var(--primary-green);
+            margin-bottom: 15px;
+        }
+
+        .service-detail-content p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
+            padding: 80px 0;
+            text-align: center;
+            color: white;
+        }
+
+        .cta-section h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">
+                    <i class="fa-solid fa-tooth"></i>
+                    Vinayak Dental Care
+                </a>
+                
+                <div class="nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="about.html">About Us</a>
+                    <a href="services.html" class="active">Services</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="admin/indexadmin.html" class="btn btn-primary" style="color: white;">Admin Panel</a>
+                </div>
+
+                <div class="hamburger">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <div class="page-header animate-on-scroll">
+        <div class="container">
+            <h1>Our Services</h1>
+            <p>Comprehensive Dental Treatments for the Whole Family</p>
+        </div>
+    </div>
+
+    <!-- Services Detailed Grid -->
+    <section class="services-page-wrap">
+        <div class="container">
+            <div class="services-list-grid">
+                
+                <!-- Dental Checkup -->
+                <div class="service-detail-card animate-on-scroll">
+                    <div class="service-detail-img">
+                        <i class="fa-solid fa-stethoscope"></i>
+                    </div>
+                    <div class="service-detail-content">
+                        <h3>Dental Checkup</h3>
+                        <p>Routine checkups are essential for maintaining optimal oral health. We perform comprehensive exams involving digital X-rays, oral cancer screenings, and specialized diagnostic care to catch issues early.</p>
+                        <a href="book.html" class="btn btn-outline">Book Now</a>
+                    </div>
+                </div>
+
+                <!-- Teeth Cleaning -->
+                <div class="service-detail-card animate-on-scroll">
+                    <div class="service-detail-img">
+                        <i class="fa-solid fa-teeth-open"></i>
+                    </div>
+                    <div class="service-detail-content">
+                        <h3>Teeth Cleaning</h3>
+                        <p>Professional cleaning (scaling and polishing) removes plaque, tartar, and surface stains that regular brushing misses, preventing gum disease and keeping your breath fresh.</p>
+                        <a href="book.html" class="btn btn-outline">Book Now</a>
+                    </div>
+                </div>
+
+                <!-- Root Canal Treatment -->
+                <div class="service-detail-card animate-on-scroll">
+                    <div class="service-detail-img">
+                        <i class="fa-solid fa-syringe"></i>
+                    </div>
+                    <div class="service-detail-content">
+                        <h3>Root Canal Treatment</h3>
+                        <p>Save your natural tooth with our painless, single-visit root canal therapy using advanced rotary endodontics. It's the most effective procedure to treat an infected or painful tooth.</p>
+                        <a href="book.html" class="btn btn-outline">Book Now</a>
+                    </div>
+                </div>
+
+                <!-- Dental Implants -->
+                <div class="service-detail-card animate-on-scroll">
+                    <div class="service-detail-img">
+                        <i class="fa-solid fa-tooth"></i>
+                    </div>
+                    <div class="service-detail-content">
+                        <h3>Dental Implants</h3>
+                        <p>Replace missing teeth permanently. Implants look, feel, and function like natural teeth, restoring your biting capability and giving you back a complete, confident smile.</p>
+                        <a href="book.html" class="btn btn-outline">Book Now</a>
+                    </div>
+                </div>
+
+                <!-- Teeth Whitening -->
+                <div class="service-detail-card animate-on-scroll">
+                    <div class="service-detail-img">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <div class="service-detail-content">
+                        <h3>Teeth Whitening</h3>
+                        <p>Instantly brighten your smile with our professional in-clinic whitening treatments. Remove years of discoloration safely to achieve glowing, sparkling white teeth in less than an hour.</p>
+                        <a href="book.html" class="btn btn-outline">Book Now</a>
+                    </div>
+                </div>
+
+                <!-- Smile Designing -->
+                <div class="service-detail-card animate-on-scroll">
+                    <div class="service-detail-img">
+                        <i class="fa-solid fa-face-smile"></i>
+                    </div>
+                    <div class="service-detail-content">
+                        <h3>Smile Designing</h3>
+                        <p>Custom-crafted cosmetic dentistry tailored to your facial aesthetics. From CAD/CAM veneers to invisible aligners, we design the perfect smile to enhance your facial symmetry.</p>
+                        <a href="book.html" class="btn btn-outline">Book Now</a>
+                    </div>
+                </div>
+
+                <!-- Pediatric Dentistry -->
+                <div class="service-detail-card animate-on-scroll">
+                    <div class="service-detail-img">
+                        <i class="fa-solid fa-child-reaching"></i>
+                    </div>
+                    <div class="service-detail-content">
+                        <h3>Pediatric Dentistry</h3>
+                        <p>Gentle and friendly dental care for children. We focus on preventive care, fluoride treatments, and creating a positive, fear-free environment for their early dental experiences.</p>
+                        <a href="book.html" class="btn btn-outline">Book Now</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section animate-on-scroll">
+        <div class="container">
+            <h2>Ready to Transform Your Smile?</h2>
+            <p>Our specialists are here to provide personalized treatments specifically designed for your oral health needs.</p>
+            <a href="book.html" class="btn btn-outline" style="border-color: white; color: white;">Schedule a Consultation</a>
+        </div>
+    </section>
+
+    <!-- Footer Preview -->
+    <footer>
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <i class="fa-solid fa-tooth"></i>
+                        Vinayak Dental Care
+                    </a>
+                    <p>Providing advanced dental care with compassion and expertise. Your smile is our top priority.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/vinayak_dental_clinic__implant/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Our Services</h4>
+                    <ul>
+                        <li><a href="services.html">Dental Checkup</a></li>
+                        <li><a href="services.html">Teeth Cleaning</a></li>
+                        <li><a href="services.html">Root Canal</a></li>
+                        <li><a href="services.html">Dental Implants</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Contact Us</h4>
+                    <ul class="contact-info">
+                        <li>
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span>B-10 Laxmipooja Complex, Kapadvanj</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-phone"></i>
+                            <span>+91 XXXXX XXXXX</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-envelope"></i>
+                            <span>info@vinayakdental.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Vinayak Dental Care. All Rights Reserved. <span style="margin-left: 15px; opacity: 0.6;">| <a href="admin/index.html" style="color: inherit; text-decoration: none; margin-left: 5px; transition: 0.3s;">Admin Login</a></span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/9199999XXXXX" class="whatsapp-float" target="_blank" rel="noopener noreferrer">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- JS -->
+    <script src="js/script.js"></script>
+</body>
+</html>

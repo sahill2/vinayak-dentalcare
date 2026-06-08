@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment | Vinayak Dental Care</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .page-header {
+            background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&q=80&w=1600') center/cover;
+            padding: 120px 0 60px;
+            text-align: center;
+            color: white;
+        }
+        
+        .page-header h1 {
+            color: white;
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .booking-wrap {
+            padding: 80px 0;
+            background-color: var(--bg-color);
+        }
+
+        .booking-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--white);
+            padding: 40px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .booking-container h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--primary-green);
+            text-align: center;
+        }
+
+        .booking-container p.subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 3px rgba(32, 178, 170, 0.1);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        #success-message {
+            display: none;
+            background-color: var(--light-green);
+            color: var(--primary-green);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 1px solid var(--primary-green);
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">
+                    <i class="fa-solid fa-tooth"></i>
+                    Vinayak Dental Care
+                </a>
+                
+                <div class="nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="about.html">About Us</a>
+                    <a href="services.html">Services</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="admin/index.html" class="btn btn-primary" style="color: white;">Admin Panel</a>
+                </div>
+
+                <div class="hamburger">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <div class="page-header animate-on-scroll">
+        <div class="container">
+            <h1>Book Appointment</h1>
+            <p>Schedule your visit with our specialists</p>
+        </div>
+    </div>
+
+    <!-- Booking Form Section -->
+    <section class="booking-wrap">
+        <div class="container">
+            <div class="booking-container animate-on-scroll">
+                <h2>Request an Appointment</h2>
+                <p class="subtitle">Fill out the form below and we will confirm your appointment shortly.</p>
+                
+                <div id="success-message">
+                    <i class="fa-solid fa-circle-check"></i> Your appointment request has been sent for approval.
+                </div>
+
+                <form id="bookingForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="patientName">Patient Name</label>
+                            <input type="text" id="patientName" class="form-control" placeholder="Full Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" class="form-control" placeholder="+91 XXXXX XXXXX" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" class="form-control" placeholder="your@email.com" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="date">Preferred Date</label>
+                            <input type="date" id="date" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="timeSlot">Preferred Time Slot</label>
+                            <select id="timeSlot" class="form-control" required>
+                                <option value="" disabled selected>Select a slot</option>
+                                <option value="10:00 AM">10:00 AM</option>
+                                <option value="11:00 AM">11:00 AM</option>
+                                <option value="12:00 PM">12:00 PM</option>
+                                <option value="04:00 PM">4:00 PM</option>
+                                <option value="05:00 PM">5:00 PM</option>
+                                <option value="06:00 PM">6:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Dental Problem / Message</label>
+                        <textarea id="message" class="form-control" placeholder="Please describe your dental issue or any questions you have..." required></textarea>
+                    </div>
+
+                        <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1.1rem; padding: 15px;">Confirm Appointment Request</button>
+                </form>
+
+                <!-- Check Status Divider -->
+                <div style="text-align: center; margin: 40px 0; position: relative;">
+                    <hr style="border: none; border-top: 1px solid #E2E8F0;">
+                    <span style="background: var(--white); padding: 0 15px; color: var(--text-muted); position: absolute; top: -10px; left: 50%; transform: translateX(-50%);">OR</span>
+                </div>
+
+                <!-- Check Status Form -->
+                <div id="checkStatusBox" style="background: #F8FAFC; padding: 30px; border-radius: 8px; border: 1px solid #E2E8F0;">
+                    <h3 style="color: var(--primary-green); margin-bottom: 15px; text-align: center;">Check Appointment Status</h3>
+                    <p style="text-align: center; color: var(--text-muted); margin-bottom: 20px; font-size: 0.9rem;">Enter your phone number to see the status of your recent appointment request.</p>
+                    
+                    <form id="checkStatusForm" style="display: flex; gap: 10px; margin-bottom: 20px;">
+                        <input type="tel" id="statusPhone" class="form-control" placeholder="+91 XXXXX XXXXX" required style="flex: 1;">
+                        <button type="submit" class="btn btn-primary">Check</button>
+                    </form>
+
+                    <div id="statusResult" style="display: none; background: white; padding: 15px; border-radius: 5px; border-left: 4px solid var(--primary-blue);">
+                        <!-- Result injected here via JS -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Preview -->
+    <footer>
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <i class="fa-solid fa-tooth"></i>
+                        Vinayak Dental Care
+                    </a>
+                    <p>Providing advanced dental care with compassion and expertise. Your smile is our top priority.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/vinayak_dental_clinic__implant/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Our Services</h4>
+                    <ul>
+                        <li><a href="services.html">Dental Checkup</a></li>
+                        <li><a href="services.html">Teeth Cleaning</a></li>
+                        <li><a href="services.html">Root Canal</a></li>
+                        <li><a href="services.html">Dental Implants</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Contact Us</h4>
+                    <ul class="contact-info">
+                        <li>
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span>B-10 Laxmipooja Complex, Kapadvanj</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-phone"></i>
+                            <span>+91 XXXXX XXXXX</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-envelope"></i>
+                            <span>info@vinayakdental.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Vinayak Dental Care. All Rights Reserved. <span style="margin-left: 15px; opacity: 0.6;">| <a href="admin/index.html" style="color: inherit; text-decoration: none; margin-left: 5px; transition: 0.3s;">Admin Login</a></span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const bookingForm = document.getElementById('bookingForm');
+            const successMessage = document.getElementById('success-message');
+
+            // Set minimum date to today
+            const dateInput = document.getElementById('date');
+            const today = new Date().toISOString().split('T')[0];
+            dateInput.setAttribute('min', today);
+
+            if (bookingForm) {
+                bookingForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+
+                    const appointmentDetails = {
+                        patientName: document.getElementById('patientName').value,
+                        phone: document.getElementById('phone').value,
+                        email: document.getElementById('email').value,
+                        date: document.getElementById('date').value,
+                        timeSlot: document.getElementById('timeSlot').value,
+                        message: document.getElementById('message').value
+                    };
+
+                    try {
+                        const response = await fetch('/api/appointments', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(appointmentDetails)
+                        });
+
+                        const data = await response.json();
+
+                        if (response.ok && data.success) {
+                            // Show success message
+                            successMessage.style.display = 'block';
+                            bookingForm.reset();
+
+                            // Hide success message after 5 seconds
+                            setTimeout(() => {
+                                successMessage.style.display = 'none';
+                            }, 5000);
+                        } else {
+                            alert(data.message || 'Failed to submit appointment request. Please try again.');
+                        }
+                    } catch (err) {
+                        alert('Server connection error. Please try again later.');
+                    }
+                });
+            }
+
+            // Check Status Logic
+            const statusForm = document.getElementById('checkStatusForm');
+            const statusResult = document.getElementById('statusResult');
+
+            if (statusForm) {
+                statusForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const phoneInput = document.getElementById('statusPhone').value.trim();
+
+                    try {
+                        const response = await fetch(`/api/appointments?phone=${encodeURIComponent(phoneInput)}`);
+                        const data = await response.json();
+
+                        if (response.ok && data.success && data.data.length > 0) {
+                            const userAppointments = data.data;
+                            
+                            let resultHTML = `<h4 style="margin-bottom: 15px; border-bottom: 1px solid #E2E8F0; padding-bottom: 10px;">Found ${userAppointments.length} appointment(s).</h4>`;
+
+                            userAppointments.forEach(app => {
+                                let statusColor = '#D97706'; // Pending (Yellow/Orange)
+                                let icon = 'fa-clock';
+                                if (app.status === 'Approved') { statusColor = '#059669'; icon = 'fa-check-circle'; }
+                                if (app.status === 'Rejected') { statusColor = '#DC2626'; icon = 'fa-times-circle'; }
+                                if (app.status === 'Rescheduled') { statusColor = '#2563EB'; icon = 'fa-calendar-check'; }
+                                
+                                resultHTML += `
+                                    <div style="margin-bottom: 20px; padding: 15px; border: 1px solid #E2E8F0; border-radius: 8px; border-left: 4px solid ${statusColor};">
+                                        <strong>Patient:</strong> ${app.patientName} <br>
+                                        <strong>Date/Time:</strong> ${app.date} at ${app.timeSlot} <br>
+                                        <div style="margin-top: 10px; font-weight: 600; color: ${statusColor};">
+                                            <i class="fa-solid ${icon}"></i> Status: ${app.status.toUpperCase()}
+                                        </div>
+                                    </div>
+                                `;
+                            });
+                            
+                            statusResult.style.display = 'block';
+                            statusResult.style.borderLeftColor = 'var(--primary-green)';
+                            statusResult.innerHTML = resultHTML;
+                            
+                        } else {
+                            statusResult.style.display = 'block';
+                            statusResult.style.borderLeftColor = '#64748B';
+                            statusResult.innerHTML = `No appointments found for this phone number.`;
+                        }
+                    } catch (err) {
+                        statusResult.style.display = 'block';
+                        statusResult.style.borderLeftColor = '#DC2626';
+                        statusResult.innerHTML = `Error connecting to the server to check status.`;
+                    }
+                });
+            }
+
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | Vinayak Dental Care</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        body {
+            background-color: var(--bg-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .login-card {
+            background: var(--white);
+            padding: 50px 40px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        .login-card .logo {
+            font-size: 2rem;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .login-card h2 {
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+
+        .login-card p {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #E2E8F0;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 3px rgba(32, 178, 170, 0.1);
+        }
+
+        .error-msg {
+            color: #EF4444;
+            background: #FEE2E2;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: var(--primary-blue);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .back-link:hover {
+            color: var(--primary-green);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-card">
+        <div class="logo">
+            <i class="fa-solid fa-tooth"></i>
+            Vinayak Admin
+        </div>
+        <h2>Welcome Back, Doctors</h2>
+        <p>Dr. Vishal & Dr. Devanshi, please log in to manage your clinic appointments.</p>
+
+        <div id="error-msg" class="error-msg">
+            Invalid username or password.
+        </div>
+
+        <form id="adminLoginForm">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" class="form-control" autocomplete="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" class="form-control" autocomplete="current-password" required>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Secure Login</button>
+        </form>
+
+        <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Main Website</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check if already logged in
+            if (sessionStorage.getItem('vinayakAdminAuth') === 'true') {
+                window.location.href = '../dashboard.html';
+                return;
+            }
+
+            const loginForm = document.getElementById('adminLoginForm');
+            const errorMsg = document.getElementById('error-msg');
+
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value;
+
+                try {
+                    const response = await fetch('/api/auth/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email, password })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok && data.success) {
+                        sessionStorage.setItem('vinayakAdminAuth', 'true');
+                        window.location.href = '../dashboard.html';
+                    } else {
+                        errorMsg.textContent = data.message || 'Invalid username or password.';
+                        errorMsg.style.display = 'block';
+                        document.getElementById('password').value = '';
+                    }
+                } catch (err) {
+                    errorMsg.textContent = 'Server connection error. Please try again later.';
+                    errorMsg.style.display = 'block';
+                    document.getElementById('password').value = '';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
