@@ -1,161 +1,154 @@
-# 🦷 Vinayak Dental Care — Full-Stack Clinic Portal & Management System
+# 🦷 Vinayak Dental Care — Full-Stack Dental Clinic Platform
 
-A modern, full-stack healthcare web application designed for **Vinayak Dental Care**. The platform features an interactive patient-facing portal for clinic information, services, appointment booking, and status tracking, combined with a secure administrative dashboard for clinic staff to manage appointments, inquiries, and schedules.
+A modern, production-ready full-stack healthcare web portal and management system designed for **Vinayak Dental Care**. Built with high-performance Vanilla JavaScript, HTML5, CSS3, and Node.js / Express with MongoDB Mongoose. Deployed seamlessly on Vercel with serverless function support.
 
 ---
 
 ## 📋 Table of Contents
 
-- [Features Overview](#-features-overview)
-- [Tech Stack](#-tech-stack)
-- [Project Structure](#-project-structure)
-- [Getting Started & Installation](#-getting-started--installation)
+- [Key Highlights](#-key-highlights)
+- [Architecture & Tech Stack](#-architecture--tech-stack)
+- [Project Directory Structure](#-project-directory-structure)
+- [Quick Start & Local Setup](#-quick-start--local-setup)
 - [Environment Configuration](#-environment-configuration)
-- [Default Admin Credentials](#-default-admin-credentials)
+- [Security & Production Hardening](#-security--production-hardening)
 - [API Reference](#-api-reference)
-- [Security Implementations](#-security-implementations)
-- [Deployment & Production Tips](#-deployment--production-tips)
+- [Vercel Serverless Deployment](#-vercel-serverless-deployment)
+- [Owner Configuration Guide](#-owner-configuration-guide)
+- [Changelog](#-changelog)
 - [License](#-license)
 
 ---
 
-## ✨ Features Overview
+## ✨ Key Highlights
 
-### 👤 Patient Portal
-* **Homepage (`index.html`)**: Clinic introduction, highlight of dental specialties, patient testimonials, emergency contact banners, and quick booking access.
-* **About Us (`about.html`)**: Doctor profiles, clinic mission, sterilization & hygiene standards, and modern diagnostic technologies.
-* **Services (`services.html`)**: Detailed overview of dental services including Teeth Whitening, Root Canal Treatment (RCT), Dental Implants, Orthodontics/Aligners, Pediatric Care, and Routine Scaling/Cleaning.
-* **Appointment Booking & Tracker (`book.html`)**:
-  * Real-time slot and service selection.
-  * Instant appointment submission.
-  * **Live Appointment Tracker**: Patients can look up their appointment status using their phone number (statuses: *Pending Approval*, *Confirmed*, *Rescheduled*, *Completed*, *Cancelled*).
-* **Contact & Inquiries (`contact.html`)**: Interactive contact form with automated recording of patient messages and clinic location details.
+### 👤 Patient Experience
+- **Interactive Multi-Language Portal (`js/i18n.js`)**: Real-time language switching across **English**, **Gujarati (ગુજરાતી)**, and **Hindi (हिन्दी)** with persistent browser storage (`localStorage`).
+- **Single Source of Truth Catalog (`js/config.js`)**: Dynamic rendering of clinical services, emergency numbers, clinic hours, and social media handles.
+- **Smart Appointment Booking (`book.html`)**:
+  - Live pre-selection from homepage/services links (e.g. `book.html?service=rct`).
+  - Validation restricting past dates and Sundays (clinic weekly holiday).
+  - Indian phone format enforcement (`[6-9]\d{9}`).
+  - Double-booking prevention via MongoDB compound unique indices.
+  - Mandatory DPDP/privacy consent before submission.
+- **Reference Code Tracking (`VDC-XXXX`)**: Instant privacy-preserving status lookup (`POST /api/appointments/lookup`) showing live appointment status, date, time slot, and service without exposing phone numbers or emails.
+- **Post-Booking Action Card**: Displays confirmed appointment details and 1-click WhatsApp message dispatch prefilled with reference code.
+- **Mobile-First Experience**: Sticky bottom quick-action bar (`Call Clinic` & `WhatsApp Consultation`), click-to-call, and interactive Google Maps directions.
 
-### 🛡️ Admin Management Portal
-* **Protected Login (`admin/index.html`)**: Secure JWT-based authentication using HTTP-Only cookies.
-* **Interactive Dashboard (`dashboard.html`)**:
-  * **Real-time Metrics**: Total appointments, pending requests, confirmed visits, today's schedule, and total contact inquiries.
-  * **Appointment Workflow**: Accept, reschedule (with custom date/time), mark completed, or cancel appointments.
-  * **Search & Filter**: Filter appointments by status or search instantly by patient name, phone, or email.
-  * **Inquiry Manager**: View, read, and delete patient contact inquiries.
-  * **Credentials Manager**: Update administrator login email and password directly from the settings panel.
-  * **Automated Email Alerts**: Automatic email notifications dispatched to patients when their appointment status changes.
+### 🛡️ Secure Admin Portal (`/admin/index.html` & `dashboard.html`)
+- **JWT Authentication via HTTP-Only Cookies**: Secure session management protected from client-side script inspection.
+- **Brute-Force Login Rate Limiting**: Strict threshold (5 attempts per 15 minutes per IP) with automatic lockout and remaining attempt counters.
+- **Rich Dashboard Management**:
+  - **Metrics**: Total bookings, Pending reviews, Confirmed visits, Today's schedule, Inquiries count.
+  - **Filters & Search**: Multi-field search (Name, Phone, Email, Reference Code, Service) + Status dropdown + Date Range filter (From / To) + **"Today's Schedule"** quick toggle.
+  - **Server-side Pagination**: High-performance paginated queries (20 records per page).
+  - **Export to CSV**: Client-side CSV generator with date, time, status, reference code, and patient contact details.
+  - **Audit Trail & Activity Log**: Automatic logging of all appointment status updates and rescheduling actions with staff timestamp.
+  - **Inquiry Manager & Account Settings**: Manage patient contact form inquiries and update admin login credentials.
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️ Architecture & Tech Stack
 
 | Layer | Technology |
 | :--- | :--- |
-| **Backend Runtime** | Node.js (v18+) |
-| **Backend Framework** | Express.js (v4.x) |
-| **Database & ODM** | MongoDB with Mongoose |
-| **Authentication** | JSON Web Tokens (JWT) stored in HTTP-Only, SameSite cookies |
-| **Security Suite** | Helmet, Express Rate Limit, Express Mongo Sanitize, XSS-Clean, Bcrypt.js |
-| **Email Delivery** | Nodemailer (SMTP integration) |
-| **Frontend** | Semantic HTML5, Vanilla CSS3 (Custom Dental Theme & Responsive Grid/Flexbox), Vanilla JavaScript (Fetch API / Async-Await) |
+| **Frontend** | Semantic HTML5, Vanilla CSS3 (Custom Dental Palette, Glassmorphism, Responsive Grid/Flexbox), Vanilla JS (ES6+ Modules, Fetch API, i18n engine) |
+| **Backend Runtime** | Node.js (v18+) & Express.js (v4.x) |
+| **Database & ODM** | MongoDB with Mongoose (with cached connection for Serverless environments) |
+| **Authentication** | JSON Web Tokens (`jsonwebtoken`) + HTTP-Only, `SameSite=Lax/Strict`, Secure Cookies |
+| **Security Middleware** | `helmet`, `express-rate-limit`, `express-mongo-sanitize`, Custom HTML Escaping Sanitizers |
+| **Email Delivery** | `nodemailer` (SMTP notifications for status updates and rescheduling) |
+| **Deployment** | Vercel Serverless Functions (`api/index.js` + `vercel.json`) |
 
 ---
 
-## 📂 Project Structure
+## 📂 Project Directory Structure
 
 ```text
 dental/
 ├── admin/
-│   ├── index.html              # Admin login page
-│   └── indexadmin.html         # Admin login fallback/template
+│   └── index.html              # Dedicated admin login (noindex, nofollow)
+├── api/
+│   └── index.js                # Vercel serverless entry point wrapping Express app
 ├── backend/
 │   ├── config/
-│   │   └── db.js               # MongoDB database connection configuration
+│   │   └── db.js               # MongoDB connection with serverless connection caching
 │   ├── controllers/
-│   │   ├── appointmentController.js # Appointment CRUD & status actions
+│   │   ├── appointmentController.js # Appointment booking, lookup, pagination & logs
 │   │   ├── authController.js        # Admin login, logout & credentials update
-│   │   └── inquiryController.js     # Patient inquiry submissions & management
+│   │   └── inquiryController.js     # Patient contact inquiries
 │   ├── middleware/
-│   │   └── auth.js             # JWT authentication & route protection middleware
+│   │   ├── auth.js             # JWT verification & admin route protection
+│   │   └── validator.js        # Input validation (phone, date, time slot, sanitization)
 │   ├── models/
-│   │   ├── Admin.js            # Admin schema & password hashing methods
-│   │   ├── Appointment.js      # Appointment schema
-│   │   └── Inquiry.js          # Inquiry schema
+│   │   ├── ActivityLog.js      # Audit trail schema for admin status updates
+│   │   ├── Admin.js            # Admin schema with bcrypt password hashing
+│   │   ├── Appointment.js      # Appointment schema with compound unique index & VDC ref code
+│   │   └── Inquiry.js          # Patient inquiry schema
 │   ├── routes/
-│   │   ├── appointmentRoutes.js# /api/appointments routes
-│   │   ├── authRoutes.js       # /api/auth routes
-│   │   └── inquiryRoutes.js    # /api/inquiries routes
+│   │   ├── appointmentRoutes.js# /api/appointments endpoints
+│   │   ├── authRoutes.js       # /api/auth endpoints with rate limiter
+│   │   └── inquiryRoutes.js    # /api/inquiries endpoints
 │   ├── services/
 │   │   └── emailService.js     # Nodemailer email notification service
 │   ├── utils/
-│   │   └── seed.js             # Default administrator account seeder
-│   ├── .env                    # Environment variables (secret configuration)
+│   │   └── seed.js             # Environment-driven admin account seeder
 │   ├── .env.example            # Sample environment variables template
-│   └── server.js               # Express application entry point & middleware setup
+│   └── server.js               # Express application configuration & routes
 ├── css/
-│   └── (custom styling files)  # Stylesheets for client & admin views
+│   └── style.css               # Core styling, responsive layouts, accessibility & sticky bar
 ├── js/
-│   └── script.js               # Frontend interactive scripts & API connectors
-├── about.html                  # About Us page
-├── book.html                   # Appointment booking & status lookup page
-├── contact.html                # Contact Us & inquiry page
-├── dashboard.html              # Protected Admin Dashboard
-├── index.html                  # Clinic Homepage
-├── services.html               # Dental Services catalog
-├── package.json                # Project dependencies and npm scripts
+│   ├── config.js               # Central clinic configuration & TODO placeholders
+│   ├── i18n.js                 # Multi-language dictionary (EN, GU, HI) & selector
+│   └── script.js               # Client frontend scripts (booking, tracking, dynamic DOM)
+├── 404.html                    # Branded 404 error page
+├── about.html                  # About the clinic & doctor profiles
+├── book.html                   # Appointment booking & privacy lookup
+├── contact.html                # Contact info, inquiry form & embedded map
+├── dashboard.html              # Admin management dashboard
+├── index.html                  # Main homepage with structured JSON-LD data
+├── privacy.html                # Privacy policy & data protection terms
+├── robots.txt                  # Search engine crawling rules
+├── sitemap.xml                 # XML Sitemap for search indexing
+├── services.html               # Dental services catalog
+├── vercel.json                 # Vercel serverless deployment routing config
+├── package.json                # Project dependencies & scripts
+├── CHANGES.md                  # Comprehensive changelog of improvements
 └── README.md                   # Project documentation
 ```
 
 ---
 
-## 🚀 Getting Started & Installation
+## 🚀 Quick Start & Local Setup
 
 ### 1. Prerequisites
-Make sure you have the following installed on your machine:
-* [Node.js](https://nodejs.org/) (version 18 or above recommended)
-* [MongoDB](https://www.mongodb.com/) (Local MongoDB instance or MongoDB Atlas connection URI)
-* [Git](https://git-scm.com/)
+- **Node.js** (v18 or higher recommended)
+- **MongoDB** (Local MongoDB Community instance or MongoDB Atlas cluster URI)
+- **Git**
 
-### 2. Clone the Repository
+### 2. Installation
 ```bash
+# Clone the repository
 git clone https://github.com/sahill2/vinayak-dentalcare.git
 cd vinayak-dentalcare
-```
 
-### 3. Install Dependencies
-```bash
+# Switch to the improve-site branch
+git checkout improve-site
+
+# Install backend dependencies
 npm install
 ```
 
-### 4. Configure Environment Variables
-Create a `.env` file inside the `backend/` directory by copying the sample template:
-
+### 3. Setup Environment Variables
+Create your local `.env` file in the `backend/` folder:
 ```bash
 cp backend/.env.example backend/.env
 ```
+Fill in the necessary keys (see [Environment Configuration](#-environment-configuration)).
 
-Open `backend/.env` and update the required values:
+### 4. Run the Application
 
-```env
-# Server Port
-PORT=5000
-
-# MongoDB URI (Replace with your local URI or MongoDB Atlas connection string)
-MONGODB_URI=mongodb://127.0.0.1:27017/vinayak_dental_care
-
-# JWT Authentication Secret (Use a strong random string in production)
-JWT_SECRET=vinayak_dental_secret_key_change_in_production
-
-# Node Environment
-NODE_ENV=development
-
-# Nodemailer SMTP Configuration (Optional for local testing, required for email delivery)
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_USER=admin@vinayakdentalcare.com
-SMTP_PASS=your_email_app_password
-EMAIL_FROM="Vinayak Dental Care" <admin@vinayakdentalcare.com>
-```
-
-### 5. Run the Application
-
-#### Development Mode (with auto-reload using nodemon):
+#### Development Mode:
 ```bash
 npm run dev
 ```
@@ -165,22 +158,65 @@ npm run dev
 npm start
 ```
 
-### 6. Access the Application
-- **Patient Portal**: [http://localhost:5000](http://localhost:5000)
+### 5. Accessing URLs
+- **Patient Homepage**: [http://localhost:5000](http://localhost:5000)
 - **Book Appointment**: [http://localhost:5000/book.html](http://localhost:5000/book.html)
-- **Admin Login**: [http://localhost:5000/admin/index.html](http://localhost:5000/admin/index.html)
-- **Admin Dashboard**: [http://localhost:5000/dashboard.html](http://localhost:5000/dashboard.html) *(Requires Admin Login)*
+- **Admin Login**: [http://localhost:5000/admin/](http://localhost:5000/admin/)
+- **Admin Dashboard**: [http://localhost:5000/dashboard.html](http://localhost:5000/dashboard.html) *(Requires admin login)*
 
 ---
 
-## 🔐 Default Admin Credentials
+## 🔐 Environment Configuration
 
-Upon launching the server for the first time, an initial administrator account is automatically seeded into MongoDB if none exists:
+Place your environment variables in `backend/.env` for local development and in the **Vercel Project Settings > Environment Variables** for production.
 
-* **Email:** `admin@vinayakdentalcare.com`
-* **Password:** `Vinayak@123`
+```env
+# Server Port & Mode
+PORT=5000
+NODE_ENV=development
 
-> ⚠️ **Important:** After logging in for the first time, navigate to the dashboard settings and update your email and password.
+# MongoDB Connection String (Atlas URI or Local MongoDB)
+MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/vinayak_dental_care?retryWrites=true&w=majority
+
+# JWT Authentication Secret (Use a strong random string >= 32 characters)
+JWT_SECRET=replace_with_a_secure_random_jwt_secret_min_32_chars
+
+# Administrator Initial Account (Optional for auto-seeding on first run, min 10 chars)
+ADMIN_EMAIL=admin@vinayakdentalcare.com
+ADMIN_PASSWORD=SetAStrongPasswordMin10Chars!
+
+# Nodemailer SMTP settings (Optional for local dev, required for patient email notifications)
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your_email@gmail.com
+SMTP_PASS=your_gmail_app_password
+EMAIL_FROM="Vinayak Dental Care" <info@vinayakdentalcare.com>
+```
+
+> ⚠️ **Security Notice**: If `.env` credentials were ever committed in past git history, ensure you rotate the MongoDB password, JWT secret, and SMTP app passwords in your production database and email providers.
+
+---
+
+## 🛡️ Security & Production Hardening
+
+1. **Strict Input Validation**:
+   - Phone numbers validated for Indian standard (10 digits starting with 6, 7, 8, or 9).
+   - Booking dates must be strictly today or in the future and cannot be on Sundays.
+   - Time slots must fall within legitimate operational clinic hours (09:00 AM – 08:00 PM).
+2. **Double Booking Prevention**:
+   - Partial compound unique index on MongoDB: `{ date: 1, timeSlot: 1 }` (active for non-cancelled bookings).
+   - Returns clean HTTP `409 Conflict` if two users attempt to book the exact same slot concurrently.
+3. **Privacy Protection**:
+   - Live status lookup (`POST /api/appointments/lookup`) requires the unique Reference Code (`VDC-XXXX`) or matching Phone + Reference Code.
+   - Rate-limited to 10 requests per 15 minutes per IP.
+   - Responses return only necessary status fields (`status`, `date`, `timeSlot`, `service`), never exposing patient contact details or PII.
+4. **Injection & XSS Protection**:
+   - NoSQL query injection prevention using `express-mongo-sanitize`.
+   - String sanitization and HTML entity escaping on all user-supplied text payloads.
+   - HTTP response header protection via `helmet`.
+5. **Admin Access Security**:
+   - Authentication endpoint rate-limited to 5 attempts / 15 min.
+   - Admin pages tagged with `<meta name="robots" content="noindex, nofollow">` and excluded from `robots.txt` and `sitemap.xml`.
 
 ---
 
@@ -188,53 +224,81 @@ Upon launching the server for the first time, an initial administrator account i
 
 ### Authentication (`/api/auth`)
 
-| Method | Endpoint | Access | Description |
-| :--- | :--- | :--- | :--- |
-| `POST` | `/api/auth/login` | Public | Authenticates admin credentials and sets HTTP-Only JWT cookie. |
-| `POST` | `/api/auth/logout` | Private (Admin) | Clears the authentication cookie. |
-| `PUT` | `/api/auth/change-credentials` | Private (Admin) | Updates admin email and/or password (requires current password). |
+| Method | Endpoint | Rate Limit | Access | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| `POST` | `/api/auth/login` | 5 req / 15 min | Public | Authenticates admin credentials and sets HTTP-Only cookie. |
+| `POST` | `/api/auth/logout` | None | Private (Admin) | Clears the session cookie. |
+| `PUT` | `/api/auth/change-credentials` | None | Private (Admin) | Updates admin email and password. |
 
 ### Appointments (`/api/appointments`)
 
-| Method | Endpoint | Access | Description |
-| :--- | :--- | :--- | :--- |
-| `POST` | `/api/appointments` | Public | Creates a new patient appointment request. |
-| `GET` | `/api/appointments?phone={phone}` | Public | Looks up appointment history and live status for a patient by phone number. |
-| `GET` | `/api/appointments` | Private (Admin) | Retrieves all patient appointments. |
-| `GET` | `/api/appointments/:id` | Private (Admin) | Retrieves specific appointment details by numeric ID. |
-| `PUT` | `/api/appointments/:id` | Private (Admin) | Updates appointment status (Confirmed, Rescheduled, Cancelled, Completed) or reschedule date/time. Triggers email notification. |
-| `DELETE` | `/api/appointments/:id` | Private (Admin) | Permanently removes an appointment record. |
+| Method | Endpoint | Rate Limit | Access | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| `POST` | `/api/appointments` | 20 req / 15 min | Public | Submits a new appointment booking. |
+| `POST` | `/api/appointments/lookup` | 10 req / 15 min | Public | Secure status tracker by reference code (`VDC-XXXX`). |
+| `GET` | `/api/appointments` | None | Private (Admin) | Paginated appointment list with search, status, and date filters. |
+| `GET` | `/api/appointments/activity/logs` | None | Private (Admin) | Retrieves audit log history of admin status updates. |
+| `GET` | `/api/appointments/:id` | None | Private (Admin) | Retrieves specific appointment details. |
+| `PUT` | `/api/appointments/:id` | None | Private (Admin) | Updates status (Confirmed, Cancelled, Completed, Rescheduled). |
+| `DELETE`| `/api/appointments/:id` | None | Private (Admin) | Deletes an appointment record. |
 
 ### Inquiries (`/api/inquiries`)
 
-| Method | Endpoint | Access | Description |
-| :--- | :--- | :--- | :--- |
-| `POST` | `/api/inquiries` | Public | Submits a new inquiry from the contact form. |
-| `GET` | `/api/inquiries` | Private (Admin) | Retrieves all submitted patient inquiries. |
-| `DELETE` | `/api/inquiries/:id` | Private (Admin) | Deletes an inquiry record by numeric ID. |
+| Method | Endpoint | Rate Limit | Access | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| `POST` | `/api/inquiries` | 10 req / 15 min | Public | Submits a patient contact inquiry. |
+| `GET` | `/api/inquiries` | None | Private (Admin) | Retrieves list of all submitted inquiries. |
+| `DELETE`| `/api/inquiries/:id` | None | Private (Admin) | Deletes an inquiry record. |
 
 ---
 
-## 🛡️ Security Implementations
+## 🌐 Vercel Serverless Deployment
 
-* **HTTP-Only Cookies**: JWT tokens are transmitted via `httpOnly`, `sameSite: 'strict'`, and SSL-secured cookies in production to mitigate XSS-based token theft.
-* **Rate Limiting**: `express-rate-limit` prevents brute-force login and spam requests on API endpoints.
-* **Header Protection**: `helmet` manages security headers to prevent common web vulnerabilities.
-* **Data Sanitization**: `express-mongo-sanitize` scrubs user inputs to prevent MongoDB NoSQL query injection.
-* **XSS Protection**: `xss-clean` sanitizes request payloads against Cross-Site Scripting.
-* **Password Hashing**: `bcryptjs` with salt rounds protects stored administrator passwords.
+This project is configured out-of-the-box for serverless deployment on Vercel:
+
+1. **Serverless Entrypoint (`api/index.js`)**: Exports the Express application instance as a Vercel serverless function.
+2. **Routing Configuration (`vercel.json`)**:
+   - Routes `/api/*` requests to `/api/index.js`.
+   - Serves static HTML, CSS, and JS files directly.
+3. **Database Connection Caching (`backend/config/db.js`)**: Reuses active Mongoose connections across serverless function invocations to prevent exhausting connection pools.
+
+### Deploying to Vercel
+1. Push the branch to your GitHub repository.
+2. Import the project in [Vercel Dashboard](https://vercel.com).
+3. Under **Settings > Environment Variables**, add:
+   - `MONGODB_URI`
+   - `JWT_SECRET`
+   - `ADMIN_EMAIL`
+   - `ADMIN_PASSWORD`
+   - `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `EMAIL_FROM`
+   - `NODE_ENV=production`
+4. Click **Deploy**.
 
 ---
 
-## 🌐 Deployment & Production Tips
+## 📝 Owner Configuration Guide
 
-1. **Production Environment**: Set `NODE_ENV=production` in your `.env` so that cookies enforce `secure: true` (HTTPS).
-2. **Reverse Proxy**: When deploying behind Nginx, Apache, or cloud load balancers (Render, Railway, AWS, DigitalOcean), enable `app.set('trust proxy', 1)` if utilizing rate limiting behind a proxy.
-3. **Database Backup**: Use MongoDB Atlas automated snapshots or `mongodump` for routine backups of appointments and patient inquiries.
-4. **Email SMTP**: Use a dedicated transactional email service (e.g., SendGrid, Brevo, AWS SES, or Gmail App Passwords) in `SMTP_*` variables for high email deliverability.
+All clinic contact information, hours, addresses, and service catalogs are centralized in [`js/config.js`](file:///c:/SAHIL/New%20folder/dental/js/config.js). 
+
+To customize the clinic details for production, update the fields marked with `TODO: OWNER`:
+- `clinicName`: Full business name.
+- `phone` & `emergencyPhone`: Clinic front-desk telephone number.
+- `whatsappNumber`: WhatsApp business number (digits with country code).
+- `email`: Public clinic contact email.
+- `address`: Physical clinic street address, city, and pincode.
+- `googleMapsUrl` & `googleMapsEmbedUrl`: Google Maps listing links.
+- `googleReviewUrl`: Direct link for patients to leave a 5-star Google Review.
+- `socialLinks`: Instagram, Facebook, and YouTube profile URLs.
+- `services`: Service catalog descriptions, icons, and pricing/duration tags.
 
 ---
 
-## 📄 License
+## 📄 Changes & Audit History
 
-This project is created for **Vinayak Dental Care**. All rights reserved.
+For a complete breakdown of all architectural, security, and UI enhancements made across all phases, see [`CHANGES.md`](file:///c:/SAHIL/New%20folder/dental/CHANGES.md).
+
+---
+
+## ⚖️ License
+
+Copyright © 2026 **Vinayak Dental Care**. All rights reserved.
