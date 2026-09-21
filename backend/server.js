@@ -16,24 +16,17 @@ if (process.env.NODE_ENV === 'production') {
   const placeholder = 'your_jwt_secret_key_change_this_in_production';
   if (!secret || secret === placeholder || secret.length < 16) {
     console.error('FATAL: A strong, unique JWT_SECRET (minimum 16 characters) is required in production.');
-    process.exit(1);
+    if (!process.env.VERCEL) {
+      process.exit(1);
+    }
   }
 }
 
 const connectDB = require('./config/db');
-const seedAdmin = require('./utils/seed');
 const authRoutes = require('./routes/authRoutes');
 const appointmentRoutes = require('./routes/appointmentRoutes');
 const inquiryRoutes = require('./routes/inquiryRoutes');
 const { protect } = require('./middleware/auth');
-
-// Connect to Database
-connectDB().then(() => {
-  // Seed admin account if configured in env
-  seedAdmin();
-}).catch((err) => {
-  console.error(`Initial database connection error: ${err.message}`);
-});
 
 // Initialize Express
 const app = express();
@@ -58,6 +51,20 @@ app.use(cors({
 app.use(helmet({
   contentSecurityPolicy: false
 }));
+
+// Ensure Database connection is established before processing any request
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    console.error(`[DB CONNECTION ERROR] ${err.stack || err.message}`);
+    return res.status(503).json({
+      success: false,
+      message: 'Database service is temporarily unavailable. Please try again shortly.'
+    });
+  }
+});
 
 // General API rate limiting (300 requests per 15 min per IP)
 const apiLimiter = rateLimit({
@@ -85,19 +92,19 @@ app.get('/dashboard.html', protect, (req, res) => {
 // Serve frontend static assets
 app.use(express.static(path.join(__dirname, '../')));
 
-// Global Error Handler
+// Global Error Handler - Logs real error server-side, returns generic message to client
 app.use((err, req, res, next) => {
   console.error(`[SERVER ERROR] ${err.stack || err.message}`);
   res.status(err.status || 500).json({
     success: false,
-    message: err.message || 'Internal Server Error'
+    message: err.status && err.status < 500 ? err.message : 'An internal server error occurred. Please try again later.'
   });
 });
 
 const PORT = process.env.PORT || 5000;
 
-// Only start the standalone HTTP listener when executed directly (not in Vercel serverless)
-if (process.env.VERCEL !== '1' && require.main === module) {
+// Only start HTTP listener when NOT running in Vercel serverless environment
+if (!process.env.VERCEL) {
   const server = app.listen(PORT, () => {
     console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
   });

@@ -16,15 +16,12 @@ const connectDB = async () => {
 
   if (!process.env.MONGODB_URI) {
     console.error('MONGODB_URI is not defined in environment variables.');
-    if (process.env.NODE_ENV === 'production') {
-      throw new Error('MONGODB_URI is not defined in environment variables.');
-    }
-    return null;
+    throw new Error('MONGODB_URI is not defined in environment variables.');
   }
 
   if (!cached.promise) {
     const opts = {
-      bufferCommands: false,
+      serverSelectionTimeoutMS: 8000,
       maxPoolSize: 10,
     };
 

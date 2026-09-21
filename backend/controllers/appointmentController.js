@@ -111,6 +111,7 @@ exports.createAppointment = async (req, res) => {
       }
     });
   } catch (error) {
+    console.error(`[APPOINTMENT CREATE ERROR] ${error.stack || error.message}`);
     // Handle unique index conflict
     if (error.code === 11000) {
       return res.status(409).json({
@@ -118,7 +119,7 @@ exports.createAppointment = async (req, res) => {
         message: 'This time slot was just reserved. Please select another slot.'
       });
     }
-    res.status(500).json({ success: false, message: `Server error: ${error.message}` });
+    res.status(500).json({ success: false, message: 'Failed to create appointment. Please try again later.' });
   }
 };
 
@@ -171,6 +172,7 @@ exports.lookupAppointment = async (req, res) => {
       }
     });
   } catch (error) {
+    console.error(`[APPOINTMENT LOOKUP ERROR] ${error.stack || error.message}`);
     res.status(500).json({ success: false, message: 'An error occurred while looking up your appointment.' });
   }
 };
@@ -224,7 +226,8 @@ exports.getAppointments = async (req, res) => {
       data: appointments
     });
   } catch (error) {
-    res.status(500).json({ success: false, message: `Server error: ${error.message}` });
+    console.error(`[APPOINTMENT GET ERROR] ${error.stack || error.message}`);
+    res.status(500).json({ success: false, message: 'Failed to fetch appointments. Please try again later.' });
   }
 };
 
@@ -244,7 +247,8 @@ exports.getAppointmentById = async (req, res) => {
       data: appointment
     });
   } catch (error) {
-    res.status(500).json({ success: false, message: `Server error: ${error.message}` });
+    console.error(`[APPOINTMENT GET_BY_ID ERROR] ${error.stack || error.message}`);
+    res.status(500).json({ success: false, message: 'Failed to fetch appointment details.' });
   }
 };
 
@@ -326,13 +330,14 @@ exports.updateAppointment = async (req, res) => {
       data: appointment
     });
   } catch (error) {
+    console.error(`[APPOINTMENT UPDATE ERROR] ${error.stack || error.message}`);
     if (error.code === 11000) {
       return res.status(409).json({
         success: false,
         message: 'This time slot is already taken. Please choose another.'
       });
     }
-    res.status(500).json({ success: false, message: `Server error: ${error.message}` });
+    res.status(500).json({ success: false, message: 'Failed to update appointment. Please try again.' });
   }
 };
 
@@ -359,7 +364,8 @@ exports.deleteAppointment = async (req, res) => {
       message: 'Appointment deleted successfully'
     });
   } catch (error) {
-    res.status(500).json({ success: false, message: `Server error: ${error.message}` });
+    console.error(`[APPOINTMENT DELETE ERROR] ${error.stack || error.message}`);
+    res.status(500).json({ success: false, message: 'Failed to delete appointment.' });
   }
 };
 
@@ -378,6 +384,7 @@ exports.getActivityLogs = async (req, res) => {
       data: logs
     });
   } catch (error) {
-    res.status(500).json({ success: false, message: `Server error: ${error.message}` });
+    console.error(`[APPOINTMENT LOGS ERROR] ${error.stack || error.message}`);
+    res.status(500).json({ success: false, message: 'Failed to fetch activity logs.' });
   }
 };
