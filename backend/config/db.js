@@ -10,8 +10,15 @@ if (!cached) {
 }
 
 const connectDB = async () => {
-  if (cached.conn) {
+  // Reuse existing connection ONLY if readyState is 1 (connected)
+  if (cached.conn && mongoose.connection.readyState === 1) {
     return cached.conn;
+  }
+
+  // If state is not connected, reset cached values
+  if (mongoose.connection.readyState !== 1 && mongoose.connection.readyState !== 2) {
+    cached.conn = null;
+    cached.promise = null;
   }
 
   if (!process.env.MONGODB_URI) {
@@ -21,8 +28,9 @@ const connectDB = async () => {
 
   if (!cached.promise) {
     const opts = {
+      maxPoolSize: 5,
+      socketTimeoutMS: 20000,
       serverSelectionTimeoutMS: 8000,
-      maxPoolSize: 10,
     };
 
     cached.promise = mongoose.connect(process.env.MONGODB_URI, opts).then((mongooseInstance) => {
@@ -31,6 +39,7 @@ const connectDB = async () => {
     }).catch((err) => {
       console.error(`MongoDB connection error: ${err.message}`);
       cached.promise = null;
+      cached.conn = null;
       throw err;
     });
   }
@@ -40,6 +49,7 @@ const connectDB = async () => {
     return cached.conn;
   } catch (e) {
     cached.promise = null;
+    cached.conn = null;
     throw e;
   }
 };
