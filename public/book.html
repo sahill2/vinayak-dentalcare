@@ -451,6 +451,13 @@
             }
         });
 
+        function esc(str) {
+            if (!str) return '';
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
         // Form Submission
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -461,7 +468,7 @@
             const email = form.email.value.trim();
             const service = form.service.value;
             const date = form.date.value;
-            const timeSlot = form.timeSlot?.value;
+            const timeSlot = form.querySelector('input[name="timeSlot"]:checked')?.value;
             const message = form.message.value.trim();
             const consentGiven = form.consentGiven.checked;
             const website = form.website.value;
@@ -478,6 +485,7 @@
 
             submitBtn.disabled = true;
             submitBtn.textContent = 'Submitting...';
+            alertBox.style.display = 'none';
 
             try {
                 const res = await fetch('/api/appointments', {
@@ -485,20 +493,31 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ patientName, phone, email, service, date, timeSlot, message, consentGiven: true, website })
                 });
-                const result = await res.json();
+                
+                let result;
+                try {
+                    result = await res.json();
+                } catch (jsonErr) {
+                    result = { success: false, message: `Server error (${res.status}). Service is temporarily initializing.` };
+                }
 
                 if (res.ok && result.success) {
                     form.reset();
                     document.getElementById('confirmationCard').style.display = 'block';
                     document.getElementById('confRefCode').textContent = result.data.referenceCode;
                     document.getElementById('confPatientName').textContent = result.data.patientName;
-                    document.getElementById('confDateTime').textContent = `${result.data.date} at ${result.data.timeSlot}`;
+                    
+                    const [y, m, d] = result.data.date.split('-').map(Number);
+                    const dateObj = new Date(y, m - 1, d);
+                    const formattedDate = dateObj.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+                    
+                    document.getElementById('confDateTime').textContent = `${formattedDate} at ${result.data.timeSlot}`;
                     document.getElementById('confService').textContent = result.data.service;
 
                     // WhatsApp confirmation link
                     const waBtn = document.getElementById('confirmWhatsappBtn');
                     if (window.CLINIC_CONFIG?.whatsappNumber && window.CLINIC_CONFIG.whatsappNumber.trim() !== '') {
-                        const waMsg = `Hello Vinayak Dental Care, I have requested an appointment.\nReference Code: ${result.data.referenceCode}\nPatient: ${result.data.patientName}\nDate: ${result.data.date} (${result.data.timeSlot})`;
+                        const waMsg = `Hello Vinayak Dental Care, I have requested an appointment.\nReference Code: ${result.data.referenceCode}\nPatient: ${result.data.patientName}\nDate: ${formattedDate} (${result.data.timeSlot})`;
                         waBtn.href = `https://wa.me/${window.CLINIC_CONFIG.whatsappNumber}?text=${encodeURIComponent(waMsg)}`;
                         waBtn.style.display = 'inline-flex';
                     } else {
@@ -510,7 +529,7 @@
                     showAlert(alertBox, result.message || 'Booking failed. Please try another slot or call us.', 'error');
                 }
             } catch (err) {
-                showAlert(alertBox, 'A connection error occurred. Please try again.', 'error');
+                showAlert(alertBox, 'Unable to reach the server. Please check your network connection and try again.', 'error');
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Request Appointment';
@@ -553,7 +572,13 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ referenceCode: code, phone: phone })
                 });
-                const result = await res.json();
+                
+                let result;
+                try {
+                    result = await res.json();
+                } catch (jsonErr) {
+                    result = { success: false, message: `Server error (${res.status}). Please try again.` };
+                }
 
                 lookupResult.style.display = 'block';
                 if (res.ok && result.success) {
@@ -562,21 +587,21 @@
                         <div style="color: var(--success); font-weight: 700; margin-bottom: 6px;">
                             <i class="fa-solid fa-circle-check"></i> Appointment Found
                         </div>
-                        <p style="margin-bottom: 4px;"><strong>Ref:</strong> ${appt.referenceCode}</p>
-                        <p style="margin-bottom: 4px;"><strong>Date:</strong> ${appt.date}</p>
-                        <p style="margin-bottom: 4px;"><strong>Time:</strong> ${appt.timeSlot}</p>
-                        <p style="margin-bottom: 0;"><strong>Status:</strong> <span style="font-weight: 700; color: var(--teal);">${appt.status}</span></p>
+                        <p style="margin-bottom: 4px;"><strong>Ref:</strong> ${esc(appt.referenceCode)}</p>
+                        <p style="margin-bottom: 4px;"><strong>Date:</strong> ${esc(appt.date)}</p>
+                        <p style="margin-bottom: 4px;"><strong>Time:</strong> ${esc(appt.timeSlot)}</p>
+                        <p style="margin-bottom: 0;"><strong>Status:</strong> <span style="font-weight: 700; color: var(--teal);">${esc(appt.status)}</span></p>
                     `;
                 } else {
                     lookupResult.innerHTML = `
                         <div style="color: var(--danger); font-weight: 600;">
-                            <i class="fa-solid fa-circle-xmark"></i> ${result.message || 'Appointment not found. Check code & phone.'}
+                            <i class="fa-solid fa-circle-xmark"></i> ${esc(result.message || 'Appointment not found. Please verify your reference code and registered mobile number.')}
                         </div>
                     `;
                 }
             } catch (err) {
                 lookupResult.style.display = 'block';
-                lookupResult.innerHTML = '<span style="color: var(--danger);">Connection error. Please try again.</span>';
+                lookupResult.innerHTML = '<span style="color: var(--danger);">Unable to connect to server. Please try again.</span>';
             } finally {
                 lookupBtn.disabled = false;
                 lookupBtn.textContent = 'Check Status';

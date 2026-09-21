@@ -280,21 +280,32 @@ const I18N_TRANSLATIONS = {
 
 class I18nManager {
   constructor() {
-    this.currentLang = localStorage.getItem('vdc_language') || 'en';
+    let saved = 'en';
+    try {
+      saved = localStorage.getItem('vdc_language') || 'en';
+    } catch (e) {
+      saved = 'en';
+    }
+    this.currentLang = saved;
     this.init();
   }
 
   init() {
     this.applyLanguage(this.currentLang);
-    this.renderLanguageSwitcher();
+    this.bindPillButtons();
+    this.updatePillUI();
   }
 
   setLanguage(lang) {
     if (!I18N_TRANSLATIONS[lang]) return;
     this.currentLang = lang;
-    localStorage.setItem('vdc_language', lang);
+    try {
+      localStorage.setItem('vdc_language', lang);
+    } catch (e) {
+      // Storage unavailable
+    }
     this.applyLanguage(lang);
-    this.updateSwitcherUI();
+    this.updatePillUI();
   }
 
   applyLanguage(lang) {
@@ -304,6 +315,9 @@ class I18nManager {
       if (dict[key]) {
         if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
           el.placeholder = dict[key];
+        } else if (dict[key].includes('<') || el.querySelector('em, strong, i')) {
+          // Keep inner HTML formatting if present
+          el.innerHTML = dict[key];
         } else {
           el.textContent = dict[key];
         }
@@ -314,33 +328,27 @@ class I18nManager {
     document.documentElement.lang = lang;
   }
 
-  renderLanguageSwitcher() {
-    const nav = document.querySelector('nav .nav-links');
-    if (!nav || document.getElementById('langSwitcher')) return;
-
-    const switcherContainer = document.createElement('div');
-    switcherContainer.id = 'langSwitcher';
-    switcherContainer.className = 'lang-switcher';
-    switcherContainer.innerHTML = `
-      <select id="langSelect" aria-label="Select Language" class="lang-select">
-        <option value="en" ${this.currentLang === 'en' ? 'selected' : ''}>English</option>
-        <option value="gu" ${this.currentLang === 'gu' ? 'selected' : ''}>ગુજરાતી</option>
-        <option value="hi" ${this.currentLang === 'hi' ? 'selected' : ''}>हिन्दी</option>
-      </select>
-    `;
-
-    nav.appendChild(switcherContainer);
-
-    document.getElementById('langSelect').addEventListener('change', (e) => {
-      this.setLanguage(e.target.value);
+  bindPillButtons() {
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const targetLang = e.currentTarget.getAttribute('data-lang');
+        if (targetLang) {
+          this.setLanguage(targetLang);
+        }
+      });
     });
   }
 
-  updateSwitcherUI() {
-    const select = document.getElementById('langSelect');
-    if (select) {
-      select.value = this.currentLang;
-    }
+  updatePillUI() {
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      if (btn.getAttribute('data-lang') === this.currentLang) {
+        btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
+      } else {
+        btn.classList.remove('active');
+        btn.setAttribute('aria-pressed', 'false');
+      }
+    });
   }
 }
 

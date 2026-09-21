@@ -381,7 +381,19 @@
 
     <!-- Dashboard Scripts -->
     <script>
-    (function () {
+    (async function () {
+        // Verify active session via /api/auth/me
+        try {
+            const meRes = await fetch('/api/auth/me');
+            if (!meRes.ok) {
+                window.location.replace('/admin/index.html');
+                return;
+            }
+        } catch (e) {
+            window.location.replace('/admin/index.html');
+            return;
+        }
+
         let currentPage = 1;
         let totalPages = 1;
         let isTodayFilterActive = false;

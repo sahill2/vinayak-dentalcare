@@ -257,16 +257,22 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name, phone, email, info, consentGiven: true, website })
           });
-          const result = await res.json();
+          
+          let result;
+          try {
+            result = await res.json();
+          } catch (jsonErr) {
+            result = { success: false, message: `Server error (${res.status}). Service is temporarily initializing.` };
+          }
 
           if (res.ok && result.success) {
-            showAlert(alertBox, result.message || 'Thank you. Your inquiry has been sent.', 'success');
+            showAlert(alertBox, result.message || 'Thank you. Your message has been sent.', 'success');
             form.reset();
           } else {
-            showAlert(alertBox, result.message || 'Unable to submit inquiry. Please try again or call the clinic.', 'error');
+            showAlert(alertBox, result.message || 'Unable to submit message. Please try again or call the clinic.', 'error');
           }
         } catch (err) {
-          showAlert(alertBox, 'A connection error occurred. Please try again.', 'error');
+          showAlert(alertBox, 'Unable to reach the server. Please check your network and try again.', 'error');
         } finally {
           if (submitBtn) {
             submitBtn.disabled = false;

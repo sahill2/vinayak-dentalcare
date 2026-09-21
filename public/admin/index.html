@@ -116,7 +116,13 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password })
                 });
-                const data = await res.json();
+                
+                let data;
+                try {
+                    data = await res.json();
+                } catch (jsonErr) {
+                    data = { success: false, message: `Server error (${res.status}). Database or server is currently initializing.` };
+                }
 
                 if (res.ok && data.success) {
                     window.location.replace('/dashboard.html');
@@ -125,7 +131,7 @@
                     alertBox.style.display = 'flex';
                 }
             } catch (err) {
-                alertBox.textContent = 'A connection error occurred. Please try again.';
+                alertBox.textContent = 'Unable to connect to server. Please check your network and try again.';
                 alertBox.style.display = 'flex';
             } finally {
                 loginBtn.disabled = false;

@@ -35,7 +35,6 @@
     const originalText = heroTitle.textContent.trim();
     heroTitle.setAttribute('aria-label', originalText);
 
-    // Parse HTML child elements like <em> while wrapping words
     const nodes = Array.from(heroTitle.childNodes);
     heroTitle.innerHTML = '';
 
@@ -48,8 +47,9 @@
           span.className = 'blur-word';
           span.setAttribute('aria-hidden', 'true');
           span.style.setProperty('--delay', `${wordIndex * 60}ms`);
-          span.textContent = word + ' ';
+          span.textContent = word;
           heroTitle.appendChild(span);
+          heroTitle.appendChild(document.createTextNode(' '));
           wordIndex++;
         });
       } else if (node.nodeType === Node.ELEMENT_NODE) {
@@ -62,11 +62,13 @@
           span.className = 'blur-word';
           span.setAttribute('aria-hidden', 'true');
           span.style.setProperty('--delay', `${wordIndex * 60}ms`);
-          span.textContent = word + ' ';
+          span.textContent = word;
           wrapper.appendChild(span);
+          wrapper.appendChild(document.createTextNode(' '));
           wordIndex++;
         });
         heroTitle.appendChild(wrapper);
+        heroTitle.appendChild(document.createTextNode(' '));
       }
     });
 
