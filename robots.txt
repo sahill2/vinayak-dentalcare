@@ -1,0 +1,8 @@
+# robots.txt for Vinayak Dental Care
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /dashboard.html
+Disallow: /api/
+
+Sitemap: https://vinayak-dentalcare.vercel.app/sitemap.xml

@@ -749,3 +749,62 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+
+/* Accessibility Focus States */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--primary-green);
+  outline-offset: 2px;
+}
+
+/* Sticky Mobile Quick Action Bar (Call & WhatsApp) */
+.mobile-bottom-bar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 60px; /* offset for sticky bar */
+  }
+
+  .mobile-bottom-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 56px;
+    background: #0F172A;
+    z-index: 999;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.15);
+  }
+
+  .mobile-bar-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: white;
+    transition: var(--transition);
+  }
+
+  .mobile-bar-btn.call-btn {
+    background: #0284C7;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .mobile-bar-btn.wa-btn {
+    background: #25D366;
+  }
+
+  .mobile-bar-btn:active {
+    filter: brightness(0.9);
+  }
+}
