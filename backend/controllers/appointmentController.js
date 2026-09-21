@@ -312,58 +312,50 @@ exports.getAvailability = async (req, res) => {
   }
 };
 
-// @desc    Patient privacy lookup by phone AND reference code (POST only)
+// @desc    Patient appointment lookup by registered phone number (POST only)
 // @route   POST /api/appointments/lookup
 // @access  Public (Rate limited)
 exports.lookupAppointment = async (req, res) => {
   try {
     const { phone, referenceCode, code } = req.body;
-    const ref = referenceCode || code;
 
-    if (!phone || !ref || typeof phone !== 'string' || typeof ref !== 'string') {
+    if (!phone || typeof phone !== 'string') {
       return res.status(404).json({
         success: false,
-        message: 'Appointment not found. Please check your phone number and reference code.'
+        message: 'Please enter your registered 10-digit mobile number.'
       });
     }
 
-    const cleanCode = ref.trim().toUpperCase();
     const cleanPhone = normalizePhone(phone);
 
-    if (cleanPhone.length !== 10) {
+    if (cleanPhone.length !== 10 || !/^[6-9]\d{9}$/.test(cleanPhone)) {
       return res.status(404).json({
         success: false,
-        message: 'Appointment not found. Please check your phone number and reference code.'
+        message: 'Please enter a valid 10-digit Indian mobile number.'
       });
     }
 
-    const appointment = await Appointment.findOne({ referenceCode: cleanCode });
+    const query = { phone: cleanPhone };
+    const ref = referenceCode || code;
+    if (ref && typeof ref === 'string' && ref.trim() !== '') {
+      query.referenceCode = ref.trim().toUpperCase();
+    }
+
+    // Find latest appointment for this phone number
+    const appointment = await Appointment.findOne(query).sort({ date: -1, createdAt: -1 });
 
     if (!appointment) {
       return res.status(404).json({
         success: false,
-        message: 'Appointment not found. Please check your phone number and reference code.'
+        message: 'No appointment found for this mobile number. Please verify your number or book a new appointment.'
       });
     }
 
-    const storedPhone = normalizePhone(appointment.phone);
-
-    // Constant-time buffer comparison to prevent timing side-channels
-    const reqBuf = Buffer.from(cleanPhone, 'utf8');
-    const storedBuf = Buffer.from(storedPhone, 'utf8');
-
-    if (reqBuf.length !== storedBuf.length || !crypto.timingSafeEqual(reqBuf, storedBuf)) {
-      return res.status(404).json({
-        success: false,
-        message: 'Appointment not found. Please check your phone number and reference code.'
-      });
-    }
-
-    // Return strictly non-PII fields
     res.status(200).json({
       success: true,
       data: {
         referenceCode: appointment.referenceCode,
+        patientName: appointment.patientName,
         status: appointment.status,
         date: appointment.date,
         timeSlot: appointment.timeSlot,

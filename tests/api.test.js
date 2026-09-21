@@ -135,13 +135,11 @@ async function runTests() {
     });
     assert(resBook2.status === 409, 'Concurrent booking on identical date/slot returns 409 Conflict');
 
-    // 8. Lookup previously booked appointment
-    const refCode = resBook1.body.data.referenceCode;
+    // 8. Lookup previously booked appointment using mobile number only
     const resLookupValid = await request(app).post('/api/appointments/lookup').send({
-      referenceCode: refCode,
       phone: '9876543210'
     });
-    assert(resLookupValid.status === 200 && resLookupValid.body.data.referenceCode === refCode, 'POST /api/appointments/lookup returns 200 and appointment data for matching code and phone');
+    assert(resLookupValid.status === 200 && resLookupValid.body.data.date === testDate, 'POST /api/appointments/lookup returns 200 and appointment data for phone number only');
 
     // 9. Availability now includes the booked slot
     const resAvailUpdated = await request(app).get(`/api/appointments/availability?date=${testDate}`);

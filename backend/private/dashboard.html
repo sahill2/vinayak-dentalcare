@@ -289,17 +289,16 @@
                 <table class="admin-table">
                     <thead>
                         <tr>
-                            <th>Ref Code</th>
                             <th>Patient Name</th>
                             <th>Contact</th>
-                            <th>Service</th>
-                            <th>Date & Slot</th>
+                            <th>Treatment</th>
+                            <th>Schedule</th>
                             <th>Status</th>
-                            <th>Actions</th>
+                            <th>Direct Patient Actions</th>
                         </tr>
                     </thead>
                     <tbody id="appointmentsTableBody">
-                        <tr><td colspan="7" style="text-align: center; padding: 30px;">Loading appointments...</td></tr>
+                        <tr><td colspan="6" style="text-align: center; padding: 30px;">Loading appointments...</td></tr>
                     </tbody>
                 </table>
 
@@ -460,27 +459,43 @@
                     document.getElementById('nextPageBtn').disabled = data.page >= data.pages;
 
                     if (data.data.length === 0) {
-                        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 30px;">No appointments found matching your filter.</td></tr>';
+                        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 30px;">No appointments found matching your filter.</td></tr>';
                         return;
                     }
 
                     tbody.innerHTML = data.data.map(a => {
                         const statusClass = a.status.toLowerCase().replace(' ', '');
+                        const isPending = a.status === 'Pending Approval';
                         return `
                             <tr>
-                                <td><strong style="color: var(--teal);">${esc(a.referenceCode || 'VDC-' + a.id)}</strong></td>
-                                <td>${esc(a.patientName)}</td>
-                                <td>${esc(a.phone)}<br><small style="color: var(--muted);">${esc(a.email || '-')}</small></td>
+                                <td><strong>${esc(a.patientName)}</strong></td>
+                                <td>
+                                    <a href="tel:${esc(a.phone)}" style="font-weight: 600; color: var(--ink); text-decoration: none;" title="Call Patient">
+                                        <i class="fa-solid fa-phone" style="color: var(--teal); font-size: 0.8rem;"></i> ${esc(a.phone)}
+                                    </a>
+                                    <br><small style="color: var(--muted);">${esc(a.email || '-')}</small>
+                                </td>
                                 <td>${esc(a.service)}</td>
                                 <td><strong>${esc(a.date)}</strong><br><small>${esc(a.timeSlot)}</small></td>
                                 <td><span class="status-badge ${statusClass}">${esc(a.status)}</span></td>
                                 <td>
-                                    <select class="form-control" style="padding: 6px 10px; font-size: 0.8125rem; width: auto;" onchange="window.updateStatus(${a.id}, this.value)">
-                                        <option value="">Update...</option>
-                                        <option value="Confirmed">Confirm</option>
-                                        <option value="Completed">Complete</option>
-                                        <option value="Cancelled">Cancel</option>
-                                    </select>
+                                    <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+                                        ${isPending ? `
+                                            <button class="btn btn-primary btn-sm" style="padding: 6px 12px; font-size: 0.8rem; background-color: #059669;" onclick="window.confirmAndNotify(${a.id})" title="Confirm Appointment">
+                                                <i class="fa-solid fa-check"></i> Confirm
+                                            </button>
+                                        ` : ''}
+                                        <button class="btn btn-whatsapp btn-sm" style="padding: 6px 10px; font-size: 0.8rem;" onclick="window.openWhatsAppMsg(${a.id})" title="Send Direct WhatsApp Update">
+                                            <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                                        </button>
+                                        <select class="form-control" style="padding: 5px 8px; font-size: 0.8rem; width: auto; height: 32px;" onchange="window.updateStatus(${a.id}, this.value)">
+                                            <option value="">Status...</option>
+                                            <option value="Confirmed" ${a.status === 'Confirmed' ? 'disabled' : ''}>Confirm</option>
+                                            <option value="Completed" ${a.status === 'Completed' ? 'disabled' : ''}>Complete</option>
+                                            <option value="Cancelled" ${a.status === 'Cancelled' ? 'disabled' : ''}>Cancel</option>
+                                            <option value="Rescheduled" ${a.status === 'Rescheduled' ? 'disabled' : ''}>Reschedule</option>
+                                        </select>
+                                    </div>
                                 </td>
                             </tr>
                         `;
@@ -497,7 +512,48 @@
                     document.getElementById('statConfirmed').textContent = confirmedCount;
                 }
             } catch (err) {
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--danger); padding: 30px;">Failed to load appointments.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--danger); padding: 30px;">Failed to load appointments.</td></tr>';
+            }
+        };
+
+        // Open Direct WhatsApp Message to Patient
+        window.openWhatsAppMsg = (id) => {
+            const a = allAppointmentsList.find(item => item.id === id);
+            if (!a) return;
+            const cleanPhone = a.phone.replace(/\D/g, '');
+            const phoneWithCountry = cleanPhone.length === 10 ? '91' + cleanPhone : cleanPhone;
+            
+            let msg = '';
+            if (a.status === 'Confirmed') {
+                msg = `Hello ${a.patientName}, your dental appointment at Vinayak Dental Care for *${a.service}* on *${a.date}* at *${a.timeSlot}* is *CONFIRMED*.\n\n📍 Clinic Address: B-10 Laxmipooja Complex, Near Bandhan Hotel, Kapadvanj.\n📞 For directions or questions, please reply to this message. See you soon!`;
+            } else if (a.status === 'Cancelled') {
+                msg = `Hello ${a.patientName}, your appointment request at Vinayak Dental Care for *${a.service}* on *${a.date}* has been *CANCELLED*. If you would like to reschedule, please visit our website or reply to this message.`;
+            } else if (a.status === 'Rescheduled') {
+                msg = `Hello ${a.patientName}, your appointment at Vinayak Dental Care has been *RESCHEDULED* to *${a.date}* at *${a.timeSlot}* for *${a.service}*.\n\n📍 Clinic Address: B-10 Laxmipooja Complex, Kapadvanj. Please let us know if this time works for you!`;
+            } else {
+                msg = `Hello ${a.patientName}, regarding your appointment request at Vinayak Dental Care for *${a.service}* on *${a.date}* at *${a.timeSlot}*:\nStatus: *${a.status}*.\n\nFeel free to contact us if you need any assistance!`;
+            }
+
+            const url = `https://wa.me/${phoneWithCountry}?text=${encodeURIComponent(msg)}`;
+            window.open(url, '_blank');
+        };
+
+        // 1-Click Quick Confirm and WhatsApp Notification Prompt
+        window.confirmAndNotify = async (id) => {
+            try {
+                const res = await fetch(`/api/appointments/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: 'Confirmed' })
+                });
+                if (res.ok) {
+                    await loadAppointments();
+                    if (confirm('Appointment marked as Confirmed! Would you like to open WhatsApp to send confirmation directly to the patient?')) {
+                        window.openWhatsAppMsg(id);
+                    }
+                }
+            } catch (e) {
+                alert('Failed to update status');
             }
         };
 
@@ -510,7 +566,10 @@
                     body: JSON.stringify({ status })
                 });
                 if (res.ok) {
-                    loadAppointments();
+                    await loadAppointments();
+                    if (confirm(`Appointment marked as ${status}! Would you like to open WhatsApp to message the patient?`)) {
+                        window.openWhatsAppMsg(id);
+                    }
                 }
             } catch (e) {
                 alert('Failed to update status');

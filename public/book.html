@@ -159,20 +159,13 @@
                         <i class="fa-solid fa-circle-check"></i>
                     </div>
                     <h2 class="card-title" style="margin-bottom: 8px;" data-i18n="conf_title">Appointment Request Submitted!</h2>
-                    <p data-i18n="conf_subtitle" style="margin-bottom: 16px;">
-                        Please save your appointment reference code below.
+                    <p style="margin-bottom: 20px; color: var(--text);">
+                        We have received your appointment request. You can check your live status anytime using your registered mobile number: <strong id="confPatientPhone">-</strong>
                     </p>
-                    
-                    <div class="ref-badge" id="confRefCode">VDC-XXXXXX</div>
-                    
-                    <div style="margin-top: 12px; margin-bottom: 24px;">
-                        <button id="copyRefBtn" class="btn btn-secondary btn-sm" type="button">
-                            <i class="fa-regular fa-copy"></i> <span data-i18n="btn_copy_code">Copy Code</span>
-                        </button>
-                    </div>
 
                     <div style="background-color: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-md); padding: 20px; max-width: 480px; margin: 0 auto 24px auto; text-align: left;">
                         <p style="margin-bottom: 8px;"><strong>Patient:</strong> <span id="confPatientName">-</span></p>
+                        <p style="margin-bottom: 8px;"><strong>Registered Mobile:</strong> <span id="confPhoneDisplay">-</span></p>
                         <p style="margin-bottom: 8px;"><strong>Date & Time:</strong> <span id="confDateTime">-</span></p>
                         <p style="margin-bottom: 8px;"><strong>Treatment:</strong> <span id="confService">-</span></p>
                         <p style="margin-bottom: 0;"><strong>Status:</strong> <span style="color: #D97706; font-weight: 600;">Pending Approval</span></p>
@@ -257,7 +250,7 @@
                         </form>
                     </div>
 
-                    <!-- Right Column: Sticky Helper Card & Privacy Status Tracker -->
+                    <!-- Right Column: Sticky Helper Card & Phone Status Tracker -->
                     <div>
                         <div class="booking-helper-card">
                             <h3 class="card-title" style="font-size: 1.25rem; margin-bottom: 16px;" data-i18n="how_booking_works">How Booking Works</h3>
@@ -268,27 +261,27 @@
                                 </li>
                                 <li style="margin-bottom: 12px; font-size: 0.9375rem; display: flex; gap: 10px;">
                                     <span style="font-weight: 700; color: var(--teal);">2.</span>
-                                    <span>Receive your unique <strong>VDC-XXXXXX</strong> reference code.</span>
+                                    <span>Our clinic reviews and confirms your scheduled visit.</span>
                                 </li>
                                 <li style="margin-bottom: 0; font-size: 0.9375rem; display: flex; gap: 10px;">
                                     <span style="font-weight: 700; color: var(--teal);">3.</span>
-                                    <span>Our clinic reviews and confirms your scheduled visit.</span>
+                                    <span>Track your appointment anytime using your <strong>mobile number</strong>.</span>
                                 </li>
                             </ul>
 
                             <hr style="border: 0; border-top: 1px solid var(--line); margin: 20px 0;">
 
-                            <!-- Privacy Status Lookup -->
-                            <h3 class="card-title" style="font-size: 1.15rem; margin-bottom: 12px;" data-i18n="track_appointment_title">Track Your Appointment</h3>
+                            <!-- Phone Status Lookup -->
+                            <h3 class="card-title" style="font-size: 1.15rem; margin-bottom: 6px;" data-i18n="track_appointment_title">Track Your Appointment</h3>
+                            <p style="font-size: 0.8125rem; color: var(--muted); margin-bottom: 12px;">
+                                Enter your registered mobile number to check live appointment status:
+                            </p>
                             <form id="lookupForm" novalidate>
-                                <div class="form-group" style="margin-bottom: 12px;">
-                                    <input type="text" id="lookupCode" class="form-control" required placeholder="Reference Code (e.g. VDC-YCCEF3)" style="padding: 10px 14px; font-size: 0.9rem; text-transform: uppercase;">
-                                </div>
                                 <div class="form-group" style="margin-bottom: 14px;">
-                                    <input type="tel" id="lookupPhone" class="form-control" required pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10-digit Phone Number" style="padding: 10px 14px; font-size: 0.9rem;">
+                                    <input type="tel" id="lookupPhone" class="form-control" required pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10-digit Mobile Number" style="padding: 10px 14px; font-size: 0.95rem;">
                                 </div>
                                 <button type="submit" id="lookupBtn" class="btn btn-secondary btn-sm" style="width: 100%;" data-i18n="btn_check_status">
-                                    Check Status
+                                    <i class="fa-solid fa-magnifying-glass"></i> Check Status
                                 </button>
                             </form>
 
@@ -504,8 +497,9 @@
                 if (res.ok && result.success) {
                     form.reset();
                     document.getElementById('confirmationCard').style.display = 'block';
-                    document.getElementById('confRefCode').textContent = result.data.referenceCode;
                     document.getElementById('confPatientName').textContent = result.data.patientName;
+                    document.getElementById('confPatientPhone').textContent = phone;
+                    document.getElementById('confPhoneDisplay').textContent = phone;
                     
                     const [y, m, d] = result.data.date.split('-').map(Number);
                     const dateObj = new Date(y, m - 1, d);
@@ -517,7 +511,7 @@
                     // WhatsApp confirmation link
                     const waBtn = document.getElementById('confirmWhatsappBtn');
                     if (window.CLINIC_CONFIG?.whatsappNumber && window.CLINIC_CONFIG.whatsappNumber.trim() !== '') {
-                        const waMsg = `Hello Vinayak Dental Care, I have requested an appointment.\nReference Code: ${result.data.referenceCode}\nPatient: ${result.data.patientName}\nDate: ${formattedDate} (${result.data.timeSlot})`;
+                        const waMsg = `Hello Vinayak Dental Care, I have requested an appointment.\nPatient: ${result.data.patientName}\nMobile: ${phone}\nDate: ${formattedDate} (${result.data.timeSlot})`;
                         waBtn.href = `https://wa.me/${window.CLINIC_CONFIG.whatsappNumber}?text=${encodeURIComponent(waMsg)}`;
                         waBtn.style.display = 'inline-flex';
                     } else {
@@ -536,41 +530,26 @@
             }
         });
 
-        // Copy Reference Code Button
-        const copyBtn = document.getElementById('copyRefBtn');
-        if (copyBtn) {
-            copyBtn.addEventListener('click', () => {
-                const code = document.getElementById('confRefCode').textContent;
-                navigator.clipboard.writeText(code).then(() => {
-                    copyBtn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
-                    setTimeout(() => {
-                        copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy Code';
-                    }, 2500);
-                });
-            });
-        }
-
-        // Status Lookup Handler (POST only)
+        // Phone Status Lookup Handler (POST only by mobile number)
         const lookupForm = document.getElementById('lookupForm');
         const lookupResult = document.getElementById('lookupResult');
         const lookupBtn = document.getElementById('lookupBtn');
 
         lookupForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const code = document.getElementById('lookupCode').value.trim();
             const phone = document.getElementById('lookupPhone').value.trim();
 
-            if (!code || !phone) return;
+            if (!phone) return;
 
             lookupBtn.disabled = true;
-            lookupBtn.textContent = 'Checking...';
+            lookupBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Checking...';
             lookupResult.style.display = 'none';
 
             try {
                 const res = await fetch('/api/appointments/lookup', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ referenceCode: code, phone: phone })
+                    body: JSON.stringify({ phone })
                 });
                 
                 let result;
@@ -583,19 +562,21 @@
                 lookupResult.style.display = 'block';
                 if (res.ok && result.success) {
                     const appt = result.data;
+                    const statusColor = appt.status === 'Confirmed' ? 'var(--teal)' : (appt.status === 'Cancelled' ? 'var(--danger)' : '#D97706');
                     lookupResult.innerHTML = `
-                        <div style="color: var(--success); font-weight: 700; margin-bottom: 6px;">
+                        <div style="color: var(--success); font-weight: 700; margin-bottom: 8px;">
                             <i class="fa-solid fa-circle-check"></i> Appointment Found
                         </div>
-                        <p style="margin-bottom: 4px;"><strong>Ref:</strong> ${esc(appt.referenceCode)}</p>
+                        <p style="margin-bottom: 4px;"><strong>Patient:</strong> ${esc(appt.patientName)}</p>
+                        <p style="margin-bottom: 4px;"><strong>Treatment:</strong> ${esc(appt.service)}</p>
                         <p style="margin-bottom: 4px;"><strong>Date:</strong> ${esc(appt.date)}</p>
                         <p style="margin-bottom: 4px;"><strong>Time:</strong> ${esc(appt.timeSlot)}</p>
-                        <p style="margin-bottom: 0;"><strong>Status:</strong> <span style="font-weight: 700; color: var(--teal);">${esc(appt.status)}</span></p>
+                        <p style="margin-bottom: 0;"><strong>Status:</strong> <span style="font-weight: 700; color: ${statusColor};">${esc(appt.status)}</span></p>
                     `;
                 } else {
                     lookupResult.innerHTML = `
                         <div style="color: var(--danger); font-weight: 600;">
-                            <i class="fa-solid fa-circle-xmark"></i> ${esc(result.message || 'Appointment not found. Please verify your reference code and registered mobile number.')}
+                            <i class="fa-solid fa-circle-xmark"></i> ${esc(result.message || 'No active appointment found for this mobile number.')}
                         </div>
                     `;
                 }
@@ -604,7 +585,7 @@
                 lookupResult.innerHTML = '<span style="color: var(--danger);">Unable to connect to server. Please try again.</span>';
             } finally {
                 lookupBtn.disabled = false;
-                lookupBtn.textContent = 'Check Status';
+                lookupBtn.innerHTML = '<i class="fa-solid fa-magnifying-glass"></i> Check Status';
             }
         });
 
