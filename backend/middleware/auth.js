@@ -16,7 +16,7 @@ const protect = (req, res, next) => {
     if (isApiRequest) {
       return res.status(401).json({ success: false, message: 'Not authorized, token missing' });
     } else {
-      return res.redirect('/admin/index.html');
+      return res.redirect(302, '/admin/index.html');
     }
   }
 
@@ -31,7 +31,7 @@ const protect = (req, res, next) => {
     } else {
       // Clear cookie if invalid to avoid infinite loops
       res.clearCookie('token');
-      return res.redirect('/admin/index.html');
+      return res.redirect(302, '/admin/index.html');
     }
   }
 };

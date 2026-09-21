@@ -1,5 +1,11 @@
 {
   "version": 2,
+  "outputDirectory": "public",
+  "functions": {
+    "api/index.js": {
+      "includeFiles": "backend/private/**"
+    }
+  },
   "rewrites": [
     {
       "source": "/api/(.*)",

@@ -12,7 +12,7 @@ const generateToken = (res, adminId, email) => {
   // Set HTTP-only secure cookie
   res.cookie('token', token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production', // true in production
+    secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
     maxAge: 2 * 60 * 60 * 1000 // 2 hours
   });
@@ -44,7 +44,8 @@ exports.login = async (req, res) => {
       message: 'Admin authentication successful'
     });
   } catch (error) {
-    res.status(500).json({ success: false, message: `Server error: ${error.message}` });
+    console.error(`[AUTH LOGIN ERROR] ${error.stack || error.message}`);
+    res.status(500).json({ success: false, message: 'An internal error occurred during login. Please try again later.' });
   }
 };
 
@@ -64,7 +65,8 @@ exports.logout = async (req, res) => {
       message: 'Logged out successfully'
     });
   } catch (error) {
-    res.status(500).json({ success: false, message: `Server error: ${error.message}` });
+    console.error(`[AUTH LOGOUT ERROR] ${error.stack || error.message}`);
+    res.status(500).json({ success: false, message: 'Failed to complete logout. Please try again.' });
   }
 };
 
@@ -109,6 +111,7 @@ exports.changeCredentials = async (req, res) => {
       message: 'Credentials updated successfully'
     });
   } catch (error) {
-    res.status(500).json({ success: false, message: `Server error: ${error.message}` });
+    console.error(`[AUTH CREDENTIALS ERROR] ${error.stack || error.message}`);
+    res.status(500).json({ success: false, message: 'Failed to update credentials. Please try again later.' });
   }
 };

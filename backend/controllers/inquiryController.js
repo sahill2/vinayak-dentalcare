@@ -28,7 +28,8 @@ exports.createInquiry = async (req, res) => {
       data: newInquiry
     });
   } catch (error) {
-    res.status(500).json({ success: false, message: `Server error: ${error.message}` });
+    console.error(`[INQUIRY CREATE ERROR] ${error.stack || error.message}`);
+    res.status(500).json({ success: false, message: 'Failed to submit inquiry. Please try again later.' });
   }
 };
 
@@ -45,7 +46,8 @@ exports.getInquiries = async (req, res) => {
       data: inquiries
     });
   } catch (error) {
-    res.status(500).json({ success: false, message: `Server error: ${error.message}` });
+    console.error(`[INQUIRY GET ERROR] ${error.stack || error.message}`);
+    res.status(500).json({ success: false, message: 'Failed to fetch inquiries. Please try again later.' });
   }
 };
 
@@ -65,6 +67,7 @@ exports.deleteInquiry = async (req, res) => {
       message: 'Inquiry deleted successfully'
     });
   } catch (error) {
-    res.status(500).json({ success: false, message: `Server error: ${error.message}` });
+    console.error(`[INQUIRY DELETE ERROR] ${error.stack || error.message}`);
+    res.status(500).json({ success: false, message: 'Failed to delete inquiry.' });
   }
 };
