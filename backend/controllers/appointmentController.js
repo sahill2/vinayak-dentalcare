@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const Appointment = require('../models/Appointment');
+const ActivityLog = require('../models/ActivityLog');
 const { sendStatusEmail } = require('../services/emailService');
 
 // Normalize Indian phone numbers to last 10 digits for consistent comparison
@@ -82,6 +83,13 @@ exports.createAppointment = async (req, res) => {
 
     await newAppointment.save();
 
+    // Log Activity
+    ActivityLog.create({
+      action: 'Appointment Requested',
+      details: `New booking [${newAppointment.referenceCode}] received from ${newAppointment.patientName} for ${newAppointment.date} at ${newAppointment.timeSlot}.`,
+      performedBy: 'Patient'
+    }).catch(err => console.warn(`Failed to log activity: ${err.message}`));
+
     // Trigger optional email notification safely in background without blocking response
     if (newAppointment.email) {
       sendStatusEmail(newAppointment, 'Pending Approval').catch((err) => {
@@ -152,7 +160,6 @@ exports.lookupAppointment = async (req, res) => {
     }
 
     // Privacy protection: Return ONLY status, date, timeSlot, service, referenceCode
-    // NEVER return patient name, email, notes or other details
     res.status(200).json({
       success: true,
       data: {
@@ -199,7 +206,7 @@ exports.getAppointments = async (req, res) => {
     }
 
     const pageNum = parseInt(page, 10) || 1;
-    const limitNum = parseInt(limit, 10) || 1000; // default large for single page view or paginated
+    const limitNum = parseInt(limit, 10) || 20; // 20 items per page
     const skip = (pageNum - 1) * limitNum;
 
     const total = await Appointment.countDocuments(query);
@@ -295,6 +302,17 @@ exports.updateAppointment = async (req, res) => {
 
     await appointment.save();
 
+    // Log admin action to ActivityLog
+    const actionDesc = isRescheduled
+      ? `Rescheduled appointment [${appointment.referenceCode}] to ${appointment.date} at ${appointment.timeSlot}`
+      : `Changed status of [${appointment.referenceCode}] from "${oldStatus}" to "${appointment.status}"`;
+
+    ActivityLog.create({
+      action: isRescheduled ? 'Appointment Rescheduled' : 'Status Updated',
+      details: actionDesc,
+      performedBy: req.admin?.email || 'Admin'
+    }).catch(err => console.warn(`Failed to log activity: ${err.message}`));
+
     // Trigger email alerts safely if status or schedule changed
     if (appointment.email && (appointment.status !== oldStatus || isRescheduled)) {
       sendStatusEmail(appointment, appointment.status).catch((err) => {
@@ -329,9 +347,35 @@ exports.deleteAppointment = async (req, res) => {
       return res.status(404).json({ success: false, message: 'Appointment not found' });
     }
 
+    // Log deletion
+    ActivityLog.create({
+      action: 'Appointment Deleted',
+      details: `Deleted appointment [${appointment.referenceCode}] (#${appointment.id}) for patient ${appointment.patientName}.`,
+      performedBy: req.admin?.email || 'Admin'
+    }).catch(err => console.warn(`Failed to log activity: ${err.message}`));
+
     res.status(200).json({
       success: true,
       message: 'Appointment deleted successfully'
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: `Server error: ${error.message}` });
+  }
+};
+
+// @desc    Get activity logs
+// @route   GET /api/appointments/activity/logs
+// @access  Private (Admin)
+exports.getActivityLogs = async (req, res) => {
+  try {
+    const logs = await ActivityLog.find({})
+      .sort({ createdAt: -1 })
+      .limit(50);
+
+    res.status(200).json({
+      success: true,
+      count: logs.length,
+      data: logs
     });
   } catch (error) {
     res.status(500).json({ success: false, message: `Server error: ${error.message}` });

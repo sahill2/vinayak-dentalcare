@@ -7,7 +7,8 @@ const {
   getAppointments,
   getAppointmentById,
   updateAppointment,
-  deleteAppointment
+  deleteAppointment,
+  getActivityLogs
 } = require('../controllers/appointmentController');
 const { protect } = require('../middleware/auth');
 const { validateAppointmentInput } = require('../middleware/validator');
@@ -42,6 +43,7 @@ router.post('/lookup', lookupLimiter, lookupAppointment);
 router.get('/lookup', lookupLimiter, lookupAppointment);
 
 // Private routes (Admin protected)
+router.get('/activity/logs', protect, getActivityLogs);
 router.get('/', protect, getAppointments);
 router.get('/:id', protect, getAppointmentById);
 router.put('/:id', protect, updateAppointment);
