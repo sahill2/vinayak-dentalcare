@@ -567,6 +567,16 @@
             }
         }
 
+        function escapeHtml(str) {
+            if (str === null || str === undefined) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
         function renderDashboard() {
             const tbody = document.getElementById('tableBody');
             const table = document.getElementById('appointmentsTable');
@@ -586,32 +596,48 @@
 
                 appointments.forEach(app => {
                     if (app.status === 'Pending Approval') pendingCount++;
-                    if (app.status === 'Approved') approvedCount++;
+                    if (app.status === 'Approved' || app.status === 'Confirmed') approvedCount++;
 
                     let badgeClass = 'pending';
-                    if (app.status === 'Approved') badgeClass = 'approved';
-                    if (app.status === 'Rejected') badgeClass = 'rejected';
+                    if (app.status === 'Approved' || app.status === 'Confirmed') badgeClass = 'approved';
+                    if (app.status === 'Rejected' || app.status === 'Cancelled') badgeClass = 'rejected';
+
+                    const safeId = escapeHtml(app.id);
+                    const safeRef = escapeHtml(app.referenceCode || `VDC-${app.id}`);
+                    const safeName = escapeHtml(app.patientName);
+                    const safeReqDate = escapeHtml(app.requestDate);
+                    const safePhone = escapeHtml(app.phone);
+                    const safeEmail = escapeHtml(app.email || 'N/A');
+                    const safeDate = escapeHtml(app.date);
+                    const safeTime = escapeHtml(app.timeSlot);
+                    const safeService = escapeHtml(app.service || 'General Dental Checkup');
+                    const safeMsg = escapeHtml(app.message || 'No notes provided');
+                    const safeStatus = escapeHtml(app.status);
 
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
-                        <td><span style="font-family: monospace; font-size: 0.85rem; background: #F1F5F9; padding: 2px 5px; border-radius: 4px;">#${app.id}</span></td>
                         <td>
-                            <strong>${app.patientName}</strong><br>
-                            <span style="font-size: 0.8rem; color: #64748B;">Req: ${app.requestDate}</span>
+                            <span style="font-family: monospace; font-weight: 700; font-size: 0.85rem; background: #0F172A; color: #38BDF8; padding: 3px 8px; border-radius: 4px; display: inline-block; margin-bottom: 3px;">${safeRef}</span><br>
+                            <span style="font-size: 0.75rem; color: #94A3B8;">#${safeId}</span>
                         </td>
                         <td>
-                            <i class="fa-solid fa-phone" style="font-size: 0.8rem; width: 15px;"></i> ${app.phone}<br>
-                            <i class="fa-solid fa-envelope" style="font-size: 0.8rem; width: 15px;"></i> ${app.email}
+                            <strong>${safeName}</strong><br>
+                            <span style="font-size: 0.8rem; color: #64748B;">Req: ${safeReqDate}</span>
                         </td>
                         <td>
-                            <i class="fa-regular fa-calendar"></i> ${app.date}<br>
-                            <i class="fa-regular fa-clock"></i> ${app.timeSlot}
-                        </td>
-                        <td style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${app.message}">
-                            ${app.message}
+                            <i class="fa-solid fa-phone" style="font-size: 0.8rem; width: 15px;"></i> ${safePhone}<br>
+                            <i class="fa-solid fa-envelope" style="font-size: 0.8rem; width: 15px;"></i> ${safeEmail}
                         </td>
                         <td>
-                            <span class="status ${badgeClass}">${app.status}</span>
+                            <i class="fa-regular fa-calendar"></i> ${safeDate}<br>
+                            <i class="fa-regular fa-clock"></i> ${safeTime}<br>
+                            <span style="font-size: 0.8rem; color: var(--primary-green); font-weight: 500;">${safeService}</span>
+                        </td>
+                        <td style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${safeMsg}">
+                            ${safeMsg}
+                        </td>
+                        <td>
+                            <span class="status ${badgeClass}">${safeStatus}</span>
                         </td>
                         <td>
                             <div class="action-btns">
@@ -624,11 +650,9 @@
                                 <button class="action-btn" style="background:#3B82F6;" title="Reschedule" onclick="openEditModal(${app.id})">
                                     <i class="fa-solid fa-calendar-week"></i>
                                 </button>
-                                ${app.status === 'Rejected' ? `
                                 <button class="action-btn delete-btn" style="background:#64748B;" title="Delete" onclick="deleteAppointment(${app.id})">
                                     <i class="fa-solid fa-trash"></i>
                                 </button>
-                                ` : ''}
                             </div>
                         </td>
                     `;
@@ -854,16 +878,23 @@
                 emptyState.style.display = 'none';
 
                 inquiries.forEach(inq => {
+                    const safeDate = escapeHtml(inq.date || inq.createdAt || 'Recent');
+                    const safeName = escapeHtml(inq.name);
+                    const safePhone = escapeHtml(inq.phone);
+                    const safeEmail = escapeHtml(inq.email);
+                    const safeSource = escapeHtml(inq.source || 'Website');
+                    const safeInfo = escapeHtml(inq.info);
+
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
-                        <td><span style="font-size: 0.85rem; color: #64748B;">${inq.date}</span></td>
-                        <td><strong>${inq.name}</strong></td>
+                        <td><span style="font-size: 0.85rem; color: #64748B;">${safeDate}</span></td>
+                        <td><strong>${safeName}</strong></td>
                         <td>
-                            <i class="fa-solid fa-phone" style="font-size: 0.8rem;"></i> ${inq.phone}<br>
-                            ${inq.email !== 'N/A' ? `<i class="fa-solid fa-envelope" style="font-size: 0.8rem;"></i> ${inq.email}` : ''}
+                            <i class="fa-solid fa-phone" style="font-size: 0.8rem;"></i> ${safePhone}<br>
+                            ${safeEmail !== 'N/A' && safeEmail !== '' ? `<i class="fa-solid fa-envelope" style="font-size: 0.8rem;"></i> ${safeEmail}` : ''}
                         </td>
-                        <td><span style="background: #F1F5F9; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;">${inq.source}</span></td>
-                        <td style="max-width: 250px; text-wrap: wrap;">${inq.info}</td>
+                        <td><span style="background: #F1F5F9; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;">${safeSource}</span></td>
+                        <td style="max-width: 250px; text-wrap: wrap;">${safeInfo}</td>
                         <td>
                             <button class="action-btn delete-btn" title="Delete Inquiry" onclick="deleteInquiry(${inq.id})">
                                 <i class="fa-solid fa-trash"></i>

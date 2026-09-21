@@ -10,6 +10,7 @@ const {
   deleteAppointment
 } = require('../controllers/appointmentController');
 const { protect } = require('../middleware/auth');
+const { validateAppointmentInput } = require('../middleware/validator');
 
 // Strict rate limiter for public appointment status lookup (10 requests per 15 min per IP)
 const lookupLimiter = rateLimit({
@@ -23,8 +24,20 @@ const lookupLimiter = rateLimit({
   legacyHeaders: false
 });
 
+// Rate limiter for appointment creation (20 requests per hour per IP)
+const bookingLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: 20,
+  message: {
+    success: false,
+    message: 'Too many booking requests from this IP. Please try again later or call the clinic.'
+  },
+  standardHeaders: true,
+  legacyHeaders: false
+});
+
 // Public routes
-router.post('/', createAppointment);
+router.post('/', bookingLimiter, validateAppointmentInput, createAppointment);
 router.post('/lookup', lookupLimiter, lookupAppointment);
 router.get('/lookup', lookupLimiter, lookupAppointment);
 
