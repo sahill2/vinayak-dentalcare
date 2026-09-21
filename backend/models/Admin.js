@@ -16,7 +16,19 @@ const adminSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, 'Please provide a password'],
-    minlength: 6
+    minlength: 10
+  },
+  tokenVersion: {
+    type: Number,
+    default: 0
+  },
+  failedLoginAttempts: {
+    type: Number,
+    default: 0
+  },
+  lockUntil: {
+    type: Date,
+    default: null
   }
 }, {
   timestamps: true
@@ -39,6 +51,11 @@ adminSchema.pre('save', async function (next) {
 // Instance method to compare password
 adminSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
+};
+
+// Check if account is currently locked
+adminSchema.methods.isLocked = function () {
+  return !!(this.lockUntil && this.lockUntil > Date.now());
 };
 
 module.exports = mongoose.model('Admin', adminSchema);

@@ -1,22 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const rateLimit = require('express-rate-limit');
 const { createInquiry, getInquiries, deleteInquiry } = require('../controllers/inquiryController');
 const { protect } = require('../middleware/auth');
-const { validateInquiryInput } = require('../middleware/validator');
+const { mongoRateLimit, checkHoneypot } = require('../middleware/rateLimiter');
 
-const inquiryLimiter = rateLimit({
-  windowMs: 60 * 60 * 1000,
-  max: 20,
-  message: {
-    success: false,
-    message: 'Too many inquiries submitted from this IP. Please call or WhatsApp us directly.'
-  },
-  standardHeaders: true,
-  legacyHeaders: false
+// Rate limiting: POST /api/inquiries: 5 / hour per IP
+const inquiryLimiter = mongoRateLimit({
+  prefix: 'inquiry_ip',
+  max: 5,
+  windowSec: 60 * 60,
+  message: 'You have submitted multiple inquiries. Please wait a bit before sending another message or call the clinic.'
 });
 
-router.post('/', inquiryLimiter, validateInquiryInput, createInquiry);
+// Public route with rate limiting and honeypot check
+router.post('/', inquiryLimiter, checkHoneypot, createInquiry);
+
+// Private routes (Admin protected)
 router.get('/', protect, getInquiries);
 router.delete('/:id', protect, deleteInquiry);
 

@@ -1,9 +1,43 @@
 const crypto = require('crypto');
+const { z } = require('zod');
 const Appointment = require('../models/Appointment');
 const ActivityLog = require('../models/ActivityLog');
 const { sendStatusEmail } = require('../services/emailService');
+const { ALLOWED_SERVICES, ALLOWED_TIME_SLOTS, SLOT_START_TIMES } = require('../config/clinic');
 
-// Normalize Indian phone numbers to last 10 digits for consistent comparison
+// Unambiguous alphabet (32 chars, no 0, O, 1, I)
+const REF_ALPHABET = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
+
+// Generate 6-char random alphanumeric reference code like VDC-A7K92M
+const generateReferenceCode = async () => {
+  for (let attempt = 0; attempt < 15; attempt++) {
+    let codeBody = '';
+    for (let i = 0; i < 6; i++) {
+      const randIndex = crypto.randomInt(0, REF_ALPHABET.length);
+      codeBody += REF_ALPHABET[randIndex];
+    }
+    const code = `VDC-${codeBody}`;
+    const existing = await Appointment.findOne({ referenceCode: code });
+    if (!existing) {
+      return code;
+    }
+  }
+  throw new Error('Failed to generate unique reference code after multiple attempts.');
+};
+
+// Generate collision-safe numeric ID
+const generateNumericId = async () => {
+  for (let i = 0; i < 10; i++) {
+    const candidate = Date.now() + crypto.randomInt(100, 999);
+    const existing = await Appointment.findOne({ id: candidate });
+    if (!existing) {
+      return candidate;
+    }
+  }
+  return Date.now();
+};
+
+// Normalize Indian phone number to last 10 digits
 const normalizePhone = (phoneStr) => {
   if (!phoneStr) return '';
   const digits = String(phoneStr).replace(/\D/g, '');
@@ -13,48 +47,157 @@ const normalizePhone = (phoneStr) => {
   return digits;
 };
 
-// Generate a random human-friendly reference code like VDC-4821
-const generateReferenceCode = async () => {
-  for (let i = 0; i < 10; i++) {
-    const num = Math.floor(1000 + Math.random() * 9000);
-    const code = `VDC-${num}`;
-    const existing = await Appointment.findOne({ referenceCode: code });
-    if (!existing) {
-      return code;
-    }
-  }
-  // Fallback with timestamp digits
-  return `VDC-${Date.now().toString().slice(-4)}`;
+// Helper to get current Date in Asia/Kolkata timezone
+const getNowKolkata = () => {
+  const str = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+  return new Date(str);
 };
+
+// Helper to format Date object to YYYY-MM-DD
+const formatDateStr = (d) => {
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
+// Validate booking date in Asia/Kolkata
+const validateBookingDate = (dateStr) => {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+    return { valid: false, message: 'Date must be in YYYY-MM-DD format.' };
+  }
+
+  const [year, month, day] = dateStr.split('-').map(Number);
+  const targetDate = new Date(year, month - 1, day);
+
+  // Check valid calendar date
+  if (targetDate.getFullYear() !== year || targetDate.getMonth() !== month - 1 || targetDate.getDate() !== day) {
+    return { valid: false, message: 'Invalid calendar date.' };
+  }
+
+  const nowKolkata = getNowKolkata();
+  const todayStr = formatDateStr(nowKolkata);
+
+  // Past date check
+  if (dateStr < todayStr) {
+    return { valid: false, message: 'Appointment date cannot be in the past.' };
+  }
+
+  // Sunday check (0 is Sunday)
+  if (targetDate.getDay() === 0) {
+    return { valid: false, message: 'Clinic is closed on Sundays. Please select Monday through Saturday.' };
+  }
+
+  // Max 60 days ahead
+  const maxDate = new Date(nowKolkata.getTime() + 60 * 24 * 60 * 60 * 1000);
+  const maxDateStr = formatDateStr(maxDate);
+  if (dateStr > maxDateStr) {
+    return { valid: false, message: 'Appointments can only be booked up to 60 days in advance.' };
+  }
+
+  return { valid: true };
+};
+
+// Check if slot has already passed for today
+const isSlotInPastForToday = (dateStr, timeSlot) => {
+  const nowKolkata = getNowKolkata();
+  const todayStr = formatDateStr(nowKolkata);
+
+  if (dateStr !== todayStr) {
+    return false;
+  }
+
+  const slotInfo = SLOT_START_TIMES[timeSlot];
+  if (!slotInfo) {
+    return false;
+  }
+
+  const currentHour = nowKolkata.getHours();
+  const currentMin = nowKolkata.getMinutes();
+
+  if (currentHour > slotInfo.hour || (currentHour === slotInfo.hour && currentMin >= slotInfo.minute)) {
+    return true;
+  }
+
+  return false;
+};
+
+// Escape regex special characters
+const escapeRegex = (str) => {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+};
+
+// Zod Schema for appointment creation
+const appointmentCreateSchema = z.object({
+  patientName: z.string().trim().min(2, 'Name must be at least 2 characters').max(60, 'Name cannot exceed 60 characters'),
+  phone: z.string().trim(),
+  email: z.string().trim().max(100, 'Email cannot exceed 100 characters').optional().or(z.literal('')),
+  service: z.string().trim().refine(val => !val || ALLOWED_SERVICES.includes(val), {
+    message: 'Selected service is not offered by the clinic.'
+  }).optional(),
+  date: z.string().trim(),
+  timeSlot: z.string().trim().refine(val => ALLOWED_TIME_SLOTS.includes(val), {
+    message: 'Please select a valid operating time slot.'
+  }),
+  message: z.string().trim().max(500, 'Notes cannot exceed 500 characters').optional().or(z.literal('')),
+  consentGiven: z.literal(true, {
+    errorMap: () => ({ message: 'You must provide consent to book an appointment.' })
+  })
+});
 
 // @desc    Create new appointment request
 // @route   POST /api/appointments
-// @access  Public
+// @access  Public (Rate limited)
 exports.createAppointment = async (req, res) => {
   try {
-    const { patientName, phone, email, service, date, timeSlot, message, consentGiven } = req.body;
-
-    if (!patientName || !phone || !date || !timeSlot) {
-      return res.status(400).json({
-        success: false,
-        message: 'Name, phone number, preferred date, and time slot are required.'
-      });
+    // 1. Validate request body with Zod
+    const validationResult = appointmentCreateSchema.safeParse(req.body);
+    if (!validationResult.fail && !validationResult.success) {
+      // Fallback
+    }
+    if (!validationResult.success) {
+      const firstError = validationResult.error?.issues?.[0]?.message || validationResult.error?.errors?.[0]?.message || 'Invalid input data.';
+      return res.status(400).json({ success: false, message: firstError });
     }
 
-    // Normalize phone
+    const { patientName, phone, email, service, date, timeSlot, message, consentGiven } = validationResult.data;
+
+    // 2. Normalize and validate Indian mobile phone
     const normalizedPhone = normalizePhone(phone);
-    if (normalizedPhone.length !== 10) {
+    if (!/^[6-9]\d{9}$/.test(normalizedPhone)) {
       return res.status(400).json({
         success: false,
-        message: 'Please provide a valid 10-digit Indian mobile number.'
+        message: 'Please provide a valid 10-digit Indian mobile number starting with 6, 7, 8, or 9.'
       });
     }
 
-    // Check for double booking conflict
+    // 3. Validate Email format if supplied
+    if (email && email.trim() !== '') {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email.trim())) {
+        return res.status(400).json({ success: false, message: 'Please provide a valid email address.' });
+      }
+    }
+
+    // 4. Validate Date
+    const dateCheck = validateBookingDate(date);
+    if (!dateCheck.valid) {
+      return res.status(400).json({ success: false, message: dateCheck.message });
+    }
+
+    // 5. Check if slot has already passed today
+    if (isSlotInPastForToday(date, timeSlot)) {
+      return res.status(400).json({
+        success: false,
+        message: 'This time slot has already passed for today. Please choose a later slot or another day.'
+      });
+    }
+
+    // 6. Double booking check before save
     const existingConflict = await Appointment.findOne({
       date,
       timeSlot,
-      status: { $nin: ['Cancelled', 'Rejected'] }
+      isActive: true
     });
 
     if (existingConflict) {
@@ -64,37 +207,48 @@ exports.createAppointment = async (req, res) => {
       });
     }
 
+    // 7. Generate Reference Code and Collision-Safe Numeric ID
     const referenceCode = await generateReferenceCode();
+    const id = await generateNumericId();
 
     const newAppointment = new Appointment({
-      id: Date.now(),
+      id,
       referenceCode,
       patientName: patientName.trim(),
-      phone: phone.trim(),
+      phone: normalizedPhone,
       email: email ? email.trim().toLowerCase() : '',
-      service: service ? service.trim() : 'General Dental Checkup',
+      service: service || 'General Dental Checkup',
       date,
       timeSlot,
       message: message ? message.trim() : '',
       status: 'Pending Approval',
-      consentGiven: consentGiven !== undefined ? Boolean(consentGiven) : true,
+      isActive: true,
+      consentGiven: true,
       consentTimestamp: new Date()
     });
 
     await newAppointment.save();
 
-    // Log Activity
-    ActivityLog.create({
-      action: 'Appointment Requested',
-      details: `New booking [${newAppointment.referenceCode}] received from ${newAppointment.patientName} for ${newAppointment.date} at ${newAppointment.timeSlot}.`,
-      performedBy: 'Patient'
-    }).catch(err => console.warn(`Failed to log activity: ${err.message}`));
+    // 8. Serverless background work (Awaited with try/catch to avoid loss on function freeze)
+    try {
+      await Promise.race([
+        ActivityLog.create({
+          action: 'Appointment Requested',
+          details: `New booking [${newAppointment.referenceCode}] received for ${newAppointment.patientName} (${newAppointment.date} at ${newAppointment.timeSlot}).`,
+          performedBy: 'Patient'
+        }),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('ActivityLog timeout')), 5000))
+      ]);
+    } catch (logErr) {
+      console.warn(`[ACTIVITY LOG ERROR] ${logErr.message}`);
+    }
 
-    // Trigger optional email notification safely in background without blocking response
     if (newAppointment.email) {
-      sendStatusEmail(newAppointment, 'Pending Approval').catch((err) => {
-        console.warn(`[EMAIL ERROR] Non-blocking initial booking notification failed: ${err.message}`);
-      });
+      try {
+        await sendStatusEmail(newAppointment, 'Pending Approval');
+      } catch (emailErr) {
+        console.warn(`[EMAIL ERROR] ${emailErr.message}`);
+      }
     }
 
     res.status(201).json({
@@ -112,36 +266,77 @@ exports.createAppointment = async (req, res) => {
     });
   } catch (error) {
     console.error(`[APPOINTMENT CREATE ERROR] ${error.stack || error.message}`);
-    // Handle unique index conflict
     if (error.code === 11000) {
       return res.status(409).json({
         success: false,
         message: 'This time slot was just reserved. Please select another slot.'
       });
     }
-    res.status(500).json({ success: false, message: 'Failed to create appointment. Please try again later.' });
+    res.status(500).json({ success: false, message: 'Failed to process appointment booking. Please try again later.' });
   }
 };
 
-// @desc    Patient privacy lookup by phone AND reference code
-// @route   POST /api/appointments/lookup or GET /api/appointments/lookup
-// @access  Public (Strictly rate-limited)
+// @desc    Get public availability for a specific date
+// @route   GET /api/appointments/availability?date=YYYY-MM-DD
+// @access  Public (Rate limited)
+exports.getAvailability = async (req, res) => {
+  try {
+    const { date } = req.query;
+
+    if (!date || typeof date !== 'string') {
+      return res.status(400).json({ success: false, message: 'Date parameter is required in YYYY-MM-DD format.' });
+    }
+
+    const dateCheck = validateBookingDate(date);
+    if (!dateCheck.valid) {
+      return res.status(400).json({ success: false, message: dateCheck.message });
+    }
+
+    const activeAppointments = await Appointment.find({
+      date: date.trim(),
+      isActive: true
+    }).select('timeSlot');
+
+    const takenSlots = activeAppointments.map(a => a.timeSlot);
+
+    res.status(200).json({
+      success: true,
+      data: {
+        date: date.trim(),
+        takenSlots
+      }
+    });
+  } catch (error) {
+    console.error(`[AVAILABILITY ERROR] ${error.stack || error.message}`);
+    res.status(500).json({ success: false, message: 'Failed to retrieve slot availability.' });
+  }
+};
+
+// @desc    Patient privacy lookup by phone AND reference code (POST only)
+// @route   POST /api/appointments/lookup
+// @access  Public (Rate limited)
 exports.lookupAppointment = async (req, res) => {
   try {
-    const phone = req.body.phone || req.query.phone;
-    const referenceCode = req.body.referenceCode || req.body.code || req.query.referenceCode || req.query.code;
+    const { phone, referenceCode, code } = req.body;
+    const ref = referenceCode || code;
 
-    if (!phone || !referenceCode) {
+    if (!phone || !ref || typeof phone !== 'string' || typeof ref !== 'string') {
       return res.status(404).json({
         success: false,
         message: 'Appointment not found. Please check your phone number and reference code.'
       });
     }
 
-    const normalizedReqPhone = normalizePhone(phone);
-    const cleanCode = String(referenceCode).trim().toUpperCase();
+    const cleanCode = ref.trim().toUpperCase();
+    const cleanPhone = normalizePhone(phone);
 
-    // Search by exact code first
+    if (cleanPhone.length !== 10) {
+      return res.status(404).json({
+        success: false,
+        message: 'Appointment not found. Please check your phone number and reference code.'
+      });
+    }
+
     const appointment = await Appointment.findOne({ referenceCode: cleanCode });
 
     if (!appointment) {
@@ -151,16 +346,20 @@ exports.lookupAppointment = async (req, res) => {
       });
     }
 
-    // Verify phone matches
-    const appPhoneNormalized = normalizePhone(appointment.phone);
-    if (appPhoneNormalized !== normalizedReqPhone && !appointment.phone.includes(phone.trim())) {
+    const storedPhone = normalizePhone(appointment.phone);
+
+    // Constant-time buffer comparison to prevent timing side-channels
+    const reqBuf = Buffer.from(cleanPhone, 'utf8');
+    const storedBuf = Buffer.from(storedPhone, 'utf8');
+
+    if (reqBuf.length !== storedBuf.length || !crypto.timingSafeEqual(reqBuf, storedBuf)) {
       return res.status(404).json({
         success: false,
         message: 'Appointment not found. Please check your phone number and reference code.'
       });
     }
 
-    // Privacy protection: Return ONLY status, date, timeSlot, service, referenceCode
+    // Return strictly non-PII fields
     res.status(200).json({
       success: true,
       data: {
@@ -177,7 +376,7 @@ exports.lookupAppointment = async (req, res) => {
   }
 };
 
-// @desc    Get all appointments (Admin only, supports filters and pagination)
+// @desc    Get all appointments (Admin only)
 // @route   GET /api/appointments
 // @access  Private (Admin)
 exports.getAppointments = async (req, res) => {
@@ -190,8 +389,9 @@ exports.getAppointments = async (req, res) => {
       query.status = status;
     }
 
-    if (search) {
-      const searchRegex = new RegExp(search.trim(), 'i');
+    if (search && typeof search === 'string') {
+      const sanitizedSearch = escapeRegex(search.trim().slice(0, 50));
+      const searchRegex = new RegExp(sanitizedSearch, 'i');
       query.$or = [
         { patientName: searchRegex },
         { phone: searchRegex },
@@ -203,12 +403,12 @@ exports.getAppointments = async (req, res) => {
 
     if (startDate || endDate) {
       query.date = {};
-      if (startDate) query.date.$gte = startDate;
-      if (endDate) query.date.$lte = endDate;
+      if (startDate && typeof startDate === 'string') query.date.$gte = startDate.trim();
+      if (endDate && typeof endDate === 'string') query.date.$lte = endDate.trim();
     }
 
-    const pageNum = parseInt(page, 10) || 1;
-    const limitNum = parseInt(limit, 10) || 20; // 20 items per page
+    const pageNum = Math.max(1, parseInt(page, 10) || 1);
+    const limitNum = Math.min(100, Math.max(1, parseInt(limit, 10) || 20));
     const skip = (pageNum - 1) * limitNum;
 
     const total = await Appointment.countDocuments(query);
@@ -236,10 +436,15 @@ exports.getAppointments = async (req, res) => {
 // @access  Private (Admin)
 exports.getAppointmentById = async (req, res) => {
   try {
-    const appointment = await Appointment.findOne({ id: req.params.id });
+    const numId = Number(req.params.id);
+    if (!numId || isNaN(numId)) {
+      return res.status(400).json({ success: false, message: 'Invalid appointment ID format.' });
+    }
+
+    const appointment = await Appointment.findOne({ id: numId });
 
     if (!appointment) {
-      return res.status(404).json({ success: false, message: 'Appointment not found' });
+      return res.status(404).json({ success: false, message: 'Appointment not found.' });
     }
 
     res.status(200).json({
@@ -252,15 +457,20 @@ exports.getAppointmentById = async (req, res) => {
   }
 };
 
-// @desc    Update appointment details / status
+// @desc    Update appointment details / status / reschedule
 // @route   PUT /api/appointments/:id
 // @access  Private (Admin)
 exports.updateAppointment = async (req, res) => {
   try {
-    const appointment = await Appointment.findOne({ id: req.params.id });
+    const numId = Number(req.params.id);
+    if (!numId || isNaN(numId)) {
+      return res.status(400).json({ success: false, message: 'Invalid appointment ID format.' });
+    }
+
+    const appointment = await Appointment.findOne({ id: numId });
 
     if (!appointment) {
-      return res.status(404).json({ success: false, message: 'Appointment not found' });
+      return res.status(404).json({ success: false, message: 'Appointment not found.' });
     }
 
     const { status, patientName, date, timeSlot, service, message } = req.body;
@@ -272,16 +482,25 @@ exports.updateAppointment = async (req, res) => {
     if (date && date !== oldDate) isRescheduled = true;
     if (timeSlot && timeSlot !== oldTime) isRescheduled = true;
 
-    // If rescheduling to a new slot, check if destination slot is taken
+    // If rescheduling, validate date and slot bounds
     if (isRescheduled) {
       const targetDate = date || oldDate;
       const targetTime = timeSlot || oldTime;
+
+      if (!ALLOWED_TIME_SLOTS.includes(targetTime)) {
+        return res.status(400).json({ success: false, message: 'Please select a valid clinic time slot.' });
+      }
+
+      const dateCheck = validateBookingDate(targetDate);
+      if (!dateCheck.valid) {
+        return res.status(400).json({ success: false, message: dateCheck.message });
+      }
 
       const slotConflict = await Appointment.findOne({
         id: { $ne: appointment.id },
         date: targetDate,
         timeSlot: targetTime,
-        status: { $nin: ['Cancelled', 'Rejected'] }
+        isActive: true
       });
 
       if (slotConflict) {
@@ -292,15 +511,20 @@ exports.updateAppointment = async (req, res) => {
       }
     }
 
-    if (patientName) appointment.patientName = patientName.trim();
-    if (service) appointment.service = service.trim();
+    if (patientName && typeof patientName === 'string') appointment.patientName = patientName.trim().slice(0, 60);
+    if (service && typeof service === 'string') appointment.service = service.trim();
     if (date) appointment.date = date;
     if (timeSlot) appointment.timeSlot = timeSlot;
-    if (message !== undefined) appointment.message = message.trim();
+    if (message !== undefined) appointment.message = String(message).trim().slice(0, 500);
+
+    const validStatuses = ['Pending Approval', 'Confirmed', 'Approved', 'Rescheduled', 'Completed', 'Cancelled', 'Rejected'];
 
     if (isRescheduled) {
       appointment.status = 'Rescheduled';
     } else if (status) {
+      if (!validStatuses.includes(status)) {
+        return res.status(400).json({ success: false, message: 'Invalid appointment status.' });
+      }
       appointment.status = status;
     }
 
@@ -311,17 +535,26 @@ exports.updateAppointment = async (req, res) => {
       ? `Rescheduled appointment [${appointment.referenceCode}] to ${appointment.date} at ${appointment.timeSlot}`
       : `Changed status of [${appointment.referenceCode}] from "${oldStatus}" to "${appointment.status}"`;
 
-    ActivityLog.create({
-      action: isRescheduled ? 'Appointment Rescheduled' : 'Status Updated',
-      details: actionDesc,
-      performedBy: req.admin?.email || 'Admin'
-    }).catch(err => console.warn(`Failed to log activity: ${err.message}`));
+    try {
+      await Promise.race([
+        ActivityLog.create({
+          action: isRescheduled ? 'Appointment Rescheduled' : 'Status Updated',
+          details: actionDesc,
+          performedBy: req.admin?.email || 'Admin'
+        }),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('ActivityLog timeout')), 5000))
+      ]);
+    } catch (logErr) {
+      console.warn(`[ACTIVITY LOG ERROR] ${logErr.message}`);
+    }
 
-    // Trigger email alerts safely if status or schedule changed
+    // Trigger email notification safely
     if (appointment.email && (appointment.status !== oldStatus || isRescheduled)) {
-      sendStatusEmail(appointment, appointment.status).catch((err) => {
-        console.warn(`[EMAIL ERROR] Failed to send status update email: ${err.message}`);
-      });
+      try {
+        await sendStatusEmail(appointment, appointment.status);
+      } catch (emailErr) {
+        console.warn(`[EMAIL ERROR] ${emailErr.message}`);
+      }
     }
 
     res.status(200).json({
@@ -346,18 +579,26 @@ exports.updateAppointment = async (req, res) => {
 // @access  Private (Admin)
 exports.deleteAppointment = async (req, res) => {
   try {
-    const appointment = await Appointment.findOneAndDelete({ id: req.params.id });
-
-    if (!appointment) {
-      return res.status(404).json({ success: false, message: 'Appointment not found' });
+    const numId = Number(req.params.id);
+    if (!numId || isNaN(numId)) {
+      return res.status(400).json({ success: false, message: 'Invalid appointment ID format.' });
     }
 
-    // Log deletion
-    ActivityLog.create({
-      action: 'Appointment Deleted',
-      details: `Deleted appointment [${appointment.referenceCode}] (#${appointment.id}) for patient ${appointment.patientName}.`,
-      performedBy: req.admin?.email || 'Admin'
-    }).catch(err => console.warn(`Failed to log activity: ${err.message}`));
+    const appointment = await Appointment.findOneAndDelete({ id: numId });
+
+    if (!appointment) {
+      return res.status(404).json({ success: false, message: 'Appointment not found.' });
+    }
+
+    try {
+      await ActivityLog.create({
+        action: 'Appointment Deleted',
+        details: `Deleted appointment [${appointment.referenceCode}] (#${appointment.id}) for patient ${appointment.patientName}.`,
+        performedBy: req.admin?.email || 'Admin'
+      });
+    } catch (logErr) {
+      console.warn(`[ACTIVITY LOG ERROR] ${logErr.message}`);
+    }
 
     res.status(200).json({
       success: true,

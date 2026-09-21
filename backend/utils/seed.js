@@ -11,6 +11,7 @@ const seedAdmin = async () => {
   try {
     const adminEmail = process.env.ADMIN_EMAIL ? process.env.ADMIN_EMAIL.trim().toLowerCase() : null;
     const adminPassword = process.env.ADMIN_PASSWORD;
+    const isReset = process.argv.includes('--reset');
 
     if (!adminEmail || !adminPassword) {
       console.error('[SEED ERROR] ADMIN_EMAIL and ADMIN_PASSWORD must be defined in environment variables.');
@@ -30,17 +31,36 @@ const seedAdmin = async () => {
 
     await connectDB();
 
-    const adminExists = await Admin.findOne({ email: adminEmail });
+    // Check for old legacy account
+    const oldDefaultEmail = 'admin@vinayakdentalcare.com';
+    if (adminEmail !== oldDefaultEmail) {
+      const legacyAdmin = await Admin.findOne({ email: oldDefaultEmail });
+      if (legacyAdmin) {
+        console.warn(`\n⚠️  [SECURITY WARNING] Legacy default admin account (${oldDefaultEmail}) exists in database while ADMIN_EMAIL is configured as (${adminEmail}). Consider removing or updating the legacy account.\n`);
+      }
+    }
 
-    if (!adminExists) {
-      const defaultAdmin = new Admin({
-        email: adminEmail,
-        password: adminPassword
-      });
-      await defaultAdmin.save();
-      console.log(`[SEED] Admin account (${adminEmail}) seeded successfully.`);
+    const admin = await Admin.findOne({ email: adminEmail });
+
+    if (admin) {
+      if (isReset) {
+        admin.password = adminPassword;
+        admin.tokenVersion = (admin.tokenVersion || 0) + 1;
+        admin.failedLoginAttempts = 0;
+        admin.lockUntil = null;
+        await admin.save();
+        console.log(`[SEED RESET] Admin password for (${adminEmail}) updated successfully and tokens invalidated.`);
+      } else {
+        console.log(`[SEED] Admin account (${adminEmail}) already exists. Use --reset or 'npm run seed:reset' to update password.`);
+      }
     } else {
-      console.log(`[SEED] Admin account (${adminEmail}) already exists. Skipping.`);
+      const newAdmin = new Admin({
+        email: adminEmail,
+        password: adminPassword,
+        tokenVersion: 0
+      });
+      await newAdmin.save();
+      console.log(`[SEED] Admin account (${adminEmail}) created successfully.`);
     }
 
     if (require.main === module) {
@@ -54,7 +74,7 @@ const seedAdmin = async () => {
   }
 };
 
-// If run directly from CLI (npm run seed or node seed.js)
+// If run directly from CLI
 if (require.main === module) {
   seedAdmin();
 }

@@ -4,7 +4,6 @@ const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
 const mongoSanitize = require('express-mongo-sanitize');
 const mongoose = require('mongoose');
 
@@ -42,25 +41,41 @@ const app = express();
 // Enable trust proxy for reverse proxies / Vercel serverless / load balancers
 app.set('trust proxy', 1);
 
-// Body parser
+// Body parser with 20kb limit
 app.use(express.json({ limit: '20kb' }));
 app.use(express.urlencoded({ extended: true, limit: '20kb' }));
 
 // Cookie parser
 app.use(cookieParser());
 
-// Enable CORS
-app.use(cors({
-  origin: true,
-  credentials: true
-}));
+// Restrict CORS (same-origin by default, or ALLOWED_ORIGIN if specified)
+const allowedOrigin = process.env.ALLOWED_ORIGIN || false;
+if (allowedOrigin) {
+  app.use(cors({
+    origin: allowedOrigin,
+    credentials: true
+  }));
+}
 
-// Set security headers
+// Content Security Policy via Helmet
 app.use(helmet({
-  contentSecurityPolicy: false
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com"], // Inline allowed temporarily until Phase 2 scripts are externalized
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdnjs.cloudflare.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com", "https://cdnjs.cloudflare.com"],
+      imgSrc: ["'self'", "data:", "https:", "blob:"],
+      frameSrc: ["'self'", "https://www.google.com", "https://maps.google.com"],
+      connectSrc: ["'self'"],
+      objectSrc: ["'none'"],
+      upgradeInsecureRequests: []
+    }
+  },
+  crossOriginEmbedderPolicy: false
 }));
 
-// 0.2 Health Check Endpoint (Registered before other routes, returns only {ok, db} with no error/env details)
+// Health Check Endpoint (Registered before other routes)
 app.get('/api/health', async (req, res) => {
   try {
     await connectDB();
@@ -78,7 +93,7 @@ app.get('/api/health', async (req, res) => {
   }
 });
 
-// Ensure Database connection is established before processing any other request
+// Ensure Database connection is established before processing requests
 app.use(async (req, res, next) => {
   try {
     await connectDB();
@@ -91,16 +106,6 @@ app.use(async (req, res, next) => {
     });
   }
 });
-
-// General API rate limiting (300 requests per 15 min per IP)
-const apiLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 300,
-  standardHeaders: true,
-  legacyHeaders: false,
-  message: { success: false, message: 'Too many requests from this IP, please try again in 15 minutes.' }
-});
-app.use('/api', apiLimiter);
 
 // Sanitize data (NoSQL injection prevention)
 app.use(mongoSanitize());

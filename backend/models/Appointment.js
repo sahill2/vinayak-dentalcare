@@ -4,7 +4,8 @@ const appointmentSchema = new mongoose.Schema({
   id: {
     type: Number,
     required: true,
-    unique: true
+    unique: true,
+    index: true
   },
   referenceCode: {
     type: String,
@@ -40,29 +41,38 @@ const appointmentSchema = new mongoose.Schema({
   message: {
     type: String,
     trim: true,
-    default: ''
+    default: '',
+    maxlength: 500
   },
   date: {
     type: String,
-    required: [true, 'Date is required']
+    required: [true, 'Date is required'],
+    index: true
   },
   timeSlot: {
     type: String,
-    required: [true, 'Time slot is required']
+    required: [true, 'Time slot is required'],
+    index: true
   },
   status: {
     type: String,
     required: true,
-    enum: ['Pending Approval', 'Approved', 'Rejected', 'Rescheduled', 'Completed', 'Cancelled'],
-    default: 'Pending Approval'
+    enum: ['Pending Approval', 'Confirmed', 'Approved', 'Rescheduled', 'Completed', 'Cancelled', 'Rejected'],
+    default: 'Pending Approval',
+    index: true
+  },
+  isActive: {
+    type: Boolean,
+    default: true,
+    index: true
   },
   consentGiven: {
     type: Boolean,
-    default: true
+    required: true
   },
   consentTimestamp: {
     type: Date,
-    default: Date.now
+    default: null
   },
   requestDate: {
     type: String,
@@ -72,14 +82,19 @@ const appointmentSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Partial compound index to prevent double-booking on same date and time slot for active appointments
+// Synchronize isActive before saving
+appointmentSchema.pre('save', function (next) {
+  const activeStatuses = ['Pending Approval', 'Confirmed', 'Approved', 'Rescheduled'];
+  this.isActive = activeStatuses.includes(this.status);
+  next();
+});
+
+// Partial compound unique index: Prevents double-booking where isActive is true
 appointmentSchema.index(
   { date: 1, timeSlot: 1 },
   {
     unique: true,
-    partialFilterExpression: {
-      status: { $nin: ['Cancelled', 'Rejected'] }
-    }
+    partialFilterExpression: { isActive: true }
   }
 );
 
