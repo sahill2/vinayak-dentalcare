@@ -26,11 +26,11 @@
                 </a>
                 
                 <div class="nav-links">
-                    <a href="index.html" class="active">Home</a>
-                    <a href="about.html">About Us</a>
-                    <a href="services.html">Services</a>
-                    <a href="contact.html">Contact</a>
-                    <a href="book.html" class="btn btn-primary nav-cta">Book Appointment</a>
+                    <a href="index.html" class="active" data-i18n="nav_home">Home</a>
+                    <a href="about.html" data-i18n="nav_about">About Us</a>
+                    <a href="services.html" data-i18n="nav_services">Services</a>
+                    <a href="contact.html" data-i18n="nav_contact">Contact</a>
+                    <a href="book.html" class="btn btn-primary nav-cta" data-i18n="nav_book">Book Appointment</a>
                 </div>
 
                 <div class="hamburger" aria-label="Toggle navigation menu">
@@ -46,11 +46,14 @@
         <div class="blob blob-2"></div>
         <div class="container">
             <div class="hero-content">
-                <h1 class="hero-title animate-on-scroll">Advanced Dental Care for a <span>Healthy Smile</span></h1>
-                <p class="hero-desc animate-on-scroll">At Vinayak Dental Care, we provide top-tier dental treatments to give you the confidence to smile brighter. Experience modern dentistry with comfort, precision, and personalized care.</p>
+                <h1 class="hero-title animate-on-scroll">
+                    <span data-i18n="hero_title_prefix">Advanced Dental Care for a </span>
+                    <span data-i18n="hero_title_highlight">Healthy Smile</span>
+                </h1>
+                <p class="hero-desc animate-on-scroll" data-i18n="hero_desc">At Vinayak Dental Care, we provide top-tier dental treatments to give you the confidence to smile brighter. Experience modern dentistry with comfort, precision, and personalized care.</p>
                 <div class="hero-buttons animate-on-scroll">
-                    <a href="book.html" class="btn btn-primary">Book an Appointment</a>
-                    <a href="services.html" class="btn btn-outline">Our Services</a>
+                    <a href="book.html" class="btn btn-primary" data-i18n="btn_book_appointment">Book an Appointment</a>
+                    <a href="services.html" class="btn btn-outline" data-i18n="btn_our_services">Our Services</a>
                 </div>
             </div>
             <div class="hero-image animate-on-scroll">
@@ -69,7 +72,7 @@
                         <i class="fa-solid fa-clock"></i>
                     </div>
                     <div>
-                        <h4>Opening Hours</h4>
+                        <h4 data-i18n="info_hours_title">Opening Hours</h4>
                         <p>Mon - Sat: 9:00 AM - 8:00 PM<br>Sunday: Closed</p>
                     </div>
                 </div>
@@ -78,8 +81,11 @@
                         <i class="fa-solid fa-location-dot"></i>
                     </div>
                     <div>
-                        <h4>Clinic Location</h4>
-                        <p data-config="addressFull">B-10 Laxmipooja Complex, Near Bandhan Hotel, Kapadvanj, Gujarat 387620</p>
+                        <h4 data-i18n="info_location_title">Clinic Location</h4>
+                        <p data-config="addressFull" style="font-size: 0.95rem; margin-bottom: 5px;">B-10 Laxmipooja Complex, Near Bandhan Hotel, Kapadvanj, Gujarat 387620</p>
+                        <a href="https://maps.google.com/?q=Vinayak+Dental+Care+Kapadvanj" data-config-href="mapUrl" target="_blank" rel="noopener noreferrer" style="color: var(--primary-green); font-weight: 600; font-size: 0.88rem;">
+                            <i class="fa-solid fa-location-arrow"></i> <span data-i18n="btn_get_directions">Get Directions</span>
+                        </a>
                     </div>
                 </div>
                 <div class="info-card animate-on-scroll">
@@ -87,8 +93,8 @@
                         <i class="fa-solid fa-phone"></i>
                     </div>
                     <div>
-                        <h4>Emergency & Contact</h4>
-                        <p><a href="tel:+919999900000" data-config-href="clinicPhone" data-config="clinicPhone" style="font-weight: 600; color: inherit;">+91 99999 00000</a><br>Call us for queries & urgent care.</p>
+                        <h4 data-i18n="info_contact_title">Emergency & Contact</h4>
+                        <p><a href="tel:+919999900000" data-config-href="clinicPhone" data-config="clinicPhone" style="font-weight: 600; color: inherit;">+91 99999 00000</a><br><span data-i18n="info_contact_sub">Call us for queries & urgent care.</span></p>
                     </div>
                 </div>
             </div>
@@ -103,19 +109,19 @@
                 <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=800" alt="Vinayak Dental Care Modern Treatment Operatory" width="800" height="533" loading="lazy">
                 <div class="experience-badge">
                     <h2>15+</h2>
-                    <p>Years of<br>Excellence</p>
+                    <p data-i18n="about_badge_exp">Years of<br>Excellence</p>
                 </div>
             </div>
             <div class="about-content animate-on-scroll">
-                <h2>Welcome to Vinayak Dental Care</h2>
-                <p>We are committed to providing the highest quality dental care using state-of-the-art technology. Our experienced team ensures a comfortable, gentle experience tailored to your unique oral health needs.</p>
+                <h2 data-i18n="about_welcome_title">Welcome to Vinayak Dental Care</h2>
+                <p data-i18n="about_welcome_p1">We are committed to providing the highest quality dental care using state-of-the-art technology. Our experienced team ensures a comfortable, gentle experience tailored to your unique oral health needs.</p>
                 <ul class="feature-list">
-                    <li><i class="fa-solid fa-circle-check"></i> Advanced Diagnostic & Digital Imaging</li>
-                    <li><i class="fa-solid fa-circle-check"></i> Experienced & Caring Dental Surgeons</li>
-                    <li><i class="fa-solid fa-circle-check"></i> Painless & Patient-Centric Treatments</li>
-                    <li><i class="fa-solid fa-circle-check"></i> Multi-tier Sterilization & Hygiene Standards</li>
+                    <li><i class="fa-solid fa-circle-check"></i> <span data-i18n="about_feat_1">Advanced Diagnostic & Digital Imaging</span></li>
+                    <li><i class="fa-solid fa-circle-check"></i> <span data-i18n="about_feat_2">Experienced & Caring Dental Surgeons</span></li>
+                    <li><i class="fa-solid fa-circle-check"></i> <span data-i18n="about_feat_3">Painless & Patient-Centric Treatments</span></li>
+                    <li><i class="fa-solid fa-circle-check"></i> <span data-i18n="about_feat_4">Multi-tier Sterilization & Hygiene Standards</span></li>
                 </ul>
-                <a href="about.html" class="btn btn-primary">Learn More About Us</a>
+                <a href="about.html" class="btn btn-primary" data-i18n="btn_learn_more">Learn More About Us</a>
             </div>
         </div>
     </section>
@@ -123,39 +129,15 @@
     <!-- Services Preview Section -->
     <section class="services-bg">
         <div class="container">
-            <h2 class="section-title animate-on-scroll">Our Dental Services</h2>
-            <p class="section-subtitle animate-on-scroll">Specializing in Comprehensive Dental Care & Implantology to keep your smile healthy and bright.</p>
+            <h2 class="section-title animate-on-scroll" data-i18n="services_section_title">Our Dental Services</h2>
+            <p class="section-subtitle animate-on-scroll" data-i18n="services_section_sub">Specializing in Comprehensive Dental Care & Implantology to keep your smile healthy and bright.</p>
             
             <div class="services-grid" id="homeServicesGrid">
-                <!-- Populated dynamically via config or static fallback -->
-                <div class="service-card animate-on-scroll">
-                    <i class="fa-solid fa-screwdriver service-icon"></i>
-                    <h3>Dental Implants</h3>
-                    <p>Permanent, natural-looking titanium replacements for missing teeth.</p>
-                    <a href="services.html" class="service-link">Read More <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
-                <div class="service-card animate-on-scroll">
-                    <i class="fa-solid fa-tooth service-icon"></i>
-                    <h3>Root Canal Treatment (RCT)</h3>
-                    <p>Advanced rotary endodontics to eliminate infection and preserve natural teeth.</p>
-                    <a href="services.html" class="service-link">Read More <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
-                <div class="service-card animate-on-scroll">
-                    <i class="fa-solid fa-teeth service-icon"></i>
-                    <h3>Teeth Cleaning & Scaling</h3>
-                    <p>Professional ultrasonic scaling and polishing for healthy gums and fresh breath.</p>
-                    <a href="services.html" class="service-link">Read More <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
-                <div class="service-card animate-on-scroll">
-                    <i class="fa-solid fa-wand-magic-sparkles service-icon"></i>
-                    <h3>Teeth Whitening</h3>
-                    <p>Safe in-office bleaching to remove deep stains and restore natural brightness.</p>
-                    <a href="services.html" class="service-link">Read More <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
+                <!-- Dynamically populated from CLINIC_CONFIG.services -->
             </div>
             
             <div style="text-align: center; margin-top: 50px;" class="animate-on-scroll">
-                <a href="services.html" class="btn btn-outline">View All Services</a>
+                <a href="services.html" class="btn btn-outline" data-i18n="btn_view_all_services">View All Services</a>
             </div>
         </div>
     </section>
@@ -163,8 +145,8 @@
     <!-- Meet Our Dentists Section -->
     <section class="expert-section" style="padding: 80px 0; background-color: var(--white);">
         <div class="container">
-            <h2 class="section-title animate-on-scroll">Meet Our Dentists</h2>
-            <p class="section-subtitle animate-on-scroll" style="margin-bottom: 50px;">Expert dental care led by qualified and compassionate surgeons.</p>
+            <h2 class="section-title animate-on-scroll" data-i18n="dentists_title">Meet Our Dentists</h2>
+            <p class="section-subtitle animate-on-scroll" data-i18n="dentists_sub" style="margin-bottom: 50px;">Expert dental care led by qualified and compassionate surgeons.</p>
             
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;">
                 <!-- Doctor 1 -->
@@ -173,8 +155,8 @@
                     <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400" alt="Dr. Vishal - Dental Surgeon" style="width: 100%; height: 300px; object-fit: cover;" loading="lazy">
                     <div style="padding: 30px;">
                         <h3 style="color: var(--text-dark); margin-bottom: 5px; font-size: 1.5rem;">Dr. Vishal</h3>
-                        <p style="color: var(--primary-blue); font-weight: 600; margin-bottom: 15px;">BDS - Dental Surgeon & Implantologist</p>
-                        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px;">Specializing in dental implants, complex extractions, and comprehensive oral rehabilitation with emphasis on painless care.</p>
+                        <p style="color: var(--primary-blue); font-weight: 600; margin-bottom: 15px;" data-i18n="dr_vishal_spec">BDS - Dental Surgeon & Implantologist</p>
+                        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px;" data-i18n="dr_vishal_bio">Specializing in dental implants, complex extractions, and comprehensive oral rehabilitation with emphasis on painless care.</p>
                     </div>
                 </div>
 
@@ -184,8 +166,8 @@
                     <img src="https://images.unsplash.com/photo-1594824436998-fe4087326e0b?auto=format&fit=crop&q=80&w=400" alt="Dr. Devanshi - Dental Surgeon" style="width: 100%; height: 300px; object-fit: cover;" loading="lazy">
                     <div style="padding: 30px;">
                         <h3 style="color: var(--text-dark); margin-bottom: 5px; font-size: 1.5rem;">Dr. Devanshi</h3>
-                        <p style="color: var(--primary-blue); font-weight: 600; margin-bottom: 15px;">BDS - Dental Surgeon & Aesthetic Specialist</p>
-                        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px;">Dedicated to cosmetic restorations, pediatric dentistry, and delivering comfortable root canal therapy tailored to every patient.</p>
+                        <p style="color: var(--primary-blue); font-weight: 600; margin-bottom: 15px;" data-i18n="dr_devanshi_spec">BDS - Dental Surgeon & Aesthetic Specialist</p>
+                        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px;" data-i18n="dr_devanshi_bio">Dedicated to cosmetic restorations, pediatric dentistry, and delivering comfortable root canal therapy tailored to every patient.</p>
                     </div>
                 </div>
             </div>
@@ -195,8 +177,8 @@
     <!-- Real Patient Results (Social Proof) -->
     <section class="gallery-section" style="padding: 80px 0; background-color: var(--bg-color);">
         <div class="container">
-            <h2 class="section-title animate-on-scroll">Clinical Case Highlights</h2>
-            <p class="section-subtitle animate-on-scroll" style="margin-bottom: 50px;">Transforming smiles and restoring dental health.</p>
+            <h2 class="section-title animate-on-scroll" data-i18n="cases_title">Clinical Case Highlights</h2>
+            <p class="section-subtitle animate-on-scroll" data-i18n="cases_sub" style="margin-bottom: 50px;">Transforming smiles and restoring dental health.</p>
             
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
                 <!-- TODO: Swap with actual before-and-after clinical case photos -->
@@ -225,8 +207,8 @@
     <!-- Patient Testimonials -->
     <section class="testimonials" style="background-color: var(--white); padding: 80px 0;">
         <div class="container">
-            <h2 class="section-title animate-on-scroll">What Our Patients Say</h2>
-            <p class="section-subtitle animate-on-scroll">Verified feedback from our valued clinic patients.</p>
+            <h2 class="section-title animate-on-scroll" data-i18n="testimonials_title">What Our Patients Say</h2>
+            <p class="section-subtitle animate-on-scroll" data-i18n="testimonials_sub">Verified feedback from our valued clinic patients.</p>
             
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 40px;">
                 <!-- TODO: Replace testimonial cards with authentic Google Reviews -->
@@ -278,7 +260,7 @@
 
             <div style="text-align: center;">
                 <a href="https://g.page/r/vinayakdental/review" data-config-href="reviewUrl" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="display: inline-flex; align-items: center; gap: 8px;">
-                    <i class="fa-brands fa-google" style="color: #4285F4;"></i> Review Us on Google
+                    <i class="fa-brands fa-google" style="color: #4285F4;"></i> <span data-i18n="btn_review_google">Review Us on Google</span>
                 </a>
             </div>
         </div>
@@ -288,8 +270,8 @@
     <section class="inquiry-section" style="background-color: var(--bg-color); padding: 80px 0; border-top: 1px solid #E2E8F0;">
         <div class="container" style="max-width: 800px;">
             <div class="inquiry-card animate-on-scroll" style="background: var(--white); padding: 40px; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); border-top: 4px solid var(--primary-green);">
-                <h2 style="text-align: center; color: var(--primary-green); margin-bottom: 10px;">Have a Question?</h2>
-                <p style="text-align: center; color: var(--text-muted); margin-bottom: 30px;">Send us a quick inquiry and our dental team will respond promptly.</p>
+                <h2 style="text-align: center; color: var(--primary-green); margin-bottom: 10px;" data-i18n="inquiry_title">Have a Question?</h2>
+                <p style="text-align: center; color: var(--text-muted); margin-bottom: 30px;" data-i18n="inquiry_sub">Send us a quick inquiry and our dental team will respond promptly.</p>
                 
                 <div id="inqSuccessAlert" style="display: none; background-color: var(--light-green); color: var(--primary-green); padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center; font-weight: 500;">
                     <i class="fa-solid fa-circle-check"></i> Thank you! Your inquiry has been sent successfully.
@@ -298,29 +280,29 @@
                 <form id="quickInquiryForm">
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
                         <div>
-                            <label for="inqName" style="display: block; margin-bottom: 6px; font-weight: 500; font-size: 0.9rem;">Your Name *</label>
+                            <label for="inqName" style="display: block; margin-bottom: 6px; font-weight: 500; font-size: 0.9rem;" data-i18n="form_name">Your Name *</label>
                             <input type="text" id="inqName" placeholder="Full Name" required style="width: 100%; padding: 12px 15px; border: 1px solid #E2E8F0; border-radius: 8px; font-family: 'Inter', sans-serif;">
                         </div>
                         <div>
-                            <label for="inqPhone" style="display: block; margin-bottom: 6px; font-weight: 500; font-size: 0.9rem;">Phone Number *</label>
+                            <label for="inqPhone" style="display: block; margin-bottom: 6px; font-weight: 500; font-size: 0.9rem;" data-i18n="form_phone">Phone Number *</label>
                             <input type="tel" id="inqPhone" placeholder="10-digit Mobile Number" required style="width: 100%; padding: 12px 15px; border: 1px solid #E2E8F0; border-radius: 8px; font-family: 'Inter', sans-serif;">
                         </div>
                     </div>
                     <div style="margin-bottom: 20px;">
-                        <label for="inqEmail" style="display: block; margin-bottom: 6px; font-weight: 500; font-size: 0.9rem;">Email Address (Optional)</label>
+                        <label for="inqEmail" style="display: block; margin-bottom: 6px; font-weight: 500; font-size: 0.9rem;" data-i18n="form_email">Email Address (Optional)</label>
                         <input type="email" id="inqEmail" placeholder="your@email.com" style="width: 100%; padding: 12px 15px; border: 1px solid #E2E8F0; border-radius: 8px; font-family: 'Inter', sans-serif;">
                     </div>
                     <div style="margin-bottom: 20px;">
-                        <label for="inqMessage" style="display: block; margin-bottom: 6px; font-weight: 500; font-size: 0.9rem;">Your Message / Dental Problem *</label>
+                        <label for="inqMessage" style="display: block; margin-bottom: 6px; font-weight: 500; font-size: 0.9rem;" data-i18n="form_message">Your Message / Dental Problem *</label>
                         <textarea id="inqMessage" placeholder="Please describe how we can assist you..." required style="width: 100%; padding: 12px 15px; border: 1px solid #E2E8F0; border-radius: 8px; font-family: 'Inter', sans-serif; resize: vertical; min-height: 100px;"></textarea>
                     </div>
                     <div style="margin-bottom: 20px;">
                         <label style="display: flex; align-items: flex-start; gap: 10px; font-size: 0.88rem; color: var(--text-muted); cursor: pointer;">
                             <input type="checkbox" id="inqConsent" required style="margin-top: 3px;">
-                            <span>I agree to be contacted by Vinayak Dental Care and agree to the <a href="privacy.html" target="_blank" style="color: var(--primary-green); text-decoration: underline;">Privacy Policy</a>.</span>
+                            <span data-i18n="form_consent">I agree to be contacted by Vinayak Dental Care and agree to the Privacy Policy.</span>
                         </label>
                     </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%;">Send Inquiry</button>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;" data-i18n="btn_send_inquiry">Send Inquiry</button>
                 </form>
             </div>
         </div>
@@ -376,7 +358,7 @@
                         <i class="fa-solid fa-tooth"></i>
                         <span data-config="clinicName">Vinayak Dental Care</span>
                     </a>
-                    <p>Providing advanced dental care with compassion and expertise. Your smile is our top priority.</p>
+                    <p data-i18n="footer_tagline">Providing advanced dental care with compassion and expertise. Your smile is our top priority.</p>
                     <div class="social-links">
                         <a href="https://www.instagram.com/vinayak_dental_clinic__implant/" data-config-href="instagramUrl" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
                         <a href="https://wa.me/919999900000" data-config-href="whatsappLink" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
@@ -384,19 +366,19 @@
                 </div>
                 
                 <div class="footer-links">
-                    <h4>Quick Links</h4>
+                    <h4 data-i18n="footer_quick_links">Quick Links</h4>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="services.html">Services</a></li>
-                        <li><a href="book.html">Book Appointment</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
-                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+                        <li><a href="about.html" data-i18n="nav_about">About Us</a></li>
+                        <li><a href="services.html" data-i18n="nav_services">Services</a></li>
+                        <li><a href="book.html" data-i18n="nav_book">Book Appointment</a></li>
+                        <li><a href="contact.html" data-i18n="nav_contact">Contact Us</a></li>
+                        <li><a href="privacy.html" data-i18n="footer_privacy">Privacy Policy</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-links">
-                    <h4>Our Services</h4>
+                    <h4 data-i18n="footer_services">Our Services</h4>
                     <ul>
                         <li><a href="services.html">Dental Checkup</a></li>
                         <li><a href="services.html">Teeth Cleaning</a></li>
@@ -406,7 +388,7 @@
                 </div>
                 
                 <div class="footer-links">
-                    <h4>Contact Us</h4>
+                    <h4 data-i18n="footer_contact_us">Contact Us</h4>
                     <ul class="contact-info">
                         <li>
                             <i class="fa-solid fa-location-dot"></i>
@@ -425,7 +407,7 @@
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2026 Vinayak Dental Care. All Rights Reserved. | <a href="privacy.html" style="color: inherit; text-decoration: underline;">Privacy Policy</a></p>
+                <p>&copy; 2026 Vinayak Dental Care. <span data-i18n="footer_rights">All Rights Reserved.</span> | <a href="privacy.html" style="color: inherit; text-decoration: underline;" data-i18n="footer_privacy">Privacy Policy</a></p>
             </div>
         </div>
     </footer>
@@ -437,9 +419,27 @@
 
     <!-- JS Scripts -->
     <script src="js/config.js"></script>
+    <script src="js/i18n.js"></script>
     <script src="js/script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Render Featured Services on Homepage from Single Source of Truth
+            const homeServicesGrid = document.getElementById('homeServicesGrid');
+            if (homeServicesGrid && window.CLINIC_CONFIG && window.CLINIC_CONFIG.services) {
+                const featured = window.CLINIC_CONFIG.services.slice(0, 4);
+                homeServicesGrid.innerHTML = featured.map(svc => `
+                    <div class="service-card animate-on-scroll">
+                        <i class="fa-solid ${svc.icon} service-icon"></i>
+                        <h3>${svc.name}</h3>
+                        <p>${svc.shortDesc}</p>
+                        <a href="book.html?service=${encodeURIComponent(svc.name)}" class="service-link" style="color: var(--primary-green); font-weight: 600;">
+                            Book Treatment <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                `).join('');
+            }
+
+            // Quick Inquiry Form Handler
             const inqForm = document.getElementById('quickInquiryForm');
             const alertBox = document.getElementById('inqSuccessAlert');
 
