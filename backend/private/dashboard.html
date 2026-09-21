@@ -4,29 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
-    <title>Admin Dashboard | Vinayak Dental Care</title>
+    <title>Clinic Management Dashboard | Vinayak Dental Care</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
     <style>
         body {
-            background-color: var(--bg-color);
+            background-color: var(--cream);
             padding-top: 80px;
         }
 
         .admin-header {
-            background: linear-gradient(135deg, #0F172A, #1E293B);
-            color: white;
-            padding: 15px 0;
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 16px 0;
             position: fixed;
             top: 0;
+            left: 0;
             width: 100%;
             z-index: 1000;
+            border-bottom: 1px solid rgba(221, 210, 191, 0.15);
         }
 
         .admin-nav {
@@ -36,63 +38,48 @@
         }
 
         .admin-brand {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: white;
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 1.3rem;
+            color: var(--footer-text);
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
         .admin-brand i {
-            color: var(--primary-green);
-        }
-
-        .logout-btn {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 8px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 0.9rem;
-        }
-
-        .logout-btn:hover {
-            background: #EF4444;
-            border-color: #EF4444;
+            color: var(--teal-soft);
         }
 
         .dashboard-container {
-            padding: 30px 20px;
+            padding: 32px 24px;
             max-width: 1250px;
             margin: 0 auto;
         }
 
         .dashboard-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
         }
 
         .stat-card {
-            background: var(--white);
+            background: var(--surface);
             padding: 20px;
             border-radius: var(--radius-md);
-            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--line);
             display: flex;
             align-items: center;
-            gap: 15px;
-            border-left: 4px solid var(--primary-green);
+            gap: 16px;
+            border-left: 4px solid var(--teal);
         }
 
         .stat-icon {
             width: 48px;
             height: 48px;
-            border-radius: 50%;
+            border-radius: var(--radius-md);
+            background-color: var(--teal-soft);
+            color: var(--teal);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -101,980 +88,576 @@
         }
 
         .stat-info h3 {
+            font-family: 'Fraunces', Georgia, serif;
             font-size: 1.6rem;
             margin: 0;
-            color: var(--text-dark);
-            line-height: 1.2;
+            color: var(--ink);
         }
 
         .stat-info p {
-            color: var(--text-muted);
+            font-size: 0.8125rem;
+            color: var(--muted);
             margin: 0;
-            font-size: 0.85rem;
-            font-weight: 500;
         }
 
-        /* Filter Controls */
-        .filter-panel {
-            background: var(--white);
-            padding: 20px;
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-sm);
-            margin-bottom: 25px;
+        /* Tabs */
+        .dashboard-tabs {
             display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .filter-inputs {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            align-items: center;
-            flex: 1;
-        }
-
-        .filter-control {
-            padding: 9px 12px;
-            border: 1px solid #CBD5E1;
-            border-radius: 6px;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
-            outline: none;
-            transition: var(--transition);
-        }
-
-        .filter-control:focus {
-            border-color: var(--primary-green);
-            box-shadow: 0 0 0 2px rgba(32, 178, 170, 0.15);
-        }
-
-        .filter-actions {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        /* Tables */
-        .table-card {
-            background: var(--white);
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-sm);
-            overflow: hidden;
-            margin-bottom: 35px;
-        }
-
-        .table-header {
-            padding: 18px 20px;
-            border-bottom: 1px solid #E2E8F0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .table-header h3 {
-            margin: 0;
-            font-size: 1.2rem;
-            color: var(--text-dark);
-        }
-
-        .table-responsive {
+            gap: 8px;
+            border-bottom: 2px solid var(--line);
+            margin-bottom: 24px;
             overflow-x: auto;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            font-size: 0.9rem;
-        }
-
-        th {
-            background-color: #F8FAFC;
-            padding: 12px 16px;
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 12px 20px;
+            font-size: 0.9375rem;
             font-weight: 600;
-            color: #475569;
-            border-bottom: 1px solid #E2E8F0;
+            color: var(--muted);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            transition: all var(--transition-fast);
             white-space: nowrap;
         }
 
-        td {
-            padding: 14px 16px;
-            border-bottom: 1px solid #F1F5F9;
-            vertical-align: middle;
+        .tab-btn.active {
+            color: var(--teal);
+            border-bottom-color: var(--teal);
         }
 
-        tr:hover td {
-            background-color: #F8FAFC;
+        /* Data Tables */
+        .table-responsive {
+            overflow-x: auto;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--line);
         }
 
-        /* Badges */
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9375rem;
+        }
+
+        .admin-table th {
+            background-color: var(--paper);
+            padding: 14px 18px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--ink);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .admin-table td {
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--line);
+            color: var(--text);
+        }
+
+        .admin-table tbody tr:hover {
+            background-color: var(--cream);
+        }
+
         .status-badge {
             display: inline-block;
-            padding: 4px 10px;
-            border-radius: 50px;
-            font-size: 0.78rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
         }
 
-        .status-pending { background: #FEF3C7; color: #B45309; }
-        .status-approved { background: #D1FAE5; color: #047857; }
-        .status-rescheduled { background: #DBEAFE; color: #1D4ED8; }
-        .status-rejected { background: #FEE2E2; color: #B91C1C; }
-        .status-completed { background: #E2E8F0; color: #475569; }
+        .status-badge.confirmed { background: #D1FAE5; color: #059669; }
+        .status-badge.pending { background: #FEF3C7; color: #D97706; }
+        .status-badge.rescheduled { background: #DBEAFE; color: #1D4ED8; }
+        .status-badge.cancelled { background: #FEE2E2; color: #DC2626; }
+        .status-badge.completed { background: #E2E8F0; color: #475569; }
 
-        .action-btns {
-            display: flex;
-            gap: 6px;
-        }
-
-        .action-btn {
-            border: none;
-            width: 32px;
-            height: 32px;
-            border-radius: 6px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 0.85rem;
-            transition: var(--transition);
-        }
-
-        .approve-btn { background: #10B981; }
-        .approve-btn:hover { background: #059669; }
-        .reject-btn { background: #EF4444; }
-        .reject-btn:hover { background: #DC2626; }
-        .reschedule-btn { background: #3B82F6; }
-        .reschedule-btn:hover { background: #2563EB; }
-        .delete-btn { background: #64748B; }
-        .delete-btn:hover { background: #475569; }
-
-        /* Pagination */
         .pagination-container {
-            padding: 15px 20px;
-            border-top: 1px solid #E2E8F0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.88rem;
-            color: var(--text-muted);
-        }
-
-        .page-btn {
-            background: white;
-            border: 1px solid #CBD5E1;
-            padding: 6px 14px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .page-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .page-btn:not(:disabled):hover {
-            border-color: var(--primary-green);
-            color: var(--primary-green);
-        }
-
-        /* Modals */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            padding: 20px;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-card {
-            background: white;
-            border-radius: var(--radius-md);
-            max-width: 480px;
-            width: 100%;
-            padding: 30px;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .modal-card h3 {
-            margin-top: 0;
-            color: var(--text-dark);
-            margin-bottom: 20px;
+            padding: 16px 20px;
+            background: var(--surface);
+            border-top: 1px solid var(--line);
         }
     </style>
 </head>
 <body>
 
-    <!-- Admin Header -->
-    <header class="admin-header">
+    <!-- Header -->
+    <div class="admin-header">
         <div class="container">
             <div class="admin-nav">
                 <div class="admin-brand">
                     <i class="fa-solid fa-tooth"></i>
-                    <span>Vinayak Dental Care — Management</span>
+                    <span>Vinayak Dental Care — Clinic Management</span>
                 </div>
-                <div style="display: flex; gap: 10px;">
-                    <button class="logout-btn" onclick="openCredentialsModal()" title="Change Admin Credentials">
-                        <i class="fa-solid fa-key"></i> Settings
-                    </button>
-                    <button class="logout-btn" onclick="logoutAdmin()" title="Logout of Admin Panel">
-                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                <div style="display: flex; gap: 12px; align-items: center;">
+                    <button id="logoutBtn" class="btn btn-secondary btn-sm" style="color: var(--footer-text); border-color: rgba(221, 210, 191, 0.4);">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
                     </button>
                 </div>
             </div>
         </div>
-    </header>
+    </div>
 
+    <!-- Dashboard Main -->
     <div class="dashboard-container">
-        
-        <!-- Key Metrics Cards -->
+        <!-- Stats Strip -->
         <div class="dashboard-stats">
-            <div class="stat-card" style="border-left-color: #0284C7;">
-                <div class="stat-icon" style="background: #E0F2FE; color: #0284C7;">
-                    <i class="fa-solid fa-calendar-check"></i>
-                </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fa-solid fa-calendar-check"></i></div>
                 <div class="stat-info">
-                    <h3 id="statTotal">0</h3>
+                    <h3 id="statTotal">-</h3>
                     <p>Total Bookings</p>
                 </div>
             </div>
             <div class="stat-card" style="border-left-color: #D97706;">
-                <div class="stat-icon" style="background: #FEF3C7; color: #D97706;">
-                    <i class="fa-solid fa-clock"></i>
-                </div>
+                <div class="stat-icon" style="background-color: #FEF3C7; color: #D97706;"><i class="fa-solid fa-clock"></i></div>
                 <div class="stat-info">
-                    <h3 id="statPending">0</h3>
+                    <h3 id="statPending">-</h3>
                     <p>Pending Approval</p>
                 </div>
             </div>
             <div class="stat-card" style="border-left-color: #059669;">
-                <div class="stat-icon" style="background: #D1FAE5; color: #059669;">
-                    <i class="fa-solid fa-circle-check"></i>
-                </div>
+                <div class="stat-icon" style="background-color: #D1FAE5; color: #059669;"><i class="fa-solid fa-circle-check"></i></div>
                 <div class="stat-info">
-                    <h3 id="statConfirmed">0</h3>
-                    <p>Confirmed</p>
+                    <h3 id="statConfirmed">-</h3>
+                    <p>Confirmed Visits</p>
                 </div>
             </div>
-            <div class="stat-card" style="border-left-color: #7C3AED;">
-                <div class="stat-icon" style="background: #EDE9FE; color: #7C3AED;">
-                    <i class="fa-solid fa-calendar-day"></i>
-                </div>
+            <div class="stat-card" style="border-left-color: #2563EB;">
+                <div class="stat-icon" style="background-color: #DBEAFE; color: #2563EB;"><i class="fa-solid fa-calendar-day"></i></div>
                 <div class="stat-info">
-                    <h3 id="statToday">0</h3>
+                    <h3 id="statToday">-</h3>
                     <p>Today's Schedule</p>
                 </div>
             </div>
-            <div class="stat-card" style="border-left-color: #DB2777;">
-                <div class="stat-icon" style="background: #FCE7F3; color: #DB2777;">
-                    <i class="fa-solid fa-envelope"></i>
-                </div>
+            <div class="stat-card" style="border-left-color: var(--accent);">
+                <div class="stat-icon" style="background-color: #FEE2E2; color: var(--accent);"><i class="fa-solid fa-envelope"></i></div>
                 <div class="stat-info">
-                    <h3 id="statInquiries">0</h3>
+                    <h3 id="statInquiries">-</h3>
                     <p>Inquiries</p>
                 </div>
             </div>
         </div>
 
-        <!-- Filter & Search Toolbar -->
-        <div class="filter-panel">
-            <div class="filter-inputs">
-                <input type="text" id="searchInput" class="filter-control" placeholder="Search ref code, name, phone..." style="min-width: 220px;">
-                
-                <select id="statusFilter" class="filter-control">
-                    <option value="all">All Statuses</option>
-                    <option value="Pending Approval">Pending Approval</option>
-                    <option value="Approved">Approved</option>
-                    <option value="Rescheduled">Rescheduled</option>
-                    <option value="Completed">Completed</option>
-                    <option value="Rejected">Rejected</option>
-                </select>
-
-                <div style="display: flex; align-items: center; gap: 5px;">
-                    <label style="font-size: 0.8rem; color: var(--text-muted);">From:</label>
-                    <input type="date" id="startDateFilter" class="filter-control">
-                </div>
-
-                <div style="display: flex; align-items: center; gap: 5px;">
-                    <label style="font-size: 0.8rem; color: var(--text-muted);">To:</label>
-                    <input type="date" id="endDateFilter" class="filter-control">
-                </div>
-            </div>
-
-            <div class="filter-actions">
-                <button type="button" id="todayBtn" class="filter-control" style="background: #F3E8FF; border-color: #C084FC; color: #6B21A8; font-weight: 600; cursor: pointer;">
-                    <i class="fa-solid fa-calendar-day"></i> Today's Schedule
-                </button>
-                <button type="button" id="exportCsvBtn" class="filter-control" style="background: #ECFDF5; border-color: #6EE7B7; color: #047857; font-weight: 600; cursor: pointer;">
-                    <i class="fa-solid fa-file-csv"></i> Export CSV
-                </button>
-                <button type="button" id="clearFiltersBtn" class="filter-control" style="background: #F1F5F9; cursor: pointer;">
-                    <i class="fa-solid fa-rotate-left"></i> Reset
-                </button>
-            </div>
+        <!-- Navigation Tabs -->
+        <div class="dashboard-tabs">
+            <button class="tab-btn active" data-tab="appointmentsTab">Appointments</button>
+            <button class="tab-btn" data-tab="inquiriesTab">Patient Inquiries</button>
+            <button class="tab-btn" data-tab="activityTab">Audit Trail & Logs</button>
+            <button class="tab-btn" data-tab="accountTab">Account Settings</button>
         </div>
 
-        <!-- Appointments Table Card -->
-        <div class="table-card">
-            <div class="table-header">
-                <h3>Appointments Directory</h3>
-                <span id="appointmentResultsCount" style="font-size: 0.85rem; color: var(--text-muted);">Loading appointments...</span>
+        <!-- Tab 1: Appointments -->
+        <div id="appointmentsTab" class="tab-content">
+            <!-- Filter Bar -->
+            <div class="form-card" style="padding: 20px; margin-bottom: 24px;">
+                <div style="display: flex; gap: 14px; flex-wrap: wrap; align-items: center; justify-content: space-between;">
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Search ref code, name, phone..." style="width: 240px; padding: 10px 14px; font-size: 0.875rem;">
+                        <select id="statusFilter" class="form-control" style="width: 170px; padding: 10px 14px; font-size: 0.875rem;">
+                            <option value="all">All Statuses</option>
+                            <option value="Pending Approval">Pending Approval</option>
+                            <option value="Confirmed">Confirmed</option>
+                            <option value="Rescheduled">Rescheduled</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+                        <button id="todayFilterBtn" class="btn btn-secondary btn-sm">
+                            <i class="fa-solid fa-calendar-day"></i> Today Only
+                        </button>
+                    </div>
+
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <button id="exportCsvBtn" class="btn btn-secondary btn-sm">
+                            <i class="fa-solid fa-file-csv"></i> Export CSV
+                        </button>
+                        <button id="refreshApptsBtn" class="btn btn-secondary btn-sm">
+                            <i class="fa-solid fa-rotate"></i> Refresh
+                        </button>
+                    </div>
+                </div>
             </div>
+
+            <!-- Appointments Table -->
             <div class="table-responsive">
-                <table id="appointmentsTable">
+                <table class="admin-table">
                     <thead>
                         <tr>
-                            <th>Reference</th>
+                            <th>Ref Code</th>
                             <th>Patient Name</th>
-                            <th>Contact Info</th>
-                            <th>Date & Time</th>
-                            <th>Treatment</th>
+                            <th>Contact</th>
+                            <th>Service</th>
+                            <th>Date & Slot</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="tableBody">
-                        <!-- Populated via JS -->
+                    <tbody id="appointmentsTableBody">
+                        <tr><td colspan="7" style="text-align: center; padding: 30px;">Loading appointments...</td></tr>
                     </tbody>
                 </table>
-            </div>
 
-            <div id="emptyState" style="display: none; text-align: center; padding: 50px 20px; color: var(--text-muted);">
-                <i class="fa-regular fa-folder-open" style="font-size: 3rem; color: #CBD5E1; margin-bottom: 10px;"></i>
-                <h4>No Appointments Found</h4>
-                <p style="font-size: 0.9rem;">No appointments match your current search or date filters.</p>
-            </div>
-
-            <!-- Pagination Bar -->
-            <div class="pagination-container" id="paginationBar">
-                <span id="pageInfo">Showing page 1 of 1</span>
-                <div style="display: flex; gap: 8px;">
-                    <button type="button" id="prevPageBtn" class="page-btn" disabled><i class="fa-solid fa-chevron-left"></i> Previous</button>
-                    <button type="button" id="nextPageBtn" class="page-btn" disabled>Next <i class="fa-solid fa-chevron-right"></i></button>
+                <div class="pagination-container">
+                    <span id="pageInfoText" style="color: var(--muted); font-size: 0.875rem;">Showing 0 of 0</span>
+                    <div style="display: flex; gap: 8px;">
+                        <button id="prevPageBtn" class="btn btn-secondary btn-sm" disabled>Previous</button>
+                        <button id="nextPageBtn" class="btn btn-secondary btn-sm" disabled>Next</button>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Inquiries Table Card -->
-        <div class="table-card">
-            <div class="table-header">
-                <h3>Patient Contact Inquiries <span id="inquiryCountBadge" style="background: #E2E8F0; padding: 2px 8px; border-radius: 20px; font-size: 0.8rem; margin-left: 8px;">0</span></h3>
-            </div>
+        <!-- Tab 2: Inquiries -->
+        <div id="inquiriesTab" class="tab-content" style="display: none;">
             <div class="table-responsive">
-                <table id="inquiriesTable">
+                <table class="admin-table">
                     <thead>
                         <tr>
                             <th>Date</th>
                             <th>Name</th>
                             <th>Contact</th>
-                            <th>Source</th>
-                            <th>Inquiry Details</th>
-                            <th>Action</th>
+                            <th>Message</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="inqTableBody">
-                        <!-- Populated via JS -->
+                    <tbody id="inquiriesTableBody">
+                        <tr><td colspan="5" style="text-align: center; padding: 30px;">Loading inquiries...</td></tr>
                     </tbody>
                 </table>
             </div>
-            <div id="emptyInqState" style="display: none; text-align: center; padding: 40px 20px; color: var(--text-muted);">
-                <p>No customer inquiries at this time.</p>
-            </div>
         </div>
 
-        <!-- Activity Log Card -->
-        <div class="table-card">
-            <div class="table-header">
-                <h3><i class="fa-solid fa-clock-rotate-left" style="color: var(--primary-green); margin-right: 8px;"></i> Recent Management Activity Log</h3>
-            </div>
+        <!-- Tab 3: Activity Logs -->
+        <div id="activityTab" class="tab-content" style="display: none;">
             <div class="table-responsive">
-                <table id="activityTable">
+                <table class="admin-table">
                     <thead>
                         <tr>
-                            <th>Time</th>
+                            <th>Timestamp</th>
                             <th>Action</th>
                             <th>Details</th>
-                            <th>User</th>
+                            <th>Performed By</th>
                         </tr>
                     </thead>
                     <tbody id="activityTableBody">
-                        <!-- Populated via JS -->
+                        <tr><td colspan="4" style="text-align: center; padding: 30px;">Loading audit logs...</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-    </div>
+        <!-- Tab 4: Account Settings -->
+        <div id="accountTab" class="tab-content" style="display: none; max-width: 540px;">
+            <div class="form-card">
+                <h3 class="card-title" style="margin-bottom: 16px;">Update Administrator Credentials</h3>
+                <div id="accountAlert" class="alert-box alert-error" style="display: none;" role="alert"></div>
 
-    <!-- Reschedule Modal -->
-    <div id="editModal" class="modal-overlay">
-        <div class="modal-card">
-            <h3>Reschedule Appointment</h3>
-            <form id="editForm">
-                <input type="hidden" id="editId">
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-size: 0.85rem; font-weight: 600;">Patient Name</label>
-                    <input type="text" id="editName" class="filter-control" style="width: 100%;" required>
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-size: 0.85rem; font-weight: 600;">New Appointment Date (Mon – Sat)</label>
-                    <input type="date" id="editDate" class="filter-control" style="width: 100%;" required>
-                </div>
-                <div class="form-group" style="margin-bottom: 20px;">
-                    <label style="display: block; margin-bottom: 5px; font-size: 0.85rem; font-weight: 600;">New Time Slot</label>
-                    <select id="editTime" class="filter-control" style="width: 100%;" required>
-                        <option value="09:30 AM">09:30 AM</option>
-                        <option value="10:30 AM">10:30 AM</option>
-                        <option value="11:30 AM">11:30 AM</option>
-                        <option value="12:30 PM">12:30 PM</option>
-                        <option value="04:00 PM">04:00 PM</option>
-                        <option value="05:00 PM">05:00 PM</option>
-                        <option value="06:00 PM">06:00 PM</option>
-                        <option value="07:00 PM">07:00 PM</option>
-                    </select>
-                </div>
-                <div style="display: flex; justify-content: flex-end; gap: 10px;">
-                    <button type="button" class="logout-btn" onclick="closeModal()" style="background: #64748B;">Cancel</button>
-                    <button type="submit" class="logout-btn" style="background: var(--primary-green);">Save Schedule</button>
-                </div>
-            </form>
+                <form id="changeCredentialsForm" novalidate>
+                    <div class="form-group">
+                        <label for="newEmail">New Email (Optional)</label>
+                        <input type="email" id="newEmail" class="form-control" placeholder="Leave blank to keep current email">
+                    </div>
+                    <div class="form-group">
+                        <label for="currentPassword">Current Password *</label>
+                        <input type="password" id="currentPassword" class="form-control" required placeholder="••••••••••••">
+                    </div>
+                    <div class="form-group">
+                        <label for="newPassword">New Password (Min 10 characters)</label>
+                        <input type="password" id="newPassword" class="form-control" placeholder="••••••••••••" minlength="10">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        Update Credentials
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 
-    <!-- Credentials Modal -->
-    <div id="credentialsModal" class="modal-overlay">
-        <div class="modal-card">
-            <h3>Update Administrator Credentials</h3>
-            <form id="credentialsForm">
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-size: 0.85rem; font-weight: 600;">New Email Address</label>
-                    <input type="email" id="credEmail" class="filter-control" style="width: 100%;" placeholder="admin@vinayakdentalcare.com">
-                </div>
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-size: 0.85rem; font-weight: 600;">Current Password *</label>
-                    <input type="password" id="credCurrentPassword" class="filter-control" style="width: 100%;" required placeholder="Verify current password">
-                </div>
-                <div class="form-group" style="margin-bottom: 20px;">
-                    <label style="display: block; margin-bottom: 5px; font-size: 0.85rem; font-weight: 600;">New Password (min 10 characters)</label>
-                    <input type="password" id="credNewPassword" class="filter-control" style="width: 100%;" placeholder="Leave blank to keep current">
-                </div>
-                <div style="display: flex; justify-content: flex-end; gap: 10px;">
-                    <button type="button" class="logout-btn" onclick="closeCredentialsModal()" style="background: #64748B;">Cancel</button>
-                    <button type="submit" class="logout-btn" style="background: var(--primary-green);">Update Credentials</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Dashboard JavaScript Logic -->
+    <!-- Dashboard Scripts -->
     <script>
-        let allAppointments = [];
-        let filteredAppointments = [];
-        let inquiries = [];
+    (function () {
         let currentPage = 1;
-        const pageSize = 20;
+        let totalPages = 1;
+        let isTodayFilterActive = false;
+        let allAppointmentsList = [];
 
-        function escapeHtml(str) {
-            if (str === null || str === undefined) return '';
+        // Safe HTML escaper for DOM injections
+        const esc = (str) => {
+            if (!str) return '';
             return String(str)
                 .replace(/&/g, '&amp;')
                 .replace(/</g, '&lt;')
                 .replace(/>/g, '&gt;')
                 .replace(/"/g, '&quot;')
                 .replace(/'/g, '&#039;');
-        }
+        };
 
-        async function logoutAdmin() {
-            try {
-                await fetch('/api/auth/logout', { method: 'POST' });
-            } finally {
-                window.location.href = 'admin/index.html';
+        // Tab Switching
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+                btn.classList.add('active');
+                const targetId = btn.getAttribute('data-tab');
+                document.getElementById(targetId).style.display = 'block';
+
+                if (targetId === 'inquiriesTab') loadInquiries();
+                if (targetId === 'activityTab') loadActivityLogs();
+            });
+        });
+
+        // Load Appointments
+        const loadAppointments = async () => {
+            const search = document.getElementById('searchInput').value.trim();
+            const status = document.getElementById('statusFilter').value;
+            const tbody = document.getElementById('appointmentsTableBody');
+
+            let url = `/api/appointments?page=${currentPage}&limit=20`;
+            if (status !== 'all') url += `&status=${encodeURIComponent(status)}`;
+            if (search) url += `&search=${encodeURIComponent(search)}`;
+
+            if (isTodayFilterActive) {
+                const now = new Date();
+                const y = now.getFullYear();
+                const m = String(now.getMonth() + 1).padStart(2, '0');
+                const d = String(now.getDate()).padStart(2, '0');
+                const todayStr = `${y}-${m}-${d}`;
+                url += `&startDate=${todayStr}&endDate=${todayStr}`;
             }
-        }
 
-        async function loadAppointments() {
             try {
-                const res = await fetch('/api/appointments?limit=5000');
+                const res = await fetch(url);
                 if (res.status === 401) {
-                    window.location.href = 'admin/index.html';
+                    window.location.replace('/admin/index.html');
                     return;
                 }
                 const data = await res.json();
-                if (res.ok && data.success) {
-                    allAppointments = data.data || [];
-                    applyFilters();
-                    updateStats();
+
+                if (data.success) {
+                    allAppointmentsList = data.data;
+                    totalPages = data.pages || 1;
+                    document.getElementById('statTotal').textContent = data.total;
+                    document.getElementById('pageInfoText').textContent = `Page ${data.page} of ${data.pages} (${data.total} total)`;
+                    document.getElementById('prevPageBtn').disabled = data.page <= 1;
+                    document.getElementById('nextPageBtn').disabled = data.page >= data.pages;
+
+                    if (data.data.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 30px;">No appointments found matching your filter.</td></tr>';
+                        return;
+                    }
+
+                    tbody.innerHTML = data.data.map(a => {
+                        const statusClass = a.status.toLowerCase().replace(' ', '');
+                        return `
+                            <tr>
+                                <td><strong style="color: var(--teal);">${esc(a.referenceCode || 'VDC-' + a.id)}</strong></td>
+                                <td>${esc(a.patientName)}</td>
+                                <td>${esc(a.phone)}<br><small style="color: var(--muted);">${esc(a.email || '-')}</small></td>
+                                <td>${esc(a.service)}</td>
+                                <td><strong>${esc(a.date)}</strong><br><small>${esc(a.timeSlot)}</small></td>
+                                <td><span class="status-badge ${statusClass}">${esc(a.status)}</span></td>
+                                <td>
+                                    <select class="form-control" style="padding: 6px 10px; font-size: 0.8125rem; width: auto;" onchange="window.updateStatus(${a.id}, this.value)">
+                                        <option value="">Update...</option>
+                                        <option value="Confirmed">Confirm</option>
+                                        <option value="Completed">Complete</option>
+                                        <option value="Cancelled">Cancel</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        `;
+                    }).join('');
+
+                    // Compute Quick Stats
+                    let pendingCount = 0;
+                    let confirmedCount = 0;
+                    data.data.forEach(a => {
+                        if (a.status === 'Pending Approval') pendingCount++;
+                        if (a.status === 'Confirmed') confirmedCount++;
+                    });
+                    document.getElementById('statPending').textContent = pendingCount;
+                    document.getElementById('statConfirmed').textContent = confirmedCount;
                 }
             } catch (err) {
-                console.error('Failed to load appointments:', err);
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--danger); padding: 30px;">Failed to load appointments.</td></tr>';
             }
-        }
+        };
 
-        function updateStats() {
-            const todayStr = new Date().toISOString().split('T')[0];
-            let pending = 0;
-            let confirmed = 0;
-            let todayCount = 0;
-
-            allAppointments.forEach(app => {
-                if (app.status === 'Pending Approval') pending++;
-                if (app.status === 'Approved' || app.status === 'Confirmed') confirmed++;
-                if (app.date === todayStr && app.status !== 'Cancelled' && app.status !== 'Rejected') todayCount++;
-            });
-
-            document.getElementById('statTotal').innerText = allAppointments.length;
-            document.getElementById('statPending').innerText = pending;
-            document.getElementById('statConfirmed').innerText = confirmed;
-            document.getElementById('statToday').innerText = todayCount;
-            document.getElementById('statInquiries').innerText = inquiries.length;
-        }
-
-        function applyFilters() {
-            const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
-            const statusVal = document.getElementById('statusFilter').value;
-            const startDate = document.getElementById('startDateFilter').value;
-            const endDate = document.getElementById('endDateFilter').value;
-
-            filteredAppointments = allAppointments.filter(app => {
-                // Search term
-                if (searchTerm) {
-                    const matchName = (app.patientName || '').toLowerCase().includes(searchTerm);
-                    const matchPhone = (app.phone || '').toLowerCase().includes(searchTerm);
-                    const matchEmail = (app.email || '').toLowerCase().includes(searchTerm);
-                    const matchRef = (app.referenceCode || '').toLowerCase().includes(searchTerm);
-                    const matchSvc = (app.service || '').toLowerCase().includes(searchTerm);
-                    if (!matchName && !matchPhone && !matchEmail && !matchRef && !matchSvc) return false;
-                }
-
-                // Status
-                if (statusVal !== 'all') {
-                    if (statusVal === 'Approved') {
-                        if (app.status !== 'Approved' && app.status !== 'Confirmed') return false;
-                    } else if (app.status !== statusVal) {
-                        return false;
-                    }
-                }
-
-                // Date range
-                if (startDate && app.date < startDate) return false;
-                if (endDate && app.date > endDate) return false;
-
-                return true;
-            });
-
-            currentPage = 1;
-            renderAppointmentsTable();
-        }
-
-        function renderAppointmentsTable() {
-            const tbody = document.getElementById('tableBody');
-            const emptyState = document.getElementById('emptyState');
-            const countLabel = document.getElementById('appointmentResultsCount');
-            const total = filteredAppointments.length;
-
-            countLabel.textContent = `Showing ${total} appointment(s)`;
-            tbody.innerHTML = '';
-
-            if (total === 0) {
-                emptyState.style.display = 'block';
-                document.getElementById('paginationBar').style.display = 'none';
-                return;
-            }
-
-            emptyState.style.display = 'none';
-            document.getElementById('paginationBar').style.display = 'flex';
-
-            const totalPages = Math.ceil(total / pageSize) || 1;
-            const startIdx = (currentPage - 1) * pageSize;
-            const pageData = filteredAppointments.slice(startIdx, startIdx + pageSize);
-
-            document.getElementById('pageInfo').textContent = `Showing ${startIdx + 1}–${Math.min(startIdx + pageSize, total)} of ${total} (Page ${currentPage} of ${totalPages})`;
-            document.getElementById('prevPageBtn').disabled = currentPage <= 1;
-            document.getElementById('nextPageBtn').disabled = currentPage >= totalPages;
-
-            pageData.forEach(app => {
-                let badgeClass = 'status-pending';
-                if (app.status === 'Approved' || app.status === 'Confirmed') badgeClass = 'status-approved';
-                if (app.status === 'Rescheduled') badgeClass = 'status-rescheduled';
-                if (app.status === 'Rejected' || app.status === 'Cancelled') badgeClass = 'status-rejected';
-                if (app.status === 'Completed') badgeClass = 'status-completed';
-
-                const safeRef = escapeHtml(app.referenceCode || `VDC-${app.id}`);
-                const safeName = escapeHtml(app.patientName);
-                const safeReqDate = escapeHtml(app.requestDate);
-                const safePhone = escapeHtml(app.phone);
-                const safeEmail = escapeHtml(app.email || 'N/A');
-                const safeDate = escapeHtml(app.date);
-                const safeTime = escapeHtml(app.timeSlot);
-                const safeService = escapeHtml(app.service || 'General Dental Checkup');
-                const safeMsg = escapeHtml(app.message || 'No specific notes');
-                const safeStatus = escapeHtml(app.status);
-
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>
-                        <span style="font-family: monospace; font-weight: 700; font-size: 0.85rem; background: #0F172A; color: #38BDF8; padding: 4px 8px; border-radius: 4px;">${safeRef}</span>
-                    </td>
-                    <td>
-                        <strong>${safeName}</strong><br>
-                        <span style="font-size: 0.78rem; color: #64748B;">Req: ${safeReqDate}</span>
-                    </td>
-                    <td>
-                        <i class="fa-solid fa-phone" style="font-size: 0.75rem;"></i> <a href="tel:${safePhone}" style="color: inherit; font-weight: 500;">${safePhone}</a><br>
-                        ${safeEmail !== 'N/A' ? `<i class="fa-solid fa-envelope" style="font-size: 0.75rem;"></i> ${safeEmail}` : ''}
-                    </td>
-                    <td>
-                        <i class="fa-regular fa-calendar"></i> <strong>${safeDate}</strong><br>
-                        <i class="fa-regular fa-clock"></i> ${safeTime}
-                    </td>
-                    <td>
-                        <span style="color: var(--primary-green); font-weight: 600;">${safeService}</span><br>
-                        <span style="font-size: 0.78rem; color: #64748B; max-width: 180px; display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${safeMsg}">${safeMsg}</span>
-                    </td>
-                    <td>
-                        <span class="status-badge ${badgeClass}">${safeStatus}</span>
-                    </td>
-                    <td>
-                        <div class="action-btns">
-                            <button class="action-btn approve-btn" title="Confirm / Approve" onclick="handleAction(${app.id}, 'Approved')">
-                                <i class="fa-solid fa-check"></i>
-                            </button>
-                            <button class="action-btn reschedule-btn" title="Reschedule" onclick="openEditModal(${app.id})">
-                                <i class="fa-solid fa-calendar-week"></i>
-                            </button>
-                            <button class="action-btn reject-btn" title="Cancel / Reject" onclick="handleAction(${app.id}, 'Rejected')">
-                                <i class="fa-solid fa-xmark"></i>
-                            </button>
-                            <button class="action-btn delete-btn" title="Delete Record" onclick="deleteAppointment(${app.id})">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-                        </div>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        async function handleAction(id, newStatus) {
+        window.updateStatus = async (id, status) => {
+            if (!status) return;
             try {
                 const res = await fetch(`/api/appointments/${id}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ status: newStatus })
+                    body: JSON.stringify({ status })
                 });
-                const data = await res.json();
-                if (res.ok && data.success) {
-                    await loadAppointments();
-                    loadActivityLogs();
-                } else {
-                    alert(data.message || 'Failed to update appointment.');
+                if (res.ok) {
+                    loadAppointments();
                 }
-            } catch (err) {
-                alert('Connection error updating appointment.');
+            } catch (e) {
+                alert('Failed to update status');
             }
-        }
+        };
 
-        async function deleteAppointment(id) {
-            if (confirm("Are you sure you want to permanently delete this appointment record?")) {
-                try {
-                    const res = await fetch(`/api/appointments/${id}`, { method: 'DELETE' });
-                    const data = await res.json();
-                    if (res.ok && data.success) {
-                        await loadAppointments();
-                        loadActivityLogs();
-                    } else {
-                        alert(data.message || 'Failed to delete.');
-                    }
-                } catch (err) {
-                    alert('Connection error deleting appointment.');
+        // CSV Export with formula injection prevention
+        document.getElementById('exportCsvBtn').addEventListener('click', () => {
+            if (!allAppointmentsList.length) return;
+
+            const sanitizeCell = (val) => {
+                let str = String(val || '').replace(/"/g, '""');
+                // CSV Formula Injection Prevention (prefix =, +, -, @ with ')
+                if (/^[=+\-@]/.test(str)) {
+                    str = "'" + str;
                 }
-            }
-        }
+                return `"${str}"`;
+            };
 
-        // CSV Export Functionality
-        function exportAppointmentsToCSV() {
-            if (filteredAppointments.length === 0) {
-                alert('No appointment records to export.');
-                return;
-            }
-
-            const headers = ['Reference Code', 'Patient Name', 'Phone', 'Email', 'Treatment', 'Date', 'Time Slot', 'Status', 'Requested At', 'Notes'];
-            const rows = filteredAppointments.map(app => [
-                `"${app.referenceCode || ''}"`,
-                `"${(app.patientName || '').replace(/"/g, '""')}"`,
-                `"${app.phone || ''}"`,
-                `"${app.email || ''}"`,
-                `"${(app.service || '').replace(/"/g, '""')}"`,
-                `"${app.date || ''}"`,
-                `"${app.timeSlot || ''}"`,
-                `"${app.status || ''}"`,
-                `"${(app.requestDate || '').replace(/"/g, '""')}"`,
-                `"${(app.message || '').replace(/"/g, '""')}"`
+            const headers = ["Reference Code", "Patient Name", "Phone", "Email", "Service", "Date", "Time Slot", "Status"];
+            const rows = allAppointmentsList.map(a => [
+                sanitizeCell(a.referenceCode),
+                sanitizeCell(a.patientName),
+                sanitizeCell(a.phone),
+                sanitizeCell(a.email),
+                sanitizeCell(a.service),
+                sanitizeCell(a.date),
+                sanitizeCell(a.timeSlot),
+                sanitizeCell(a.status)
             ]);
 
-            const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-            const encodedUri = encodeURI(csvContent);
+            const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
-            const todayStr = new Date().toISOString().split('T')[0];
-            link.setAttribute('href', encodedUri);
-            link.setAttribute('download', `vinayak_appointments_${todayStr}.csv`);
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute('download', `Vinayak_Dental_Appointments_${new Date().toISOString().slice(0, 10)}.csv`);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-        }
+        });
 
-        // Reschedule Modal
-        const editModal = document.getElementById('editModal');
-        const editForm = document.getElementById('editForm');
+        // Search & Filter Listeners
+        document.getElementById('searchInput').addEventListener('input', () => { currentPage = 1; loadAppointments(); });
+        document.getElementById('statusFilter').addEventListener('change', () => { currentPage = 1; loadAppointments(); });
+        document.getElementById('refreshApptsBtn').addEventListener('click', loadAppointments);
+        document.getElementById('todayFilterBtn').addEventListener('click', (e) => {
+            isTodayFilterActive = !isTodayFilterActive;
+            e.currentTarget.classList.toggle('active', isTodayFilterActive);
+            currentPage = 1;
+            loadAppointments();
+        });
 
-        function openEditModal(id) {
-            const app = allAppointments.find(a => a.id === id);
-            if (app) {
-                document.getElementById('editId').value = app.id;
-                document.getElementById('editName').value = app.patientName;
-                document.getElementById('editDate').value = app.date;
-                document.getElementById('editTime').value = app.timeSlot;
-                editModal.classList.add('active');
-            }
-        }
+        document.getElementById('prevPageBtn').addEventListener('click', () => { if (currentPage > 1) { currentPage--; loadAppointments(); } });
+        document.getElementById('nextPageBtn').addEventListener('click', () => { if (currentPage < totalPages) { currentPage++; loadAppointments(); } });
 
-        function closeModal() {
-            editModal.classList.remove('active');
-        }
-
-        if (editForm) {
-            editForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const id = document.getElementById('editId').value;
-                const patientName = document.getElementById('editName').value.trim();
-                const date = document.getElementById('editDate').value;
-                const timeSlot = document.getElementById('editTime').value;
-
-                try {
-                    const res = await fetch(`/api/appointments/${id}`, {
-                        method: 'PUT',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ patientName, date, timeSlot })
-                    });
-                    const data = await res.json();
-                    if (res.ok && data.success) {
-                        closeModal();
-                        await loadAppointments();
-                        loadActivityLogs();
-                    } else {
-                        alert(data.message || 'Failed to reschedule.');
-                    }
-                } catch (err) {
-                    alert('Connection error.');
-                }
-            });
-        }
-
-        // Credentials Modal
-        const credModal = document.getElementById('credentialsModal');
-        const credForm = document.getElementById('credentialsForm');
-
-        function openCredentialsModal() {
-            credForm.reset();
-            credModal.classList.add('active');
-        }
-
-        function closeCredentialsModal() {
-            credModal.classList.remove('active');
-        }
-
-        if (credForm) {
-            credForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const newEmail = document.getElementById('credEmail').value.trim();
-                const currentPassword = document.getElementById('credCurrentPassword').value;
-                const newPassword = document.getElementById('credNewPassword').value;
-
-                const bodyPayload = { currentPassword };
-                if (newEmail) bodyPayload.newEmail = newEmail;
-                if (newPassword) bodyPayload.newPassword = newPassword;
-
-                try {
-                    const res = await fetch('/api/auth/change-credentials', {
-                        method: 'PUT',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(bodyPayload)
-                    });
-                    const data = await res.json();
-                    if (res.ok && data.success) {
-                        alert('Credentials updated successfully.');
-                        closeCredentialsModal();
-                    } else {
-                        alert(data.message || 'Failed to update credentials.');
-                    }
-                } catch (err) {
-                    alert('Connection error.');
-                }
-            });
-        }
-
-        // Inquiries Management
-        async function loadInquiries() {
+        // Load Inquiries
+        const loadInquiries = async () => {
+            const tbody = document.getElementById('inquiriesTableBody');
             try {
                 const res = await fetch('/api/inquiries');
-                if (res.status === 401) return;
                 const data = await res.json();
-                if (res.ok && data.success) {
-                    inquiries = data.data || [];
-                    renderInquiriesTable();
-                    updateStats();
-                }
-            } catch (err) {
-                console.error('Failed to load inquiries:', err);
-            }
-        }
-
-        function renderInquiriesTable() {
-            const tbody = document.getElementById('inqTableBody');
-            const emptyState = document.getElementById('emptyInqState');
-            document.getElementById('inquiryCountBadge').textContent = inquiries.length;
-            tbody.innerHTML = '';
-
-            if (inquiries.length === 0) {
-                emptyState.style.display = 'block';
-                return;
-            }
-
-            emptyState.style.display = 'none';
-            inquiries.forEach(inq => {
-                const safeDate = escapeHtml(inq.date || inq.createdAt || 'Recent');
-                const safeName = escapeHtml(inq.name);
-                const safePhone = escapeHtml(inq.phone);
-                const safeEmail = escapeHtml(inq.email);
-                const safeSource = escapeHtml(inq.source || 'Website');
-                const safeInfo = escapeHtml(inq.info);
-
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td><span style="font-size: 0.8rem; color: #64748B;">${safeDate}</span></td>
-                    <td><strong>${safeName}</strong></td>
-                    <td>
-                        <i class="fa-solid fa-phone" style="font-size: 0.75rem;"></i> <a href="tel:${safePhone}" style="color: inherit;">${safePhone}</a><br>
-                        ${safeEmail !== 'N/A' && safeEmail !== '' ? `<i class="fa-solid fa-envelope" style="font-size: 0.75rem;"></i> ${safeEmail}` : ''}
-                    </td>
-                    <td><span style="background: #F1F5F9; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;">${safeSource}</span></td>
-                    <td style="max-width: 250px; text-wrap: wrap;">${safeInfo}</td>
-                    <td>
-                        <button class="action-btn delete-btn" title="Delete Inquiry" onclick="deleteInquiry(${inq.id})">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        async function deleteInquiry(id) {
-            if (confirm("Delete this patient inquiry?")) {
-                try {
-                    const res = await fetch(`/api/inquiries/${id}`, { method: 'DELETE' });
-                    const data = await res.json();
-                    if (res.ok && data.success) {
-                        loadInquiries();
-                    } else {
-                        alert(data.message || 'Failed to delete.');
+                if (data.success) {
+                    document.getElementById('statInquiries').textContent = data.count;
+                    if (!data.data.length) {
+                        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 30px;">No patient inquiries found.</td></tr>';
+                        return;
                     }
-                } catch (err) {
-                    alert('Connection error.');
-                }
-            }
-        }
-
-        // Activity Logs
-        async function loadActivityLogs() {
-            try {
-                const res = await fetch('/api/appointments/activity/logs');
-                if (!res.ok) return;
-                const data = await res.json();
-                if (data.success && data.data) {
-                    const tbody = document.getElementById('activityTableBody');
-                    tbody.innerHTML = '';
-                    data.data.forEach(log => {
-                        const tr = document.createElement('tr');
-                        const timeStr = new Date(log.createdAt || log.timestamp).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
-                        tr.innerHTML = `
-                            <td><span style="font-size: 0.8rem; color: #64748B;">${escapeHtml(timeStr)}</span></td>
-                            <td><span style="font-weight: 600; color: var(--primary-green);">${escapeHtml(log.action)}</span></td>
-                            <td style="font-size: 0.85rem;">${escapeHtml(log.details)}</td>
-                            <td><span style="font-size: 0.8rem; background: #F1F5F9; padding: 2px 6px; border-radius: 4px;">${escapeHtml(log.performedBy)}</span></td>
-                        `;
-                        tbody.appendChild(tr);
-                    });
+                    tbody.innerHTML = data.data.map(i => `
+                        <tr>
+                            <td><small>${esc(i.date)}</small></td>
+                            <td><strong>${esc(i.name)}</strong></td>
+                            <td>${esc(i.phone)}<br><small>${esc(i.email || '-')}</small></td>
+                            <td>${esc(i.info)}</td>
+                            <td>
+                                <button class="btn btn-secondary btn-sm" style="color: var(--danger); border-color: var(--danger);" onclick="window.deleteInquiry(${i.id})">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `).join('');
                 }
             } catch (e) {
-                console.warn('Could not load activity logs:', e);
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--danger); padding: 30px;">Failed to load inquiries.</td></tr>';
             }
-        }
+        };
 
-        // Event Listeners
-        document.addEventListener('DOMContentLoaded', () => {
-            loadAppointments();
-            loadInquiries();
-            loadActivityLogs();
+        window.deleteInquiry = async (id) => {
+            if (!confirm('Are you sure you want to remove this inquiry?')) return;
+            try {
+                await fetch(`/api/inquiries/${id}`, { method: 'DELETE' });
+                loadInquiries();
+            } catch (e) {}
+        };
 
-            document.getElementById('searchInput').addEventListener('input', applyFilters);
-            document.getElementById('statusFilter').addEventListener('change', applyFilters);
-            document.getElementById('startDateFilter').addEventListener('change', applyFilters);
-            document.getElementById('endDateFilter').addEventListener('change', applyFilters);
-
-            document.getElementById('todayBtn').addEventListener('click', () => {
-                const todayStr = new Date().toISOString().split('T')[0];
-                document.getElementById('startDateFilter').value = todayStr;
-                document.getElementById('endDateFilter').value = todayStr;
-                document.getElementById('statusFilter').value = 'all';
-                applyFilters();
-            });
-
-            document.getElementById('clearFiltersBtn').addEventListener('click', () => {
-                document.getElementById('searchInput').value = '';
-                document.getElementById('statusFilter').value = 'all';
-                document.getElementById('startDateFilter').value = '';
-                document.getElementById('endDateFilter').value = '';
-                applyFilters();
-            });
-
-            document.getElementById('exportCsvBtn').addEventListener('click', exportAppointmentsToCSV);
-
-            document.getElementById('prevPageBtn').addEventListener('click', () => {
-                if (currentPage > 1) {
-                    currentPage--;
-                    renderAppointmentsTable();
+        // Load Activity Logs
+        const loadActivityLogs = async () => {
+            const tbody = document.getElementById('activityTableBody');
+            try {
+                const res = await fetch('/api/appointments/activity/logs');
+                const data = await res.json();
+                if (data.success) {
+                    if (!data.data.length) {
+                        tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 30px;">No audit trail events logged yet.</td></tr>';
+                        return;
+                    }
+                    tbody.innerHTML = data.data.map(l => `
+                        <tr>
+                            <td><small>${new Date(l.createdAt || l.timestamp).toLocaleString('en-IN')}</small></td>
+                            <td><strong>${esc(l.action)}</strong></td>
+                            <td>${esc(l.details)}</td>
+                            <td><small>${esc(l.performedBy)}</small></td>
+                        </tr>
+                    `).join('');
                 }
-            });
+            } catch (e) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: var(--danger); padding: 30px;">Failed to load logs.</td></tr>';
+            }
+        };
 
-            document.getElementById('nextPageBtn').addEventListener('click', () => {
-                const totalPages = Math.ceil(filteredAppointments.length / pageSize) || 1;
-                if (currentPage < totalPages) {
-                    currentPage++;
-                    renderAppointmentsTable();
+        // Change Credentials Handler
+        document.getElementById('changeCredentialsForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const alertBox = document.getElementById('accountAlert');
+            const newEmail = document.getElementById('newEmail').value.trim();
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+
+            alertBox.style.display = 'none';
+
+            try {
+                const res = await fetch('/api/auth/change-credentials', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ newEmail, currentPassword, newPassword })
+                });
+                const data = await res.json();
+
+                alertBox.className = `alert-box alert-${res.ok ? 'success' : 'error'}`;
+                alertBox.textContent = data.message;
+                alertBox.style.display = 'flex';
+                if (res.ok) {
+                    document.getElementById('changeCredentialsForm').reset();
                 }
-            });
+            } catch (err) {
+                alertBox.className = 'alert-box alert-error';
+                alertBox.textContent = 'Failed to update credentials. Please try again.';
+                alertBox.style.display = 'flex';
+            }
         });
+
+        // Sign out
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            await fetch('/api/auth/logout', { method: 'POST' });
+            window.location.replace('/admin/index.html');
+        });
+
+        // Initial Load
+        loadAppointments();
+    })();
     </script>
 </body>
 </html>

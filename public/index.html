@@ -3,77 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vinayak Dental Care | Best Dental Clinic & Implant Center in Kapadvanj</title>
-    <meta name="description" content="Experience painless and advanced dental treatments at Vinayak Dental Care, Kapadvanj. Specializing in Dental Implants, Root Canal (RCT), Teeth Whitening, and Kids Dentistry.">
-    <link rel="canonical" href="https://vinayak-dentalcare.vercel.app/">
+    <meta name="description" content="Modern, gentle dental care in Kapadvanj, Gujarat by Dr. Vishal and Dr. Devanshi. General checkups, root canal treatments, dental implants, and braces.">
+    <title>Dental Clinic & Implant Centre in Kapadvanj | Vinayak Dental Care</title>
     
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph & Twitter Meta -->
+    <meta property="og:title" content="Vinayak Dental Care — Dental Clinic in Kapadvanj">
+    <meta property="og:description" content="Modern dental care in Kapadvanj, Gujarat. Comfortable treatments, transparent care plans, and personalized dentistry.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://vinayak-dentalcare.vercel.app/">
-    <meta property="og:title" content="Vinayak Dental Care | Advanced Dental Care for a Healthy Smile">
-    <meta property="og:description" content="Top-tier dental clinic in Kapadvanj led by Dr. Vishal & Dr. Devanshi. Book your appointment online today.">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=1200">
-    <meta property="og:site_name" content="Vinayak Dental Care">
-    
-    <!-- Twitter -->
+    <meta property="og:url" content="https://vinayak-dentalcare.vercel.app">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Vinayak Dental Care | Dental Clinic in Kapadvanj">
-    <meta name="twitter:description" content="Specializing in implants, painless RCT, and smile transformations in Kapadvanj, Gujarat.">
-    <meta name="twitter:image" content="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=1200">
 
-    <!-- JSON-LD LocalBusiness / Dentist Schema -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Dentist",
-      "name": "Vinayak Dental Care",
-      "image": "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=800",
-      "telephone": "+91-9999900000",
-      "email": "info@vinayakdentalcare.com",
-      "url": "https://vinayak-dentalcare.vercel.app/",
-      "priceRange": "$$",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "B-10 Laxmipooja Complex, Near Bandhan Hotel",
-        "addressLocality": "Kapadvanj",
-        "addressRegion": "Gujarat",
-        "postalCode": "387620",
-        "addressCountry": "IN"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": "23.023",
-        "longitude": "73.069"
-      },
-      "openingHoursSpecification": [
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-          "opens": "09:00",
-          "closes": "20:00"
-        }
-      ],
-      "medicalSpecialty": "Dentistry"
-    }
-    </script>
-
-    <!-- Fonts -->
+    <!-- Google Fonts: Fraunces, Inter, Noto Serif/Sans Gujarati & Devanagari -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400&family=Inter:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&family=Noto+Sans+Gujarati:wght@400;500;600&family=Noto+Serif+Devanagari:wght@500;600&family=Noto+Serif+Gujarati:wght@500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Free 6.4 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- CSS -->
+    
+    <!-- Design System Stylesheet -->
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/whatsapp.css">
 </head>
 <body>
+    <!-- Skip to main content -->
+    <a href="#main-content" class="skip-link" data-i18n="skip_to_content">Skip to content</a>
 
     <!-- Header Navigation -->
     <header>
         <div class="container">
             <nav>
-                <a href="index.html" class="logo">
+                <a href="index.html" class="logo" aria-label="Vinayak Dental Care Homepage">
                     <i class="fa-solid fa-tooth"></i>
                     <span data-config="clinicName">Vinayak Dental Care</span>
                 </a>
@@ -81,469 +40,352 @@
                 <div class="nav-links">
                     <a href="index.html" class="active" data-i18n="nav_home">Home</a>
                     <a href="about.html" data-i18n="nav_about">About Us</a>
-                    <a href="services.html" data-i18n="nav_services">Services</a>
+                    <a href="services.html" data-i18n="nav_services">Treatments</a>
                     <a href="contact.html" data-i18n="nav_contact">Contact</a>
-                    <a href="book.html" class="btn btn-primary nav-cta" data-i18n="nav_book">Book Appointment</a>
+                    <a href="book.html" class="btn btn-primary btn-sm nav-cta-btn" data-i18n="btn_book_visit">Book a visit</a>
                 </div>
 
-                <div class="hamburger" aria-label="Toggle navigation menu">
-                    <i class="fa-solid fa-bars"></i>
+                <div class="header-actions">
+                    <!-- Live Clinic Status Chip -->
+                    <div id="clinicStatusChip" class="clinic-status-chip" role="status"></div>
+
+                    <!-- Language Selector Pill -->
+                    <div class="lang-selector-pill" role="group" aria-label="Select Language">
+                        <button class="lang-btn active" data-lang="en">EN</button>
+                        <button class="lang-btn" data-lang="gu">ગુજરાતી</button>
+                        <button class="lang-btn" data-lang="hi">हिन्दी</button>
+                    </div>
+
+                    <!-- Mobile Menu Button -->
+                    <button class="hamburger-btn" aria-label="Toggle Navigation">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
                 </div>
             </nav>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title animate-on-scroll">
-                    <span data-i18n="hero_title_prefix">Advanced Dental Care for a </span>
-                    <span data-i18n="hero_title_highlight">Healthy Smile</span>
-                </h1>
-                <p class="hero-desc animate-on-scroll" data-i18n="hero_desc">At Vinayak Dental Care, we provide top-tier dental treatments to give you the confidence to smile brighter. Experience modern dentistry with comfort, precision, and personalized care.</p>
-                <div class="hero-buttons animate-on-scroll">
-                    <a href="book.html" class="btn btn-primary" data-i18n="btn_book_appointment">Book an Appointment</a>
-                    <a href="services.html" class="btn btn-outline" data-i18n="btn_our_services">Our Services</a>
-                </div>
+    <!-- Main Landmark -->
+    <main id="main-content">
+        <!-- 1. Hero Section -->
+        <section class="hero-section">
+            <div class="ambient-hero-bg" aria-hidden="true">
+                <div class="ambient-blob-1"></div>
+                <div class="ambient-blob-2"></div>
             </div>
-            <div class="hero-image animate-on-scroll">
-                <!-- TODO: Swap with authentic high-resolution clinic or treatment photo -->
-                <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&q=80&w=800" alt="Dentist examining patient at Vinayak Dental Care" width="800" height="533">
-            </div>
-        </div>
-    </section>
 
-    <!-- Information Cards -->
-    <section class="info-section">
-        <div class="container">
-            <div class="info-cards">
-                <div class="info-card animate-on-scroll">
-                    <div class="info-icon">
-                        <i class="fa-solid fa-clock"></i>
-                    </div>
-                    <div>
-                        <h4 data-i18n="info_hours_title">Opening Hours</h4>
-                        <p>Mon - Sat: 9:00 AM - 8:00 PM<br>Sunday: Closed</p>
+            <div class="container">
+                <div class="hero-grid no-image" id="heroGrid">
+                    <div class="hero-content">
+                        <span class="eyebrow" data-i18n="hero_eyebrow">Modern Dental Care in Kapadvanj</span>
+                        <h1 class="hero-title" data-blur-text data-i18n="hero_title">
+                            A calmer way to care for your <em>smile</em>.
+                        </h1>
+                        <p class="hero-subtitle" data-i18n="hero_subtitle">
+                            Modern dental care in Kapadvanj, explained clearly by Dr. Vishal and Dr. Devanshi.
+                        </p>
+                        <div class="hero-actions">
+                            <a href="book.html" class="btn btn-primary btn-magnetic" data-i18n="btn_book_visit">
+                                <i class="fa-regular fa-calendar-check"></i> Book a visit
+                            </a>
+                            <a href="contact.html" class="btn btn-whatsapp whatsapp-link" data-i18n="btn_whatsapp_us">
+                                <i class="fa-brands fa-whatsapp"></i> WhatsApp us
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="info-card animate-on-scroll">
-                    <div class="info-icon">
-                        <i class="fa-solid fa-location-dot"></i>
+            </div>
+        </section>
+
+        <!-- 2. "What brings you in?" Symptom Navigation -->
+        <section class="section section-paper">
+            <div class="container">
+                <div class="section-header">
+                    <span class="eyebrow" data-i18n="symptoms_eyebrow">Your Dental Care</span>
+                    <h2 class="section-title" data-i18n="symptoms_title">What brings you in today?</h2>
+                    <p class="section-subtitle" data-i18n="symptoms_subtitle">
+                        Select your primary concern to explore relevant treatment options. (These guides assist navigation and do not substitute a professional examination).
+                    </p>
+                </div>
+
+                <div class="symptom-chips-container">
+                    <a href="book.html?service=General%20Dental%20Checkup" class="chip-symptom">
+                        <i class="fa-solid fa-bolt"></i> <span data-i18n="sym_toothache">Toothache / Pain</span>
+                    </a>
+                    <a href="book.html?service=General%20Dental%20Checkup" class="chip-symptom">
+                        <i class="fa-solid fa-snowflake"></i> <span data-i18n="sym_sensitivity">Tooth Sensitivity</span>
+                    </a>
+                    <a href="book.html?service=Dental%20Implants" class="chip-symptom">
+                        <i class="fa-solid fa-tooth"></i> <span data-i18n="sym_missing">Missing Tooth</span>
+                    </a>
+                    <a href="book.html?service=Braces%20%26%20Clear%20Aligners" class="chip-symptom">
+                        <i class="fa-solid fa-gem"></i> <span data-i18n="sym_crooked">Crooked Teeth / Braces</span>
+                    </a>
+                    <a href="book.html?service=Pediatric%20(Kids)%20Dentistry" class="chip-symptom">
+                        <i class="fa-solid fa-child"></i> <span data-i18n="sym_kids">Kids' Dental Visit</span>
+                    </a>
+                    <a href="book.html?service=Teeth%20Whitening" class="chip-symptom">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> <span data-i18n="sym_stains">Stained Teeth / Whitening</span>
+                    </a>
+                    <a href="book.html?service=General%20Dental%20Checkup" class="chip-symptom">
+                        <i class="fa-solid fa-stethoscope"></i> <span data-i18n="sym_routine">Routine Checkup</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Featured Treatments (Spotlight Cards) -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="eyebrow" data-i18n="services_eyebrow">Clinical Services</span>
+                    <h2 class="section-title" data-i18n="services_title">Personalized Dental Care</h2>
+                    <p class="section-subtitle" data-i18n="services_subtitle">
+                        From routine oral health checkups to advanced restorative dentistry.
+                    </p>
+                </div>
+
+                <div id="homeServicesGrid" class="cards-grid">
+                    <!-- Hydrated dynamically from CLINIC_CONFIG.services in script.js -->
+                </div>
+
+                <div style="text-align: center; margin-top: 48px;">
+                    <a href="services.html" class="btn btn-secondary" data-i18n="btn_view_all_treatments">
+                        View All Treatments <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. "Your First Visit" Timeline -->
+        <section class="section section-paper">
+            <div class="container">
+                <div class="section-header">
+                    <span class="eyebrow" data-i18n="first_visit_eyebrow">Patient Experience</span>
+                    <h2 class="section-title" data-i18n="first_visit_title">Your First Visit</h2>
+                    <p class="section-subtitle" data-i18n="first_visit_subtitle">
+                        Here is what to expect when you walk into our Kapadvanj clinic.
+                    </p>
+                </div>
+
+                <div class="steps-grid">
+                    <div class="step-card reveal" style="--i: 0;">
+                        <div class="step-number">01</div>
+                        <h3 class="step-title" data-i18n="step1_title">Warm Welcome</h3>
+                        <p class="step-desc" data-i18n="step1_desc">We listen carefully to your concerns, past history, and what you hope to achieve.</p>
                     </div>
-                    <div>
-                        <h4 data-i18n="info_location_title">Clinic Location</h4>
-                        <p data-config="addressFull" style="font-size: 0.95rem; margin-bottom: 5px;">B-10 Laxmipooja Complex, Near Bandhan Hotel, Kapadvanj, Gujarat 387620</p>
-                        <a href="https://maps.google.com/?q=Vinayak+Dental+Care+Kapadvanj" data-config-href="mapUrl" target="_blank" rel="noopener noreferrer" style="color: var(--primary-green); font-weight: 600; font-size: 0.88rem;">
-                            <i class="fa-solid fa-location-arrow"></i> <span data-i18n="btn_get_directions">Get Directions</span>
+                    <div class="step-card reveal" style="--i: 1;">
+                        <div class="step-number">02</div>
+                        <h3 class="step-title" data-i18n="step2_title">Gentle Examination</h3>
+                        <p class="step-desc" data-i18n="step2_desc">A thorough checkup of your teeth, gums, and bite, explained in plain language.</p>
+                    </div>
+                    <div class="step-card reveal" style="--i: 2;">
+                        <div class="step-number">03</div>
+                        <h3 class="step-title" data-i18n="step3_title">Transparent Plan</h3>
+                        <p class="step-desc" data-i18n="step3_desc">Clear options, transparent estimates, and realistic timelines so you decide comfortably.</p>
+                    </div>
+                    <div class="step-card reveal" style="--i: 3;">
+                        <div class="step-number">04</div>
+                        <h3 class="step-title" data-i18n="step4_title">Comfortable Care</h3>
+                        <p class="step-desc" data-i18n="step4_desc">Gentle treatment at your own pace in a clean, hygienic environment.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Meet Our Dentists -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="eyebrow" data-i18n="doctors_eyebrow">Our Dentists</span>
+                    <h2 class="section-title" data-i18n="doctors_title">Meet Our Dentists</h2>
+                    <p class="section-subtitle" data-i18n="doctors_subtitle">
+                        Committed to gentle, honest, and high-standard dental care for families in Kapadvanj.
+                    </p>
+                </div>
+
+                <div id="doctorsGridContainer" class="doctors-grid">
+                    <!-- Hydrated from CLINIC_CONFIG.doctorsList in script.js -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Patient Reviews / Google Business Link -->
+        <section class="section section-paper">
+            <div class="container">
+                <div class="section-header">
+                    <span class="eyebrow" data-i18n="reviews_eyebrow">Patient Feedback</span>
+                    <h2 class="section-title" data-i18n="reviews_title">What Patients Say</h2>
+                </div>
+
+                <div style="max-width: 650px; margin: 0 auto; text-align: center;" class="form-card">
+                    <div style="font-size: 2.2rem; color: var(--teal); margin-bottom: 16px;">
+                        <i class="fa-solid fa-comments"></i>
+                    </div>
+                    <h3 class="card-title" style="margin-bottom: 12px;" data-i18n="reviews_card_title">Read Our Google Reviews</h3>
+                    <p class="card-desc" style="margin-bottom: 24px;" data-i18n="reviews_card_desc">
+                        We value patient trust above all. Read honest feedback directly on our Google Business profile.
+                    </p>
+                    <a href="https://maps.google.com/?q=Vinayak+Dental+Care+Kapadvanj" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" data-i18n="btn_view_google_reviews">
+                        <i class="fa-brands fa-google"></i> View on Google Maps
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Visit Us & Hours -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="eyebrow" data-i18n="visit_eyebrow">Location & Hours</span>
+                    <h2 class="section-title" data-i18n="visit_title">Visit Our Clinic</h2>
+                </div>
+
+                <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));">
+                    <div class="spotlight-card">
+                        <div class="card-icon"><i class="fa-solid fa-clock"></i></div>
+                        <h3 class="card-title" data-i18n="hours_card_title">Clinic Hours</h3>
+                        <p class="card-desc">
+                            <strong>Monday – Saturday:</strong> 9:00 AM – 8:00 PM<br>
+                            <strong>Sunday:</strong> Closed (Weekly Holiday)
+                        </p>
+                    </div>
+
+                    <div class="spotlight-card">
+                        <div class="card-icon"><i class="fa-solid fa-location-dot"></i></div>
+                        <h3 class="card-title" data-i18n="address_card_title">Our Address</h3>
+                        <p class="card-desc">
+                            B-10 Laxmipooja Complex, Near Bandhan Hotel,<br>
+                            Kapadvanj, Gujarat 387620
+                        </p>
+                        <a href="https://maps.google.com/?q=Vinayak+Dental+Care+Kapadvanj" target="_blank" rel="noopener noreferrer" class="card-action-link">
+                            <span>Get Directions</span> <i class="fa-solid fa-arrow-up-right-from-square"></i>
                         </a>
                     </div>
                 </div>
-                <div class="info-card animate-on-scroll">
-                    <div class="info-icon">
-                        <i class="fa-solid fa-phone"></i>
-                    </div>
-                    <div>
-                        <h4 data-i18n="info_contact_title">Emergency & Contact</h4>
-                        <p><a href="tel:+919999900000" data-config-href="clinicPhone" data-config="clinicPhone" style="font-weight: 600; color: inherit;">+91 99999 00000</a><br><span data-i18n="info_contact_sub">Call us for queries & urgent care.</span></p>
-                    </div>
-                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Short Clinic Intro -->
-    <section class="about-preview">
-        <div class="container">
-            <div class="about-img animate-on-scroll">
-                <!-- TODO: Swap with actual clinic interior photograph -->
-                <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=800" alt="Vinayak Dental Care Modern Treatment Operatory" width="800" height="533" loading="lazy">
-                <div class="experience-badge">
-                    <h2>15+</h2>
-                    <p data-i18n="about_badge_exp">Years of<br>Excellence</p>
-                </div>
-            </div>
-            <div class="about-content animate-on-scroll">
-                <h2 data-i18n="about_welcome_title">Welcome to Vinayak Dental Care</h2>
-                <p data-i18n="about_welcome_p1">We are committed to providing the highest quality dental care using state-of-the-art technology. Our experienced team ensures a comfortable, gentle experience tailored to your unique oral health needs.</p>
-                <ul class="feature-list">
-                    <li><i class="fa-solid fa-circle-check"></i> <span data-i18n="about_feat_1">Advanced Diagnostic & Digital Imaging</span></li>
-                    <li><i class="fa-solid fa-circle-check"></i> <span data-i18n="about_feat_2">Experienced & Caring Dental Surgeons</span></li>
-                    <li><i class="fa-solid fa-circle-check"></i> <span data-i18n="about_feat_3">Painless & Patient-Centric Treatments</span></li>
-                    <li><i class="fa-solid fa-circle-check"></i> <span data-i18n="about_feat_4">Multi-tier Sterilization & Hygiene Standards</span></li>
-                </ul>
-                <a href="about.html" class="btn btn-primary" data-i18n="btn_learn_more">Learn More About Us</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Preview Section -->
-    <section class="services-bg">
-        <div class="container">
-            <h2 class="section-title animate-on-scroll" data-i18n="services_section_title">Our Dental Services</h2>
-            <p class="section-subtitle animate-on-scroll" data-i18n="services_section_sub">Specializing in Comprehensive Dental Care & Implantology to keep your smile healthy and bright.</p>
-            
-            <div class="services-grid" id="homeServicesGrid">
-                <!-- Dynamically populated from CLINIC_CONFIG.services -->
-            </div>
-            
-            <div style="text-align: center; margin-top: 50px;" class="animate-on-scroll">
-                <a href="services.html" class="btn btn-outline" data-i18n="btn_view_all_services">View All Services</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Meet Our Dentists Section -->
-    <section class="expert-section" style="padding: 80px 0; background-color: var(--white);">
-        <div class="container">
-            <h2 class="section-title animate-on-scroll" data-i18n="dentists_title">Meet Our Dentists</h2>
-            <p class="section-subtitle animate-on-scroll" data-i18n="dentists_sub" style="margin-bottom: 50px;">Expert dental care led by qualified and compassionate surgeons.</p>
-            
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;">
-                <!-- Doctor 1 -->
-                <div class="doctor-card animate-on-scroll" style="background: var(--bg-color); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); text-align: center;">
-                    <!-- TODO: Swap with authentic photograph of Dr. Vishal -->
-                    <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400" alt="Dr. Vishal - Dental Surgeon" style="width: 100%; height: 300px; object-fit: cover;" loading="lazy">
-                    <div style="padding: 30px;">
-                        <h3 style="color: var(--text-dark); margin-bottom: 5px; font-size: 1.5rem;">Dr. Vishal</h3>
-                        <p style="color: var(--primary-blue); font-weight: 600; margin-bottom: 15px;" data-i18n="dr_vishal_spec">BDS - Dental Surgeon & Implantologist</p>
-                        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px;" data-i18n="dr_vishal_bio">Specializing in dental implants, complex extractions, and comprehensive oral rehabilitation with emphasis on painless care.</p>
-                    </div>
+        <!-- 8. Quick Patient Inquiry -->
+        <section class="section section-paper">
+            <div class="container" style="max-width: 720px;">
+                <div class="section-header">
+                    <span class="eyebrow" data-i18n="inquiry_eyebrow">Have a Question?</span>
+                    <h2 class="section-title" data-i18n="inquiry_title">Send Us a Message</h2>
                 </div>
 
-                <!-- Doctor 2 -->
-                <div class="doctor-card animate-on-scroll" style="background: var(--bg-color); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); text-align: center;">
-                    <!-- TODO: Swap with authentic photograph of Dr. Devanshi -->
-                    <img src="https://images.unsplash.com/photo-1594824436998-fe4087326e0b?auto=format&fit=crop&q=80&w=400" alt="Dr. Devanshi - Dental Surgeon" style="width: 100%; height: 300px; object-fit: cover;" loading="lazy">
-                    <div style="padding: 30px;">
-                        <h3 style="color: var(--text-dark); margin-bottom: 5px; font-size: 1.5rem;">Dr. Devanshi</h3>
-                        <p style="color: var(--primary-blue); font-weight: 600; margin-bottom: 15px;" data-i18n="dr_devanshi_spec">BDS - Dental Surgeon & Aesthetic Specialist</p>
-                        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px;" data-i18n="dr_devanshi_bio">Dedicated to cosmetic restorations, pediatric dentistry, and delivering comfortable root canal therapy tailored to every patient.</p>
+                <form class="form-card inquiry-form" novalidate>
+                    <!-- Honeypot Field (Hidden from real users) -->
+                    <div style="display: none;" aria-hidden="true">
+                        <input type="text" name="website" tabindex="-1" autocomplete="off">
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Real Patient Results (Social Proof) -->
-    <section class="gallery-section" style="padding: 80px 0; background-color: var(--bg-color);">
-        <div class="container">
-            <h2 class="section-title animate-on-scroll" data-i18n="cases_title">Clinical Case Highlights</h2>
-            <p class="section-subtitle animate-on-scroll" data-i18n="cases_sub" style="margin-bottom: 50px;">Transforming smiles and restoring dental health.</p>
-            
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
-                <!-- TODO: Swap with actual before-and-after clinical case photos -->
-                <div class="gallery-item animate-on-scroll" style="border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); position: relative;">
-                    <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&q=80&w=600" alt="Teeth Whitening Clinical Result" style="width: 100%; height: 250px; object-fit: cover;" loading="lazy">
-                    <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); padding: 20px; color: white;">
-                        <h4 style="margin: 0;">Teeth Whitening & Polishing</h4>
-                    </div>
-                </div>
-                <div class="gallery-item animate-on-scroll" style="border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); position: relative;">
-                    <img src="https://images.unsplash.com/photo-1598256989800-fea5ce5146f2?auto=format&fit=crop&q=80&w=600" alt="Dental Implant Crown Placement" style="width: 100%; height: 250px; object-fit: cover;" loading="lazy">
-                    <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); padding: 20px; color: white;">
-                        <h4 style="margin: 0;">Dental Implant Restoration</h4>
-                    </div>
-                </div>
-                <div class="gallery-item animate-on-scroll" style="border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); position: relative;">
-                    <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=600" alt="Aesthetic Ceramic Restoration" style="width: 100%; height: 250px; object-fit: cover;" loading="lazy">
-                    <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); padding: 20px; color: white;">
-                        <h4 style="margin: 0;">Aesthetic Smile Designing</h4>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Patient Testimonials -->
-    <section class="testimonials" style="background-color: var(--white); padding: 80px 0;">
-        <div class="container">
-            <h2 class="section-title animate-on-scroll" data-i18n="testimonials_title">What Our Patients Say</h2>
-            <p class="section-subtitle animate-on-scroll" data-i18n="testimonials_sub">Verified feedback from our valued clinic patients.</p>
-            
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 40px;">
-                <!-- TODO: Replace testimonial cards with authentic Google Reviews -->
-                <div class="testimonial-card animate-on-scroll">
-                    <i class="fa-solid fa-quote-right quote-icon"></i>
-                    <div class="stars">
-                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                    </div>
-                    <p class="testimonial-text">"Dr. Vishal and Dr. Devanshi are very professional and gentle. The clinic is spotlessly clean, and my root canal was completed without any discomfort."</p>
-                    <div class="patient-info">
-                        <div class="patient-img">R</div>
-                        <div class="patient-details">
-                            <h4>Ramesh P.</h4>
-                            <p>Kapadvanj Patient</p>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="inq_name" data-i18n="form_name">Your Name *</label>
+                            <input type="text" id="inq_name" name="name" class="form-control" required placeholder="Full Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="inq_phone" data-i18n="form_phone">Mobile Number *</label>
+                            <input type="tel" id="inq_phone" name="phone" class="form-control" required pattern="[6-9][0-9]{9}" maxlength="10" placeholder="10-digit mobile number">
                         </div>
                     </div>
-                </div>
-                
-                <div class="testimonial-card animate-on-scroll">
-                    <i class="fa-solid fa-quote-right quote-icon"></i>
-                    <div class="stars">
-                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                    </div>
-                    <p class="testimonial-text">"Got dental scaling and cosmetic restoration done here. The results look completely natural and the doctors explained all aftercare steps thoroughly."</p>
-                    <div class="patient-info">
-                        <div class="patient-img">P</div>
-                        <div class="patient-details">
-                            <h4>Pooja S.</h4>
-                            <p>Kapadvanj Patient</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card animate-on-scroll">
-                    <i class="fa-solid fa-quote-right quote-icon"></i>
-                    <div class="stars">
-                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                    </div>
-                    <p class="testimonial-text">"Very child-friendly environment. Brought my 6-year-old for a cavity checkup, and the doctor made the visit enjoyable and stress-free."</p>
-                    <div class="patient-info">
-                        <div class="patient-img">J</div>
-                        <div class="patient-details">
-                            <h4>Jayesh K.</h4>
-                            <p>Kapadvanj Patient</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div style="text-align: center;">
-                <a href="https://g.page/r/vinayakdental/review" data-config-href="reviewUrl" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="display: inline-flex; align-items: center; gap: 8px;">
-                    <i class="fa-brands fa-google" style="color: #4285F4;"></i> <span data-i18n="btn_review_google">Review Us on Google</span>
-                </a>
-            </div>
-        </div>
-    </section>
+                    <div class="form-group">
+                        <label for="inq_email" data-i18n="form_email">Email Address (Optional)</label>
+                        <input type="email" id="inq_email" name="email" class="form-control" placeholder="yourname@example.com">
+                    </div>
 
-    <!-- Quick Inquiry Section -->
-    <section class="inquiry-section" style="background-color: var(--bg-color); padding: 80px 0; border-top: 1px solid #E2E8F0;">
-        <div class="container" style="max-width: 800px;">
-            <div class="inquiry-card animate-on-scroll" style="background: var(--white); padding: 40px; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); border-top: 4px solid var(--primary-green);">
-                <h2 style="text-align: center; color: var(--primary-green); margin-bottom: 10px;" data-i18n="inquiry_title">Have a Question?</h2>
-                <p style="text-align: center; color: var(--text-muted); margin-bottom: 30px;" data-i18n="inquiry_sub">Send us a quick inquiry and our dental team will respond promptly.</p>
-                
-                <div id="inqSuccessAlert" style="display: none; background-color: var(--light-green); color: var(--primary-green); padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center; font-weight: 500;">
-                    <i class="fa-solid fa-circle-check"></i> Thank you! Your inquiry has been sent successfully.
-                </div>
+                    <div class="form-group">
+                        <label for="inq_info" data-i18n="form_message">How can we help you? *</label>
+                        <textarea id="inq_info" name="info" class="form-control" required placeholder="Describe your question or dental concern..."></textarea>
+                    </div>
 
-                <form id="quickInquiryForm">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
-                        <div>
-                            <label for="inqName" style="display: block; margin-bottom: 6px; font-weight: 500; font-size: 0.9rem;" data-i18n="form_name">Your Name *</label>
-                            <input type="text" id="inqName" placeholder="Full Name" required style="width: 100%; padding: 12px 15px; border: 1px solid #E2E8F0; border-radius: 8px; font-family: 'Inter', sans-serif;">
-                        </div>
-                        <div>
-                            <label for="inqPhone" style="display: block; margin-bottom: 6px; font-weight: 500; font-size: 0.9rem;" data-i18n="form_phone">Phone Number *</label>
-                            <input type="tel" id="inqPhone" placeholder="10-digit Mobile Number" required style="width: 100%; padding: 12px 15px; border: 1px solid #E2E8F0; border-radius: 8px; font-family: 'Inter', sans-serif;">
-                        </div>
-                    </div>
-                    <div style="margin-bottom: 20px;">
-                        <label for="inqEmail" style="display: block; margin-bottom: 6px; font-weight: 500; font-size: 0.9rem;" data-i18n="form_email">Email Address (Optional)</label>
-                        <input type="email" id="inqEmail" placeholder="your@email.com" style="width: 100%; padding: 12px 15px; border: 1px solid #E2E8F0; border-radius: 8px; font-family: 'Inter', sans-serif;">
-                    </div>
-                    <div style="margin-bottom: 20px;">
-                        <label for="inqMessage" style="display: block; margin-bottom: 6px; font-weight: 500; font-size: 0.9rem;" data-i18n="form_message">Your Message / Dental Problem *</label>
-                        <textarea id="inqMessage" placeholder="Please describe how we can assist you..." required style="width: 100%; padding: 12px 15px; border: 1px solid #E2E8F0; border-radius: 8px; font-family: 'Inter', sans-serif; resize: vertical; min-height: 100px;"></textarea>
-                    </div>
-                    <div style="margin-bottom: 20px;">
-                        <label style="display: flex; align-items: flex-start; gap: 10px; font-size: 0.88rem; color: var(--text-muted); cursor: pointer;">
-                            <input type="checkbox" id="inqConsent" required style="margin-top: 3px;">
-                            <span data-i18n="form_consent">I agree to be contacted by Vinayak Dental Care and agree to the Privacy Policy.</span>
+                    <div class="consent-group">
+                        <input type="checkbox" id="inq_consent" name="consent" class="consent-checkbox" required>
+                        <label for="inq_consent" class="consent-label" data-i18n="form_consent_text">
+                            I consent to Vinayak Dental Care contacting me regarding this inquiry. Read our <a href="privacy.html" target="_blank">Privacy Policy</a>.
                         </label>
                     </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%;" data-i18n="btn_send_inquiry">Send Inquiry</button>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%;" data-i18n="btn_send_inquiry">
+                        Send Message
+                    </button>
                 </form>
             </div>
-        </div>
-    </section>
-
-    <!-- Instagram Feed Section -->
-    <section class="instagram-feed" style="padding: 80px 0; background-color: var(--white); border-top: 1px solid #E2E8F0;">
-        <div class="container">
-            <div style="text-align: center; margin-bottom: 40px;" class="animate-on-scroll">
-                <i class="fa-brands fa-instagram" style="font-size: 3rem; color: #E1306C; margin-bottom: 15px;"></i>
-                <h2 class="section-title" style="margin-bottom: 10px;">Follow Us on Instagram</h2>
-                <p class="section-subtitle">@vinayak_dental_clinic__implant</p>
-                <a href="https://www.instagram.com/vinayak_dental_clinic__implant/" data-config-href="instagramUrl" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="margin-top: 15px; display: inline-flex; align-items: center; gap: 10px;">
-                    <i class="fa-brands fa-instagram"></i> Follow Profile
-                </a>
-            </div>
-            
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-                <a href="https://www.instagram.com/vinayak_dental_clinic__implant/" data-config-href="instagramUrl" target="_blank" rel="noopener noreferrer" class="ig-item animate-on-scroll" style="display: block; position: relative; border-radius: 8px; overflow: hidden; aspect-ratio: 1/1;" aria-label="View Vinayak Dental Care Instagram Post">
-                    <img src="https://images.unsplash.com/photo-1598256989800-fea5ce5146f2?auto=format&fit=crop&q=80&w=400" alt="Instagram Post Dental Care" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
-                    <div class="ig-overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; opacity: 0; transition: 0.3s;">
-                        <i class="fa-brands fa-instagram" style="color: white; font-size: 2rem;"></i>
-                    </div>
-                </a>
-                <a href="https://www.instagram.com/vinayak_dental_clinic__implant/" data-config-href="instagramUrl" target="_blank" rel="noopener noreferrer" class="ig-item animate-on-scroll" style="display: block; position: relative; border-radius: 8px; overflow: hidden; aspect-ratio: 1/1;" aria-label="View Vinayak Dental Care Instagram Post">
-                    <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=400" alt="Instagram Post Clinic Operatory" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
-                    <div class="ig-overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; opacity: 0; transition: 0.3s;">
-                        <i class="fa-brands fa-instagram" style="color: white; font-size: 2rem;"></i>
-                    </div>
-                </a>
-                <a href="https://www.instagram.com/vinayak_dental_clinic__implant/" data-config-href="instagramUrl" target="_blank" rel="noopener noreferrer" class="ig-item animate-on-scroll" style="display: block; position: relative; border-radius: 8px; overflow: hidden; aspect-ratio: 1/1;" aria-label="View Vinayak Dental Care Instagram Post">
-                    <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&q=80&w=400" alt="Instagram Post Smile Treatment" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
-                    <div class="ig-overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; opacity: 0; transition: 0.3s;">
-                        <i class="fa-brands fa-instagram" style="color: white; font-size: 2rem;"></i>
-                    </div>
-                </a>
-                <a href="https://www.instagram.com/vinayak_dental_clinic__implant/" data-config-href="instagramUrl" target="_blank" rel="noopener noreferrer" class="ig-item animate-on-scroll" style="display: block; position: relative; border-radius: 8px; overflow: hidden; aspect-ratio: 1/1;" aria-label="View Vinayak Dental Care Instagram Post">
-                    <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&q=80&w=400" alt="Instagram Post Whitening" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
-                    <div class="ig-overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; opacity: 0; transition: 0.3s;">
-                        <i class="fa-brands fa-instagram" style="color: white; font-size: 2rem;"></i>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="footer-top">
-                <div class="footer-brand">
-                    <a href="index.html" class="logo">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo">
                         <i class="fa-solid fa-tooth"></i>
-                        <span data-config="clinicName">Vinayak Dental Care</span>
-                    </a>
-                    <p data-i18n="footer_tagline">Providing advanced dental care with compassion and expertise. Your smile is our top priority.</p>
-                    <div class="social-links">
-                        <a href="https://www.instagram.com/vinayak_dental_clinic__implant/" data-config-href="instagramUrl" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="https://wa.me/919999900000" data-config-href="whatsappLink" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                        <span>Vinayak Dental Care</span>
                     </div>
+                    <p class="footer-desc" data-i18n="footer_about_text">
+                        A modern, welcoming dental clinic in Kapadvanj providing high-quality, gentle oral healthcare for patients of all ages.
+                    </p>
                 </div>
-                
-                <div class="footer-links">
-                    <h4 data-i18n="footer_quick_links">Quick Links</h4>
-                    <ul>
+
+                <div>
+                    <h4 class="footer-heading" data-i18n="footer_quick_links">Quick Links</h4>
+                    <ul class="footer-links">
                         <li><a href="index.html" data-i18n="nav_home">Home</a></li>
                         <li><a href="about.html" data-i18n="nav_about">About Us</a></li>
-                        <li><a href="services.html" data-i18n="nav_services">Services</a></li>
+                        <li><a href="services.html" data-i18n="nav_services">Treatments</a></li>
                         <li><a href="book.html" data-i18n="nav_book">Book Appointment</a></li>
                         <li><a href="contact.html" data-i18n="nav_contact">Contact Us</a></li>
-                        <li><a href="privacy.html" data-i18n="footer_privacy">Privacy Policy</a></li>
+                        <li><a href="privacy.html" data-i18n="nav_privacy">Privacy Policy</a></li>
                     </ul>
                 </div>
-                
-                <div class="footer-links">
-                    <h4 data-i18n="footer_services">Our Services</h4>
-                    <ul>
-                        <li><a href="services.html">Dental Checkup</a></li>
-                        <li><a href="services.html">Teeth Cleaning</a></li>
-                        <li><a href="services.html">Root Canal</a></li>
-                        <li><a href="services.html">Dental Implants</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-links">
-                    <h4 data-i18n="footer_contact_us">Contact Us</h4>
-                    <ul class="contact-info">
-                        <li>
-                            <i class="fa-solid fa-location-dot"></i>
-                            <span data-config="addressFull">B-10 Laxmipooja Complex, Near Bandhan Hotel, Kapadvanj, Gujarat 387620</span>
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-phone"></i>
-                            <a href="tel:+919999900000" data-config-href="clinicPhone" data-config="clinicPhone" style="color: inherit;">+91 99999 00000</a>
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-envelope"></i>
-                            <a href="mailto:info@vinayakdentalcare.com" data-config-href="clinicEmail" data-config="clinicEmail" style="color: inherit;">info@vinayakdentalcare.com</a>
-                        </li>
-                    </ul>
+
+                <div>
+                    <h4 class="footer-heading" data-i18n="footer_contact_info">Clinic Contact</h4>
+                    <div class="footer-contact-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>B-10 Laxmipooja Complex, Near Bandhan Hotel, Kapadvanj, Gujarat 387620</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fa-solid fa-clock"></i>
+                        <span>Mon – Sat: 9:00 AM – 8:00 PM<br>Sunday: Closed</span>
+                    </div>
                 </div>
             </div>
-            
+
             <div class="footer-bottom">
-                <p>&copy; 2026 Vinayak Dental Care. <span data-i18n="footer_rights">All Rights Reserved.</span> | <a href="privacy.html" style="color: inherit; text-decoration: underline;" data-i18n="footer_privacy">Privacy Policy</a></p>
+                <p>&copy; 2026 Vinayak Dental Care. All Rights Reserved.</p>
+                <p><a href="privacy.html" style="color: var(--footer-muted);">Privacy & Data Policy</a></p>
             </div>
         </div>
     </footer>
 
-    <!-- Floating WhatsApp Button (Desktop) -->
-    <a href="https://wa.me/919999900000" data-config-href="whatsappLink" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Contact Vinayak Dental Care on WhatsApp">
+    <!-- Mobile Sticky Quick Action Bar (screens < 768px) -->
+    <div class="mobile-bottom-bar" aria-label="Quick Actions">
+        <div class="mobile-bottom-actions">
+            <a href="book.html" class="mobile-bottom-btn book" data-i18n="btn_book_visit">
+                <i class="fa-regular fa-calendar-check"></i> <span>Book</span>
+            </a>
+            <a href="tel:+91" class="mobile-bottom-btn call call-clinic-link" data-i18n="btn_call">
+                <i class="fa-solid fa-phone"></i> <span>Call</span>
+            </a>
+            <a href="https://wa.me/" class="mobile-bottom-btn whatsapp whatsapp-link" data-i18n="btn_whatsapp">
+                <i class="fa-brands fa-whatsapp"></i> <span>WhatsApp</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Floating WhatsApp button (Desktop only) -->
+    <a href="https://wa.me/" class="whatsapp-float whatsapp-link" aria-label="Contact Vinayak Dental Care on WhatsApp" target="_blank" rel="noopener noreferrer">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
-    <!-- Sticky Mobile Quick Action Bar (Mobile Only) -->
-    <div class="mobile-bottom-bar" role="navigation" aria-label="Quick Mobile Actions">
-        <a href="tel:+919999900000" data-config-href="clinicPhone" class="mobile-bar-btn call-btn">
-            <i class="fa-solid fa-phone"></i> Call Clinic
-        </a>
-        <a href="https://wa.me/919999900000" data-config-href="whatsappLink" class="mobile-bar-btn wa-btn" target="_blank" rel="noopener noreferrer">
-            <i class="fa-brands fa-whatsapp"></i> WhatsApp
-        </a>
-    </div>
-
-    <!-- JS Scripts -->
+    <!-- Scripts (Vanilla JS only) -->
     <script src="js/config.js"></script>
     <script src="js/i18n.js"></script>
+    <script src="js/motion.js"></script>
     <script src="js/script.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Render Featured Services on Homepage from Single Source of Truth
-            const homeServicesGrid = document.getElementById('homeServicesGrid');
-            if (homeServicesGrid && window.CLINIC_CONFIG && window.CLINIC_CONFIG.services) {
-                const featured = window.CLINIC_CONFIG.services.slice(0, 4);
-                homeServicesGrid.innerHTML = featured.map(svc => `
-                    <div class="service-card animate-on-scroll">
-                        <i class="fa-solid ${svc.icon} service-icon"></i>
-                        <h3>${svc.name}</h3>
-                        <p>${svc.shortDesc}</p>
-                        <a href="book.html?service=${encodeURIComponent(svc.name)}" class="service-link" style="color: var(--primary-green); font-weight: 600;">
-                            Book Treatment <i class="fa-solid fa-arrow-right"></i>
-                        </a>
-                    </div>
-                `).join('');
-            }
-
-            // Quick Inquiry Form Handler
-            const inqForm = document.getElementById('quickInquiryForm');
-            const alertBox = document.getElementById('inqSuccessAlert');
-
-            if(inqForm) {
-                inqForm.addEventListener('submit', async (e) => {
-                    e.preventDefault();
-                    
-                    const inquiry = {
-                        name: document.getElementById('inqName').value.trim(),
-                        phone: document.getElementById('inqPhone').value.trim(),
-                        email: document.getElementById('inqEmail').value.trim(),
-                        info: document.getElementById('inqMessage').value.trim(),
-                        source: 'Homepage Quick Inquiry'
-                    };
-
-                    try {
-                        const response = await fetch('/api/inquiries', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(inquiry)
-                        });
-
-                        const data = await response.json();
-
-                        if (response.ok && data.success) {
-                            if (alertBox) {
-                                alertBox.style.display = 'block';
-                                setTimeout(() => { alertBox.style.display = 'none'; }, 6000);
-                            } else {
-                                alert('Inquiry sent successfully! We will contact you shortly.');
-                            }
-                            inqForm.reset();
-                        } else {
-                            alert(data.message || 'Failed to send inquiry. Please try again.');
-                        }
-                    } catch (err) {
-                        alert('Unable to send inquiry. Please call or WhatsApp us directly.');
-                    }
-                });
-            }
-        });
-    </script>
 </body>
 </html>

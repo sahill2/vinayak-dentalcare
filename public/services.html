@@ -4,97 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dental Services & Treatments | Vinayak Dental Care Kapadvanj</title>
-    <meta name="description" content="Explore advanced dental treatments at Vinayak Dental Care: Dental Implants, Rotary Root Canal, Teeth Whitening, Scaling, Braces, Aligners & Pediatric Dentistry.">
+    <meta name="description" content="Explore clinical dental treatments at Vinayak Dental Care in Kapadvanj: Root Canal Therapy, Dental Implants, Teeth Cleaning, Whitening, Braces, and Pediatric Care.">
     <link rel="canonical" href="https://vinayak-dentalcare.vercel.app/services.html">
     
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://vinayak-dentalcare.vercel.app/services.html">
     <meta property="og:title" content="Our Dental Services | Vinayak Dental Care">
-    <meta property="og:description" content="High-quality, gentle, and comprehensive dental treatments tailored for you in Kapadvanj.">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1598256989800-fea5ce5146f2?auto=format&fit=crop&q=80&w=1200">
-    
+    <meta property="og:description" content="Clear, gentle, and comprehensive dental treatments tailored for your family in Kapadvanj.">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Dental Treatments | Vinayak Dental Care">
-    <meta name="twitter:description" content="Implantology, Endodontics, Cosmetic Dentistry and routine checkups in Kapadvanj.">
-    <meta name="twitter:image" content="https://images.unsplash.com/photo-1598256989800-fea5ce5146f2?auto=format&fit=crop&q=80&w=1200">
 
-    <!-- Fonts -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400&family=Inter:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&family=Noto+Sans+Gujarati:wght@400;500;600&family=Noto+Serif+Devanagari:wght@500;600&family=Noto+Serif+Gujarati:wght@500;600&display=swap" rel="stylesheet">
+    
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- CSS -->
+    
+    <!-- Stylesheet -->
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/whatsapp.css">
-    <style>
-        .page-header {
-            background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1598256989800-fea5ce5146f2?auto=format&fit=crop&q=80&w=1600') center/cover;
-            padding: 120px 0 60px;
-            text-align: center;
-            color: white;
-        }
-        
-        .page-header h1 {
-            color: white;
-            font-size: 3rem;
-            margin-bottom: 10px;
-        }
-
-        .services-detail-section {
-            padding: 80px 0;
-            background-color: var(--bg-color);
-        }
-
-        .service-full-card {
-            background: var(--white);
-            border-radius: var(--radius-lg);
-            padding: 40px;
-            margin-bottom: 30px;
-            box-shadow: var(--shadow-sm);
-            display: grid;
-            grid-template-columns: 80px 1fr auto;
-            gap: 30px;
-            align-items: center;
-            transition: var(--transition);
-        }
-
-        .service-full-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .service-icon-wrap {
-            width: 80px;
-            height: 80px;
-            background: var(--light-green);
-            color: var(--primary-green);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            flex-shrink: 0;
-        }
-
-        @media (max-width: 768px) {
-            .service-full-card {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            .service-icon-wrap {
-                margin: 0 auto;
-            }
-        }
-    </style>
 </head>
 <body>
+    <!-- Skip Link -->
+    <a href="#main-content" class="skip-link" data-i18n="skip_to_content">Skip to content</a>
 
     <!-- Header Navigation -->
     <header>
         <div class="container">
             <nav>
-                <a href="index.html" class="logo">
+                <a href="index.html" class="logo" aria-label="Vinayak Dental Care Homepage">
                     <i class="fa-solid fa-tooth"></i>
                     <span data-config="clinicName">Vinayak Dental Care</span>
                 </a>
@@ -102,154 +40,140 @@
                 <div class="nav-links">
                     <a href="index.html" data-i18n="nav_home">Home</a>
                     <a href="about.html" data-i18n="nav_about">About Us</a>
-                    <a href="services.html" class="active" data-i18n="nav_services">Services</a>
+                    <a href="services.html" class="active" data-i18n="nav_services">Treatments</a>
                     <a href="contact.html" data-i18n="nav_contact">Contact</a>
-                    <a href="book.html" class="btn btn-primary nav-cta" data-i18n="nav_book">Book Appointment</a>
+                    <a href="book.html" class="btn btn-primary btn-sm nav-cta-btn" data-i18n="btn_book_visit">Book a visit</a>
                 </div>
 
-                <div class="hamburger" aria-label="Toggle navigation menu">
-                    <i class="fa-solid fa-bars"></i>
+                <div class="header-actions">
+                    <div id="clinicStatusChip" class="clinic-status-chip" role="status"></div>
+                    <div class="lang-selector-pill" role="group" aria-label="Select Language">
+                        <button class="lang-btn active" data-lang="en">EN</button>
+                        <button class="lang-btn" data-lang="gu">ગુજરાતી</button>
+                        <button class="lang-btn" data-lang="hi">हिन्दी</button>
+                    </div>
+                    <button class="hamburger-btn" aria-label="Toggle Navigation">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
                 </div>
             </nav>
         </div>
     </header>
 
-    <!-- Page Header -->
-    <div class="page-header animate-on-scroll">
-        <div class="container">
-            <h1>Our Dental Services</h1>
-            <p>Comprehensive, High-Quality Dental Treatments for Every Smile</p>
-        </div>
-    </div>
+    <main id="main-content">
+        <!-- Page Title Header -->
+        <section class="section section-paper" style="padding: 60px 0 40px 0;">
+            <div class="container" style="text-align: center;">
+                <span class="eyebrow" data-i18n="services_eyebrow">Clinical Services</span>
+                <h1 class="hero-title" style="font-size: clamp(2.2rem, 5vw, 3.5rem);" data-i18n="treatments_page_title">
+                    Our Dental <em>Treatments</em>
+                </h1>
+                <p class="section-subtitle" style="max-width: 680px; margin-left: auto; margin-right: auto;" data-i18n="treatments_page_subtitle">
+                    We take time to explain each procedure clearly, recommending only treatments that genuinely benefit your long-term oral health.
+                </p>
 
-    <!-- Services List Section -->
-    <section class="services-detail-section">
-        <div class="container">
-            <div id="servicesListContainer">
-                <!-- Populated dynamically via config.js -->
+                <!-- Category Filter Chips -->
+                <div id="servicesFilterContainer" class="symptom-chips-container" style="margin-top: 32px;">
+                    <!-- Hydrated dynamically in script.js -->
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Call to Action Banner -->
-    <section style="padding: 60px 0; background: linear-gradient(135deg, #0F172A, #1E293B); color: white; text-align: center;">
-        <div class="container">
-            <h2 style="color: white; font-size: 2.2rem; margin-bottom: 15px;">Ready to Experience Painless Dental Care?</h2>
-            <p style="color: #94A3B8; max-width: 600px; margin: 0 auto 30px auto;">Schedule your visit today with Dr. Vishal & Dr. Devanshi at Vinayak Dental Care.</p>
-            <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-                <a href="book.html" class="btn btn-primary" style="font-size: 1.1rem; padding: 14px 32px;">Book Appointment Online</a>
-                <a href="https://wa.me/919999900000" data-config-href="whatsappLink" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="color: white; border-color: white;">
-                    <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp
-                </a>
+        <!-- Services Grid Section -->
+        <section class="section">
+            <div class="container">
+                <div id="servicesListContainer" class="cards-grid">
+                    <!-- Hydrated dynamically from CLINIC_CONFIG.services in script.js -->
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <!-- Consultation CTA Section -->
+        <section class="section section-paper">
+            <div class="container" style="text-align: center; max-width: 700px;">
+                <h2 class="section-title" data-i18n="cta_unsure_title">Not sure which treatment you need?</h2>
+                <p class="section-subtitle" style="margin-bottom: 32px;" data-i18n="cta_unsure_subtitle">
+                    Book a general consultation. Our dentists will examine your teeth and explain your options with complete transparency.
+                </p>
+                <div class="hero-actions" style="justify-content: center;">
+                    <a href="book.html" class="btn btn-primary" data-i18n="btn_book_consultation">
+                        <i class="fa-regular fa-calendar-check"></i> Book Consultation
+                    </a>
+                    <a href="contact.html" class="btn btn-secondary" data-i18n="btn_contact_clinic">
+                        Contact Clinic
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="footer-top">
-                <div class="footer-brand">
-                    <a href="index.html" class="logo">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo">
                         <i class="fa-solid fa-tooth"></i>
-                        <span data-config="clinicName">Vinayak Dental Care</span>
-                    </a>
-                    <p>Providing advanced dental care with compassion and expertise. Your smile is our top priority.</p>
-                    <div class="social-links">
-                        <a href="https://www.instagram.com/vinayak_dental_clinic__implant/" data-config-href="instagramUrl" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="https://wa.me/919999900000" data-config-href="whatsappLink" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                        <span>Vinayak Dental Care</span>
+                    </div>
+                    <p class="footer-desc" data-i18n="footer_about_text">
+                        A modern, welcoming dental clinic in Kapadvanj providing high-quality, gentle oral healthcare for patients of all ages.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="footer-heading" data-i18n="footer_quick_links">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+                        <li><a href="about.html" data-i18n="nav_about">About Us</a></li>
+                        <li><a href="services.html" data-i18n="nav_services">Treatments</a></li>
+                        <li><a href="book.html" data-i18n="nav_book">Book Appointment</a></li>
+                        <li><a href="contact.html" data-i18n="nav_contact">Contact Us</a></li>
+                        <li><a href="privacy.html" data-i18n="nav_privacy">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-heading" data-i18n="footer_contact_info">Clinic Contact</h4>
+                    <div class="footer-contact-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>B-10 Laxmipooja Complex, Near Bandhan Hotel, Kapadvanj, Gujarat 387620</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fa-solid fa-clock"></i>
+                        <span>Mon – Sat: 9:00 AM – 8:00 PM<br>Sunday: Closed</span>
                     </div>
                 </div>
-                
-                <div class="footer-links">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="services.html">Services</a></li>
-                        <li><a href="book.html">Book Appointment</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
-                        <li><a href="privacy.html">Privacy Policy</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-links">
-                    <h4>Our Services</h4>
-                    <ul>
-                        <li><a href="services.html">Dental Checkup</a></li>
-                        <li><a href="services.html">Teeth Cleaning</a></li>
-                        <li><a href="services.html">Root Canal</a></li>
-                        <li><a href="services.html">Dental Implants</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-links">
-                    <h4>Contact Us</h4>
-                    <ul class="contact-info">
-                        <li>
-                            <i class="fa-solid fa-location-dot"></i>
-                            <span data-config="addressFull">B-10 Laxmipooja Complex, Near Bandhan Hotel, Kapadvanj, Gujarat 387620</span>
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-phone"></i>
-                            <a href="tel:+919999900000" data-config-href="clinicPhone" data-config="clinicPhone" style="color: inherit;">+91 99999 00000</a>
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-envelope"></i>
-                            <a href="mailto:info@vinayakdentalcare.com" data-config-href="clinicEmail" data-config="clinicEmail" style="color: inherit;">info@vinayakdentalcare.com</a>
-                        </li>
-                    </ul>
-                </div>
             </div>
-            
             <div class="footer-bottom">
-                <p>&copy; 2026 Vinayak Dental Care. All Rights Reserved. | <a href="privacy.html" style="color: inherit; text-decoration: underline;">Privacy Policy</a></p>
+                <p>&copy; 2026 Vinayak Dental Care. All Rights Reserved.</p>
+                <p><a href="privacy.html" style="color: var(--footer-muted);">Privacy & Data Policy</a></p>
             </div>
         </div>
     </footer>
 
-    <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/919999900000" data-config-href="whatsappLink" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+    <!-- Mobile Action Bar -->
+    <div class="mobile-bottom-bar" aria-label="Quick Actions">
+        <div class="mobile-bottom-actions">
+            <a href="book.html" class="mobile-bottom-btn book" data-i18n="btn_book_visit">
+                <i class="fa-regular fa-calendar-check"></i> <span>Book</span>
+            </a>
+            <a href="tel:+91" class="mobile-bottom-btn call call-clinic-link" data-i18n="btn_call">
+                <i class="fa-solid fa-phone"></i> <span>Call</span>
+            </a>
+            <a href="https://wa.me/" class="mobile-bottom-btn whatsapp whatsapp-link" data-i18n="btn_whatsapp">
+                <i class="fa-brands fa-whatsapp"></i> <span>WhatsApp</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Floating WhatsApp button (Desktop only) -->
+    <a href="https://wa.me/" class="whatsapp-float whatsapp-link" aria-label="Contact Vinayak Dental Care on WhatsApp" target="_blank" rel="noopener noreferrer">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
-
-    <!-- Sticky Mobile Quick Action Bar (Mobile Only) -->
-    <div class="mobile-bottom-bar" role="navigation" aria-label="Quick Mobile Actions">
-        <a href="tel:+919999900000" data-config-href="clinicPhone" class="mobile-bar-btn call-btn">
-            <i class="fa-solid fa-phone"></i> Call Clinic
-        </a>
-        <a href="https://wa.me/919999900000" data-config-href="whatsappLink" class="mobile-bar-btn wa-btn" target="_blank" rel="noopener noreferrer">
-            <i class="fa-brands fa-whatsapp"></i> WhatsApp
-        </a>
-    </div>
 
     <!-- Scripts -->
     <script src="js/config.js"></script>
     <script src="js/i18n.js"></script>
+    <script src="js/motion.js"></script>
     <script src="js/script.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const container = document.getElementById('servicesListContainer');
-            if (container && window.CLINIC_CONFIG && window.CLINIC_CONFIG.services) {
-                container.innerHTML = window.CLINIC_CONFIG.services.map(svc => `
-                    <div class="service-full-card animate-on-scroll">
-                        <div class="service-icon-wrap">
-                            <i class="fa-solid ${svc.icon}"></i>
-                        </div>
-                        <div>
-                            <span style="font-size: 0.85rem; font-weight: 600; color: var(--primary-green); text-transform: uppercase; letter-spacing: 0.5px;">${svc.category}</span>
-                            <h3 style="font-size: 1.6rem; color: var(--text-dark); margin: 5px 0 10px 0;">${svc.name}</h3>
-                            <p style="color: var(--text-muted); line-height: 1.7; margin-bottom: 0;">${svc.fullDesc}</p>
-                        </div>
-                        <div>
-                            <a href="book.html?service=${encodeURIComponent(svc.name)}" class="btn btn-primary" style="white-space: nowrap;">
-                                Book This Service
-                            </a>
-                        </div>
-                    </div>
-                `).join('');
-            }
-        });
-    </script>
 </body>
 </html>
