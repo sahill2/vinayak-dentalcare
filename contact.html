@@ -3,7 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us | Vinayak Dental Care</title>
+    <title>Contact Vinayak Dental Care | Dental Clinic in Kapadvanj Gujarat</title>
+    <meta name="description" content="Contact Vinayak Dental Care at B-10 Laxmipooja Complex, Kapadvanj. Call +91 99999 00000 or chat on WhatsApp for consultations, location map, and directions.">
+    <link rel="canonical" href="https://vinayak-dentalcare.vercel.app/contact.html">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vinayak-dentalcare.vercel.app/contact.html">
+    <meta property="og:title" content="Contact Vinayak Dental Care | Kapadvanj">
+    <meta property="og:description" content="Reach our clinic for inquiries, emergency dental care, or Google Maps directions.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=1200">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Contact Vinayak Dental Care">
+    <meta name="twitter:description" content="Dental clinic location, contact numbers, and appointment inquiries in Kapadvanj.">
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=1200">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -132,17 +146,16 @@
             min-height: 120px;
         }
 
-        /* Map styling */
         .map-section {
-            padding: 0 0 80px 0;
+            padding-bottom: 80px;
             background-color: var(--bg-color);
         }
 
         .map-container {
+            height: 450px;
             border-radius: var(--radius-lg);
             overflow: hidden;
             box-shadow: var(--shadow-md);
-            height: 450px;
         }
 
         @media (max-width: 992px) {
@@ -160,18 +173,18 @@
             <nav>
                 <a href="index.html" class="logo">
                     <i class="fa-solid fa-tooth"></i>
-                    Vinayak Dental Care
+                    <span data-config="clinicName">Vinayak Dental Care</span>
                 </a>
                 
                 <div class="nav-links">
-                    <a href="index.html">Home</a>
-                    <a href="about.html">About Us</a>
-                    <a href="services.html">Services</a>
-                    <a href="contact.html" class="active">Contact</a>
-                    <a href="admin/index.html" class="btn btn-primary" style="color: white;">Admin Panel</a>
+                    <a href="index.html" data-i18n="nav_home">Home</a>
+                    <a href="about.html" data-i18n="nav_about">About Us</a>
+                    <a href="services.html" data-i18n="nav_services">Services</a>
+                    <a href="contact.html" class="active" data-i18n="nav_contact">Contact</a>
+                    <a href="book.html" class="btn btn-primary nav-cta" data-i18n="nav_book">Book Appointment</a>
                 </div>
 
-                <div class="hamburger">
+                <div class="hamburger" aria-label="Toggle navigation menu">
                     <i class="fa-solid fa-bars"></i>
                 </div>
             </nav>
@@ -182,48 +195,71 @@
     <div class="page-header animate-on-scroll">
         <div class="container">
             <h1>Contact Us</h1>
-            <p>Get in Touch for Appointments & Consultations</p>
+            <p>Get in Touch with Dr. Vishal & Dr. Devanshi</p>
         </div>
     </div>
 
-    <!-- Contact Details & Form -->
+    <!-- Contact & Form Section -->
     <section class="contact-wrap">
         <div class="container">
             <div class="contact-grid">
                 
-                <!-- Contact Info -->
+                <!-- Contact Details -->
                 <div class="contact-details animate-on-scroll">
-                    <h2>Reach Out To Us</h2>
-                    <p>Have questions about a treatment or want to schedule an appointment? Our friendly front desk staff is ready to help you coordinate your visit.</p>
+                    <h2>Get in Touch</h2>
+                    <p>Have questions about treatments, fees, or scheduling? Contact us directly or visit our modern clinic in Kapadvanj.</p>
                     
                     <ul class="contact-info-list">
                         <li>
-                            <div class="contact-icon-box"><i class="fa-solid fa-location-dot"></i></div>
+                            <div class="contact-icon-box">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
                             <div class="contact-text">
-                                <h4>Our Location</h4>
-                                <p>Vinayak Dental Care<br>B-10 Laxmipooja Complex,<br>Near Bandhan Hotel, Kapadvanj,<br>Gujarat 387620, India</p>
-                                <a href="https://maps.app.goo.gl/BcG7uPndRZ3n5V1Y8" target="_blank" style="color: var(--primary-blue); font-weight: 500; font-size: 0.9rem; margin-top: 5px; display: inline-block;">Open in Google Maps <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                                <h4>Clinic Location</h4>
+                                <p data-config="addressFull">B-10 Laxmipooja Complex, Near Bandhan Hotel, Kapadvanj, Gujarat 387620</p>
+                                <a href="https://maps.google.com/?q=Vinayak+Dental+Care+Kapadvanj" data-config-href="mapUrl" target="_blank" rel="noopener noreferrer" style="color: var(--primary-green); font-weight: 600; display: inline-flex; align-items: center; gap: 5px; margin-top: 5px;">
+                                    <i class="fa-solid fa-location-arrow"></i> Get Directions on Google Maps
+                                </a>
                             </div>
                         </li>
                         <li>
-                            <div class="contact-icon-box"><i class="fa-solid fa-phone"></i></div>
+                            <div class="contact-icon-box">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
                             <div class="contact-text">
-                                <h4>Phone Number</h4>
-                                <p>+91 99999 XXXXX<br>+91 88888 XXXXX</p>
+                                <h4>Phone Numbers</h4>
+                                <p>Call for Queries & Emergencies:<br>
+                                   <a href="tel:+919999900000" data-config-href="clinicPhone" data-config="clinicPhone" style="font-weight: 600; color: var(--text-dark);">+91 99999 00000</a>
+                                </p>
                             </div>
                         </li>
                         <li>
-                            <div class="contact-icon-box"><i class="fa-solid fa-envelope"></i></div>
+                            <div class="contact-icon-box">
+                                <i class="fa-brands fa-whatsapp"></i>
+                            </div>
                             <div class="contact-text">
-                                <h4>Email Address</h4>
-                                <p><a href="mailto:info@vinayakdentalcare.com">info@vinayakdentalcare.com</a></p>
+                                <h4>WhatsApp Consultation</h4>
+                                <p>Instant Chat Support:<br>
+                                   <a href="https://wa.me/919999900000" data-config-href="whatsappLink" target="_blank" rel="noopener noreferrer" style="color: var(--primary-green); font-weight: 600;">Chat with Clinic on WhatsApp</a>
+                                </p>
                             </div>
                         </li>
                         <li>
-                            <div class="contact-icon-box"><i class="fa-solid fa-clock"></i></div>
+                            <div class="contact-icon-box">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
                             <div class="contact-text">
-                                <h4>Clinic Hours</h4>
-                                <p>Monday - Saturday: 9:00 AM - 8:00 PM<br>Sunday: Closed (By Prior Appointment Only)</p>
+                                <h4>Email Us</h4>
+                                <p><a href="mailto:info@vinayakdentalcare.com" data-config-href="clinicEmail" data-config="clinicEmail" style="color: inherit;">info@vinayakdentalcare.com</a></p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="contact-icon-box">
+                                <i class="fa-solid fa-clock"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Working Hours</h4>
+                                <p>Monday – Saturday: 9:00 AM – 8:00 PM<br>Sunday: Closed</p>
                             </div>
                         </li>
                     </ul>
@@ -231,33 +267,49 @@
 
                 <!-- Contact Form -->
                 <div class="contact-form animate-on-scroll">
-                    <h2>Book an Appointment</h2>
+                    <h2>Send Us a Message</h2>
+                    
+                    <div id="contactSuccessMsg" style="display: none; background-color: var(--light-green); color: var(--primary-green); padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center; font-weight: 500;">
+                        <i class="fa-solid fa-circle-check"></i> Thank you! Your message has been received. Our team will contact you shortly.
+                    </div>
+
                     <form id="contactInquiryForm">
                         <div class="form-group">
-                            <label for="name">Full Name</label>
-                            <input type="text" id="name" class="form-control" placeholder="John Doe" required>
+                            <label for="name">Your Name *</label>
+                            <input type="text" id="name" class="form-control" placeholder="Full Name" required minlength="2" maxlength="60">
                         </div>
                         <div class="form-group">
-                            <label for="phone">Phone Number</label>
-                            <input type="tel" id="phone" class="form-control" placeholder="+91 XXXXX XXXXX" required>
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" class="form-control" placeholder="10-digit mobile number" required>
                         </div>
                         <div class="form-group">
-                            <label for="service">Select Service</label>
-                            <select id="service" class="form-control" required>
-                                <option value="" disabled selected>Select a Service</option>
-                                <option value="checkup">Dental Checkup</option>
-                                <option value="cleaning">Teeth Cleaning</option>
-                                <option value="root-canal">Root Canal</option>
-                                <option value="implants">Dental Implants</option>
-                                <option value="whitening">Teeth Whitening</option>
-                                <option value="other">Other / Not Sure</option>
+                            <label for="email">Email Address (Optional)</label>
+                            <input type="email" id="email" class="form-control" placeholder="your@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="service">Treatment of Interest</label>
+                            <select id="service" class="form-control">
+                                <option value="General Consultation">General Dental Checkup</option>
+                                <option value="Root Canal Treatment">Root Canal Treatment (RCT)</option>
+                                <option value="Dental Implants">Dental Implants</option>
+                                <option value="Teeth Cleaning">Teeth Cleaning & Scaling</option>
+                                <option value="Teeth Whitening">Teeth Whitening</option>
+                                <option value="Braces & Aligners">Braces & Aligners</option>
+                                <option value="Pediatric Dentistry">Pediatric Dentistry</option>
+                                <option value="Other Inquiry">Other / Not Sure</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="message">Additional Message (Optional)</label>
-                            <textarea id="message" class="form-control" placeholder="How can we help you?"></textarea>
+                            <label for="message">Your Message or Questions *</label>
+                            <textarea id="message" class="form-control" placeholder="How can we assist with your dental health?" required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Request</button>
+                        <div class="form-group">
+                            <label style="display: flex; align-items: flex-start; gap: 10px; font-size: 0.88rem; color: var(--text-muted); cursor: pointer;">
+                                <input type="checkbox" id="consent" required style="margin-top: 3px;">
+                                <span>I agree to be contacted by Vinayak Dental Care and agree to the <a href="privacy.html" target="_blank" style="color: var(--primary-green); text-decoration: underline;">Privacy Policy</a>.</span>
+                            </label>
+                        </div>
+                        <button type="submit" id="contactSubmitBtn" class="btn btn-primary" style="width: 100%;">Submit Message</button>
                     </form>
                 </div>
 
@@ -268,27 +320,31 @@
     <!-- Map Section -->
     <section class="map-section animate-on-scroll">
         <div class="container">
+            <h2 class="section-title" style="margin-bottom: 20px;">Find Us on Google Maps</h2>
             <div class="map-container">
-                <iframe src="https://maps.google.com/maps?q=Vinayak+Dental+Care,+Laxmipooja+Complex,+Near+Bandhan+Hotel,+Kapadvanj,+Gujarat+387620&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <iframe src="https://maps.google.com/maps?q=Vinayak+Dental+Care,+Laxmipooja+Complex,+Near+Bandhan+Hotel,+Kapadvanj,+Gujarat+387620&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Vinayak Dental Care Location Map"></iframe>
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="https://maps.google.com/?q=Vinayak+Dental+Care+Kapadvanj" data-config-href="mapUrl" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                    <i class="fa-solid fa-diamond-turn-right"></i> Open Navigation in Google Maps
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Footer Preview -->
+    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-top">
                 <div class="footer-brand">
                     <a href="index.html" class="logo">
                         <i class="fa-solid fa-tooth"></i>
-                        Vinayak Dental Care
+                        <span data-config="clinicName">Vinayak Dental Care</span>
                     </a>
                     <p>Providing advanced dental care with compassion and expertise. Your smile is our top priority.</p>
                     <div class="social-links">
-                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                        <a href="https://www.instagram.com/vinayak_dental_clinic__implant/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="https://www.instagram.com/vinayak_dental_clinic__implant/" data-config-href="instagramUrl" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://wa.me/919999900000" data-config-href="whatsappLink" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
                     </div>
                 </div>
                 
@@ -298,7 +354,9 @@
                         <li><a href="index.html">Home</a></li>
                         <li><a href="about.html">About Us</a></li>
                         <li><a href="services.html">Services</a></li>
+                        <li><a href="book.html">Book Appointment</a></li>
                         <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
                     </ul>
                 </div>
                 
@@ -317,71 +375,95 @@
                     <ul class="contact-info">
                         <li>
                             <i class="fa-solid fa-location-dot"></i>
-                            <span>B-10 Laxmipooja Complex, Kapadvanj</span>
+                            <span data-config="addressFull">B-10 Laxmipooja Complex, Near Bandhan Hotel, Kapadvanj, Gujarat 387620</span>
                         </li>
                         <li>
                             <i class="fa-solid fa-phone"></i>
-                            <span>+91 XXXXX XXXXX</span>
+                            <a href="tel:+919999900000" data-config-href="clinicPhone" data-config="clinicPhone" style="color: inherit;">+91 99999 00000</a>
                         </li>
                         <li>
                             <i class="fa-solid fa-envelope"></i>
-                            <span>info@vinayakdental.com</span>
+                            <a href="mailto:info@vinayakdentalcare.com" data-config-href="clinicEmail" data-config="clinicEmail" style="color: inherit;">info@vinayakdentalcare.com</a>
                         </li>
                     </ul>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2026 Vinayak Dental Care. All Rights Reserved. <span style="margin-left: 15px; opacity: 0.6;">| <a href="admin/index.html" style="color: inherit; text-decoration: none; margin-left: 5px; transition: 0.3s;">Admin Login</a></span></p>
+                <p>&copy; 2026 Vinayak Dental Care. All Rights Reserved. | <a href="privacy.html" style="color: inherit; text-decoration: underline;">Privacy Policy</a></p>
             </div>
         </div>
     </footer>
 
     <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/9199999XXXXX" class="whatsapp-float" target="_blank" rel="noopener noreferrer">
+    <a href="https://wa.me/919999900000" data-config-href="whatsappLink" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Contact on WhatsApp">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
-    <!-- JS -->
+    <!-- Sticky Mobile Quick Action Bar (Mobile Only) -->
+    <div class="mobile-bottom-bar" role="navigation" aria-label="Quick Mobile Actions">
+        <a href="tel:+919999900000" data-config-href="clinicPhone" class="mobile-bar-btn call-btn">
+            <i class="fa-solid fa-phone"></i> Call Clinic
+        </a>
+        <a href="https://wa.me/919999900000" data-config-href="whatsappLink" class="mobile-bar-btn wa-btn" target="_blank" rel="noopener noreferrer">
+            <i class="fa-brands fa-whatsapp"></i> WhatsApp
+        </a>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/i18n.js"></script>
     <script src="js/script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const contactForm = document.getElementById('contactInquiryForm');
+            const successBox = document.getElementById('contactSuccessMsg');
+
             if(contactForm) {
                 contactForm.addEventListener('submit', async (e) => {
                     e.preventDefault();
                     
+                    const submitBtn = document.getElementById('contactSubmitBtn');
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Sending Message...';
+
                     const serviceSelect = document.getElementById('service');
                     const serviceName = serviceSelect.options[serviceSelect.selectedIndex].text;
-                    const messageVal = document.getElementById('message').value;
+                    const messageVal = document.getElementById('message').value.trim();
 
                     const inquiry = {
-                        name: document.getElementById('name').value,
-                        phone: document.getElementById('phone').value,
-                        email: 'N/A', // Form didn't have email
-                        info: `Service: ${serviceName} | ${messageVal}`,
+                        name: document.getElementById('name').value.trim(),
+                        phone: document.getElementById('phone').value.trim(),
+                        email: document.getElementById('email').value.trim() || 'N/A',
+                        info: `Interest: ${serviceName} | Note: ${messageVal}`,
                         source: 'Contact Page'
                     };
 
                     try {
                         const response = await fetch('/api/inquiries', {
                             method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
+                            headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify(inquiry)
                         });
 
                         const data = await response.json();
 
                         if (response.ok && data.success) {
-                            alert('Request Submitted! Our team will contact you shortly.');
+                            if (successBox) {
+                                successBox.style.display = 'block';
+                                setTimeout(() => { successBox.style.display = 'none'; }, 6000);
+                            } else {
+                                alert('Thank you! Your message has been received.');
+                            }
                             contactForm.reset();
                         } else {
-                            alert(data.message || 'Failed to submit request. Please try again.');
+                            alert(data.message || 'Failed to submit message. Please try again.');
                         }
                     } catch (err) {
-                        alert('Server connection error. Please try again later.');
+                        alert('Server error. Please call or WhatsApp our clinic directly.');
+                    } finally {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Submit Message';
                     }
                 });
             }

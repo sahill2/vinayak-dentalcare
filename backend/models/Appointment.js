@@ -6,29 +6,41 @@ const appointmentSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
+  referenceCode: {
+    type: String,
+    required: true,
+    unique: true,
+    uppercase: true,
+    trim: true,
+    index: true
+  },
   patientName: {
     type: String,
     required: [true, 'Patient name is required'],
-    trim: true
+    trim: true,
+    minlength: 2,
+    maxlength: 60
   },
   phone: {
     type: String,
     required: [true, 'Phone number is required'],
-    trim: true
+    trim: true,
+    index: true
   },
   email: {
     type: String,
-    required: [true, 'Email is required'],
     trim: true,
-    match: [
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-      'Please provide a valid email address'
-    ]
+    default: ''
+  },
+  service: {
+    type: String,
+    default: 'General Dental Checkup',
+    trim: true
   },
   message: {
     type: String,
-    required: [true, 'Message/Problem description is required'],
-    trim: true
+    trim: true,
+    default: ''
   },
   date: {
     type: String,
@@ -41,15 +53,34 @@ const appointmentSchema = new mongoose.Schema({
   status: {
     type: String,
     required: true,
-    enum: ['Pending Approval', 'Approved', 'Rejected', 'Rescheduled'],
+    enum: ['Pending Approval', 'Approved', 'Rejected', 'Rescheduled', 'Completed', 'Cancelled'],
     default: 'Pending Approval'
+  },
+  consentGiven: {
+    type: Boolean,
+    default: true
+  },
+  consentTimestamp: {
+    type: Date,
+    default: Date.now
   },
   requestDate: {
     type: String,
-    default: () => new Date().toLocaleString()
+    default: () => new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
   }
 }, {
   timestamps: true
 });
+
+// Partial compound index to prevent double-booking on same date and time slot for active appointments
+appointmentSchema.index(
+  { date: 1, timeSlot: 1 },
+  {
+    unique: true,
+    partialFilterExpression: {
+      status: { $nin: ['Cancelled', 'Rejected'] }
+    }
+  }
+);
 
 module.exports = mongoose.model('Appointment', appointmentSchema);
