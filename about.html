@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/whatsapp.css">
     <style>
         .page-header {
             background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&q=80&w=1600') center/cover;
@@ -87,7 +88,7 @@
             <nav>
                 <a href="index.html" class="logo">
                     <i class="fa-solid fa-tooth"></i>
-                    Vinayak Dental Care
+                    <span data-config="clinicName">Vinayak Dental Care</span>
                 </a>
                 
                 <div class="nav-links">
@@ -95,10 +96,10 @@
                     <a href="about.html" class="active">About Us</a>
                     <a href="services.html">Services</a>
                     <a href="contact.html">Contact</a>
-                    <a href="admin/index.html" class="btn btn-primary" style="color: white;">Admin Panel</a>
+                    <a href="book.html" class="btn btn-primary nav-cta">Book Appointment</a>
                 </div>
 
-                <div class="hamburger">
+                <div class="hamburger" aria-label="Toggle navigation menu">
                     <i class="fa-solid fa-bars"></i>
                 </div>
             </nav>
@@ -108,100 +109,77 @@
     <!-- Page Header -->
     <div class="page-header animate-on-scroll">
         <div class="container">
-            <h1>About Us</h1>
-            <p>Committed to Your Oral Health and Beautiful Smile</p>
+            <h1>About Vinayak Dental Care</h1>
+            <p>Committed to Dental Health, Comfort, and Beautiful Smiles</p>
         </div>
     </div>
 
-    <!-- Clinic Intro -->
-    <section class="about-preview">
+    <!-- About Detail Section -->
+    <section style="padding: 80px 0; background-color: var(--bg-color);">
         <div class="container">
-            <div class="about-content animate-on-scroll">
-                <h2>Our Story & Experience</h2>
-                <p>Establishing a legacy of trust and care, Vinayak Dental Care has been serving the community with dedication for over 15 years. We blend artistry with advanced dental science to deliver functional and aesthetically pleasing results.</p>
-                <p>Our clinic is designed to offer a calming, welcoming environment. Whether it's a routine checkup or complex restorative procedures, our multidisciplinary team of specialists ensures comprehensive care under one roof.</p>
-                <ul class="feature-list">
-                    <li><i class="fa-solid fa-circle-check"></i> Globally trained specialists</li>
-                    <li><i class="fa-solid fa-circle-check"></i> 100% transparent pricing</li>
-                    <li><i class="fa-solid fa-circle-check"></i> Kid-friendly pediatric zone</li>
-                    <li><i class="fa-solid fa-circle-check"></i> Strict hygiene and COVID-safety protocols</li>
-                </ul>
-            </div>
-            <div class="about-img animate-on-scroll">
-                <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=800" alt="Clinic Interior">
-            </div>
-        </div>
-    </section>
-
-    <!-- Dentist Experience -->
-    <section class="expert-section" style="padding: 80px 0; background-color: var(--white);">
-        <div class="container">
-            <h2 class="section-title animate-on-scroll">Meet Our Dentists</h2>
-            <p class="section-subtitle animate-on-scroll" style="margin-bottom: 50px;">Expert care from our highly qualified dental professionals.</p>
-            
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;">
-                <!-- Doctor 1 -->
-                <div class="doctor-card animate-on-scroll" style="background: var(--bg-color); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); text-align: center; transition: transform 0.3s ease;">
-                    <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400" alt="Dr. Vishal Patel" style="width: 100%; height: 300px; object-fit: cover;">
-                    <div style="padding: 30px;">
-                        <h3 style="color: var(--text-dark); margin-bottom: 5px; font-size: 1.5rem;">Dr. Vishal Patel</h3>
-                        <p style="color: var(--primary-blue); font-weight: 600; margin-bottom: 15px;">BDS - Dental Surgeon</p>
-                        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px;">Specializing in advanced dental care, implants, and comprehensive oral rehabilitation with a focus on patient comfort.</p>
-                        <div style="display: flex; justify-content: center; gap: 10px;">
-                            <span style="background: var(--light-blue); color: var(--primary-blue); padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 500;">Implants</span>
-                            <span style="background: var(--light-blue); color: var(--primary-blue); padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 500;">Surgery</span>
-                        </div>
-                    </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center;">
+                <div class="animate-on-scroll">
+                    <h2 style="font-size: 2.2rem; color: var(--text-dark); margin-bottom: 20px;">Dedicated to Providing World-Class Dental Care</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">At Vinayak Dental Care in Kapadvanj, we believe that high-quality dentistry combines clinical precision with genuine warmth and empathy. From routine preventive cleanings to full mouth restorations and dental implants, our mission is to make every patient visit positive, transparent, and pain-free.</p>
+                    <p style="color: var(--text-muted); margin-bottom: 30px;">Our clinic is equipped with advanced rotary systems, ultrasonic scaling units, digital X-rays, and strict class-B autoclaving protocols to ensure total clinical safety for you and your family.</p>
+                    <a href="contact.html" class="btn btn-primary">Contact Our Clinic</a>
                 </div>
-
-                <!-- Doctor 2 -->
-                <div class="doctor-card animate-on-scroll" style="background: var(--bg-color); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); text-align: center; transition: transform 0.3s ease;">
-                    <img src="https://images.unsplash.com/photo-1594824436998-fe4087326e0b?auto=format&fit=crop&q=80&w=400" alt="Dr. Devanshi Patel" style="width: 100%; height: 300px; object-fit: cover;">
-                    <div style="padding: 30px;">
-                        <h3 style="color: var(--text-dark); margin-bottom: 5px; font-size: 1.5rem;">Dr. Devanshi Patel</h3>
-                        <p style="color: var(--primary-blue); font-weight: 600; margin-bottom: 15px;">BDS - Dental Surgeon</p>
-                        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px;">Dedicated to providing painless treatments, aesthetic smile designing, and ensuring the highest standards of clinical excellence.</p>
-                        <div style="display: flex; justify-content: center; gap: 10px;">
-                            <span style="background: var(--light-green); color: var(--primary-green); padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 500;">Smile Design</span>
-                            <span style="background: var(--light-green); color: var(--primary-green); padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 500;">Cosmetic</span>
-                        </div>
-                    </div>
+                <div class="animate-on-scroll">
+                    <!-- TODO: Swap with authentic high-resolution clinic operatory photograph -->
+                    <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=800" alt="Vinayak Dental Care Operatory Room" style="width: 100%; border-radius: var(--radius-lg); box-shadow: var(--shadow-md);" loading="lazy">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Mission and Vision -->
+    <!-- Mission & Vision -->
     <section class="mission-vision">
         <div class="container">
             <div class="mis-vis-grid">
                 <div class="mis-vis-card animate-on-scroll">
-                    <h3><i class="fa-regular fa-compass"></i> Our Mission</h3>
-                    <p>To provide high-quality, accessible, and compassionate dental care utilizing the latest technological advancements. We aim to educate our patients, fostering lifelong oral health habits and delivering treatments that prioritize comfort and long-term well-being.</p>
+                    <h3><i class="fa-solid fa-bullseye"></i> Our Mission</h3>
+                    <p style="color: var(--text-muted);">To deliver ethical, painless, and technologically advanced dental healthcare to every patient in Kapadvanj and surrounding communities, fostering long-term oral health through patient education and preventive dentistry.</p>
                 </div>
                 <div class="mis-vis-card animate-on-scroll">
-                    <h3><i class="fa-regular fa-eye"></i> Our Vision</h3>
-                    <p>To be recognized as the leading dental care provider, known for our clinical excellence, ethical practices, and patient-centric approach. We envision a community where advanced dental care brings confident, healthy smiles to everyone's face.</p>
+                    <h3><i class="fa-solid fa-eye"></i> Our Vision</h3>
+                    <p style="color: var(--text-muted);">To be recognized as the premier dental care and implant center in the region, trusted for excellence in clinical standards, hygiene, patient comfort, and lasting smile transformations.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer Preview (Same as Home) -->
+    <!-- Doctors Section -->
+    <section class="expert-section">
+        <div class="container">
+            <div class="expert-grid">
+                <div class="expert-img animate-on-scroll">
+                    <!-- TODO: Swap with authentic photo of Dr. Vishal & Dr. Devanshi -->
+                    <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=600" alt="Lead Dental Surgeon at Vinayak Dental Care" loading="lazy">
+                </div>
+                <div class="animate-on-scroll">
+                    <h2 style="font-size: 2.2rem; color: var(--text-dark); margin-bottom: 15px;">Meet Your Dental Specialists</h2>
+                    <h4 style="color: var(--primary-green); font-size: 1.2rem; margin-bottom: 20px;">Dr. Vishal & Dr. Devanshi (BDS - Dental Surgeons)</h4>
+                    <p style="color: var(--text-muted); margin-bottom: 15px;">With years of combined clinical experience, our doctors have successfully treated thousands of patients spanning cosmetic smile makeovers, dental implants, complex rotary root canal therapies, and pediatric dental care.</p>
+                    <p style="color: var(--text-muted); margin-bottom: 30px;">We take the time to listen to your concerns, explain all available treatment options clearly, and design personalized treatment plans that respect your preferences and comfort.</p>
+                    <a href="book.html" class="btn btn-primary">Schedule a Consultation</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-top">
                 <div class="footer-brand">
                     <a href="index.html" class="logo">
                         <i class="fa-solid fa-tooth"></i>
-                        Vinayak Dental Care
+                        <span data-config="clinicName">Vinayak Dental Care</span>
                     </a>
                     <p>Providing advanced dental care with compassion and expertise. Your smile is our top priority.</p>
                     <div class="social-links">
-                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                        <a href="https://www.instagram.com/vinayak_dental_clinic__implant/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="https://www.instagram.com/vinayak_dental_clinic__implant/" data-config-href="instagramUrl" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://wa.me/919999900000" data-config-href="whatsappLink" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
                     </div>
                 </div>
                 
@@ -211,7 +189,9 @@
                         <li><a href="index.html">Home</a></li>
                         <li><a href="about.html">About Us</a></li>
                         <li><a href="services.html">Services</a></li>
+                        <li><a href="book.html">Book Appointment</a></li>
                         <li><a href="contact.html">Contact Us</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
                     </ul>
                 </div>
                 
@@ -230,27 +210,33 @@
                     <ul class="contact-info">
                         <li>
                             <i class="fa-solid fa-location-dot"></i>
-                            <span>B-10 Laxmipooja Complex, Kapadvanj</span>
+                            <span data-config="addressFull">B-10 Laxmipooja Complex, Near Bandhan Hotel, Kapadvanj, Gujarat 387620</span>
                         </li>
                         <li>
                             <i class="fa-solid fa-phone"></i>
-                            <span>+91 XXXXX XXXXX</span>
+                            <a href="tel:+919999900000" data-config-href="clinicPhone" data-config="clinicPhone" style="color: inherit;">+91 99999 00000</a>
                         </li>
                         <li>
                             <i class="fa-solid fa-envelope"></i>
-                            <span>info@vinayakdental.com</span>
+                            <a href="mailto:info@vinayakdentalcare.com" data-config-href="clinicEmail" data-config="clinicEmail" style="color: inherit;">info@vinayakdentalcare.com</a>
                         </li>
                     </ul>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2026 Vinayak Dental Care. All Rights Reserved. <span style="margin-left: 15px; opacity: 0.6;">| <a href="admin/index.html" style="color: inherit; text-decoration: none; margin-left: 5px; transition: 0.3s;">Admin Login</a></span></p>
+                <p>&copy; 2026 Vinayak Dental Care. All Rights Reserved. | <a href="privacy.html" style="color: inherit; text-decoration: underline;">Privacy Policy</a></p>
             </div>
         </div>
     </footer>
 
-    <!-- JS -->
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/919999900000" data-config-href="whatsappLink" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Contact on WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
     <script src="js/script.js"></script>
 </body>
 </html>
