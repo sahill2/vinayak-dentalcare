@@ -66,25 +66,27 @@ A modern, production-ready full-stack healthcare web portal and management syste
 
 ```text
 dental/
-├── admin/
-│   └── index.html              # Dedicated admin login (noindex, nofollow)
 ├── api/
 │   └── index.js                # Vercel serverless entry point wrapping Express app
 ├── backend/
 │   ├── config/
+│   │   ├── clinic.js           # Single source of truth for services and time slots
 │   │   └── db.js               # MongoDB connection with serverless connection caching
 │   ├── controllers/
-│   │   ├── appointmentController.js # Appointment booking, lookup, pagination & logs
+│   │   ├── appointmentController.js # Appointment booking, lookup, availability & pagination
 │   │   ├── authController.js        # Admin login, logout & credentials update
 │   │   └── inquiryController.js     # Patient contact inquiries
 │   ├── middleware/
-│   │   ├── auth.js             # JWT verification & admin route protection
-│   │   └── validator.js        # Input validation (phone, date, time slot, sanitization)
+│   │   ├── auth.js             # JWT verification, tokenVersion check & admin route protection
+│   │   └── rateLimiter.js      # MongoDB-backed serverless rate limiter & honeypot
 │   ├── models/
-│   │   ├── ActivityLog.js      # Audit trail schema for admin status updates
-│   │   ├── Admin.js            # Admin schema with bcrypt password hashing
-│   │   ├── Appointment.js      # Appointment schema with compound unique index & VDC ref code
-│   │   └── Inquiry.js          # Patient inquiry schema
+│   │   ├── ActivityLog.js      # Audit trail schema with 180-day TTL index
+│   │   ├── Admin.js            # Admin schema with lockout & bcrypt password hashing
+│   │   ├── Appointment.js      # Appointment schema with partial compound unique index
+│   │   ├── Inquiry.js          # Patient inquiry schema
+│   │   └── RateLimit.js        # Rate limit schema with TTL expiration
+│   ├── private/
+│   │   └── dashboard.html      # Protected administrative dashboard (served via auth guard only)
 │   ├── routes/
 │   │   ├── appointmentRoutes.js# /api/appointments endpoints
 │   │   ├── authRoutes.js       # /api/auth endpoints with rate limiter
@@ -92,28 +94,35 @@ dental/
 │   ├── services/
 │   │   └── emailService.js     # Nodemailer email notification service
 │   ├── utils/
-│   │   └── seed.js             # Environment-driven admin account seeder
+│   │   └── seed.js             # Environment-driven admin account seeder & reset tool
 │   ├── .env.example            # Sample environment variables template
-│   └── server.js               # Express application configuration & routes
-├── css/
-│   └── style.css               # Core styling, responsive layouts, accessibility & sticky bar
-├── js/
-│   ├── config.js               # Central clinic configuration & TODO placeholders
-│   ├── i18n.js                 # Multi-language dictionary (EN, GU, HI) & selector
-│   └── script.js               # Client frontend scripts (booking, tracking, dynamic DOM)
-├── 404.html                    # Branded 404 error page
-├── about.html                  # About the clinic & doctor profiles
-├── book.html                   # Appointment booking & privacy lookup
-├── contact.html                # Contact info, inquiry form & embedded map
-├── dashboard.html              # Admin management dashboard
-├── index.html                  # Main homepage with structured JSON-LD data
-├── privacy.html                # Privacy policy & data protection terms
-├── robots.txt                  # Search engine crawling rules
-├── sitemap.xml                 # XML Sitemap for search indexing
-├── services.html               # Dental services catalog
+│   └── server.js               # Express application configuration, security & routes
+├── public/
+│   ├── admin/
+│   │   └── index.html          # Dedicated admin staff login
+│   ├── css/
+│   │   └── style.css           # Warm Clinic Journal tokens, typography & components
+│   ├── js/
+│   │   ├── config.js           # Single Source of Truth clinic configuration
+│   │   ├── i18n.js             # Multilingual translation engine (EN, GU, HI)
+│   │   ├── motion.js           # Lightweight custom vanilla animation engine
+│   │   └── script.js           # DOM hydration, navigation & form handlers
+│   ├── 404.html                # Branded 404 error page
+│   ├── about.html              # About the clinic & doctor profiles
+│   ├── book.html               # Appointment booking & status lookup
+│   ├── contact.html            # Contact info, inquiry form & map
+│   ├── index.html              # Homepage with symptom navigation & clinic status
+│   ├── privacy.html            # Privacy policy & patient data notice
+│   ├── robots.txt              # Search engine crawling rules
+│   ├── services.html           # Treatments & clinical services catalog
+│   └── sitemap.xml             # XML Sitemap for search indexing
+├── tests/
+│   └── api.test.js             # Supertest automated integration test suite
 ├── vercel.json                 # Vercel serverless deployment routing config
 ├── package.json                # Project dependencies & scripts
 ├── CHANGES.md                  # Comprehensive changelog of improvements
+├── DESIGN.md                   # Warm Clinic Journal design system specifications
+├── OWNER_TODO.md               # Action checklist for clinic owner
 └── README.md                   # Project documentation
 ```
 
@@ -122,8 +131,8 @@ dental/
 ## 🚀 Quick Start & Local Setup
 
 ### 1. Prerequisites
-- **Node.js** (v18 or higher recommended)
-- **MongoDB** (Local MongoDB Community instance or MongoDB Atlas cluster URI)
+- **Node.js** (v22.x recommended)
+- **MongoDB** (Local MongoDB instance or MongoDB Atlas cluster URI)
 - **Git**
 
 ### 2. Installation
@@ -132,8 +141,8 @@ dental/
 git clone https://github.com/sahill2/vinayak-dentalcare.git
 cd vinayak-dentalcare
 
-# Switch to the improve-site branch
-git checkout improve-site
+# Switch to the master-fixes branch
+git checkout master-fixes
 
 # Install backend dependencies
 npm install
@@ -144,9 +153,30 @@ Create your local `.env` file in the `backend/` folder:
 ```bash
 cp backend/.env.example backend/.env
 ```
-Fill in the necessary keys (see [Environment Configuration](#-environment-configuration)).
+Fill in the variable values (`MONGODB_URI`, `JWT_SECRET`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`).
 
-### 4. Run the Application
+### 4. Seed / Reset Administrator Account
+```bash
+# Create initial admin account
+npm run seed
+
+# Or reset existing admin password at any time
+npm run seed:reset
+```
+
+### 5. Run Automated Tests
+```bash
+npm test
+```
+
+### 6. Run the Application
+```bash
+# Start backend dev server
+npm run dev
+
+# Or start in standard mode
+npm start
+```
 
 #### Development Mode:
 ```bash
